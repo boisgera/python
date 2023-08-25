@@ -4,6 +4,8 @@ import mdx from "@astrojs/mdx";
 
 // https://astro.build/config
 export default defineConfig({
+  base: "",
+  site: "http://localhost:3000",
   experimental: {
     assets: true,
   },
