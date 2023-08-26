@@ -5,9 +5,15 @@ interface Props {
   type?: "note" | "solution" | "warning";
   label?: string;
   open?: boolean;
+  lock?: boolean;
 }
 
-let { type = "note", label = undefined, open = true } = Astro.props;
+let {
+  type = "note",
+  label = undefined,
+  open = true,
+  lock = false,
+} = Astro.props;
 
 function capitalize(word: string) {
   return word.charAt(0).toUpperCase() + word.slice(1);
@@ -38,7 +44,7 @@ console.log(`tabler:${icon}`);
 ---
 
 <aside>
-  <details open={open}>
+  <details open={open} class={lock ? "lock" : ""}>
     <summary
       style="display:flex;align-items:center;justify-content:space-between;"
     >
@@ -81,6 +87,13 @@ console.log(`tabler:${icon}`);
 
   .minmax {
     color: var(--dark);
+  }
+
+  details.lock {
+    pointer-events: none;
+  }
+  details.lock .minmax {
+    display: none;
   }
   details[open] .open {
     display: inline;

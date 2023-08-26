@@ -6,13 +6,12 @@ license: "[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)"
 layout: ../layouts/MDXLayout.astro
 ---
 
-import Admonition from '/src/components/Admonition.astro';
-import { Image } from 'astro:assets';
-
+import Admonition from "/src/components/Admonition.astro";
+import { Image } from "astro:assets";
 
 import snake from "/src/assets/snake.jpg";
 
-<Image src={snake} alt="Boa constrictor by Jan Kopřiva"/>
+<Image src={snake} alt="Boa constrictor by Jan Kopřiva" />
 
 Projet original par Aurélien Noce (aka [@ushu](https://github.com/ushu)).
 
@@ -67,16 +66,16 @@ pyxel.run(update, draw)
 
 **TODO:**
 
-  - couleurs: faire le tour des possibles, renvoyer sur la "doc"?
+- couleurs: faire le tour des possibles, renvoyer sur la "doc"?
 
-  - Text: comprendre la taille (fixe) de chaque caractère,
-    display d'une "grille" de caractères., comprendre comment est
-    placé le "Hello world!", ajuster le programme pour que le texte
-    soit toujours centré (même si plusieurs lignes ?).
+- Text: comprendre la taille (fixe) de chaque caractère,
+  display d'une "grille" de caractères., comprendre comment est
+  placé le "Hello world!", ajuster le programme pour que le texte
+  soit toujours centré (même si plusieurs lignes ?).
 
 ## Nombre d'images par seconde
 
-La fonction `time.time` de la bibliothèque standard Python renvoie le temps 
+La fonction `time.time` de la bibliothèque standard Python renvoie le temps
 écoulé en secondes depuis le 1er janvier 1970 à midi.
 
 ```
@@ -88,38 +87,39 @@ La fonction `time.time` de la bibliothèque standard Python renvoie le temps
 >>> time.time()
 1692980872.3245282
 ```
+
 Utilisez-là pour mesurer le temps qui s'écoule entre deux appels à la fonction
-`draw` de Pyxel. Puis, affichez le nombre d'images par seconde 
-(ou FPS pour *frames per second*) dans le coin en haut à gauche de la fenêtre.
+`draw` de Pyxel. Puis, affichez le nombre d'images par seconde
+(ou FPS pour _frames per second_) dans le coin en haut à gauche de la fenêtre.
 
 <video controls width="768">
   <source src="/videos/fps.webm" type="video/webm" />
 </video>
 
-
-<Admonition type="solution" open={false} >
+<Admonition type="solution" open={false}>
 ```python
 import math
 import time
 import pyxel
 
 def update():
-    if pyxel.btnp(pyxel.KEY_Q):
-        pyxel.quit()
+if pyxel.btnp(pyxel.KEY_Q):
+pyxel.quit()
 
 def draw():
-    global t
-    t_new = time.time()
-    dt = t_new - t
-    t = t_new
-    fps = 1.0 / dt
-    pyxel.cls(0)
-    pyxel.text(0, 0, f"fps: {int(round(fps))}", 7)
+global t
+t_new = time.time()
+dt = t_new - t
+t = t_new
+fps = 1.0 / dt
+pyxel.cls(0)
+pyxel.text(0, 0, f"fps: {int(round(fps))}", 7)
 
 pyxel.init(160, 120, title="🐍 Snake")
 t = time.time()
 pyxel.run(update, draw)
-```
+
+````
 </Admonition>
 
 ## Evènements
@@ -164,7 +164,7 @@ while True:
     screen.fill(color)
     pygame.display.update()
     clock.tick(1)
-```
+````
 
 Modifier ce programme pour que lorsque l'utilisateur presse
 les flêches de son clavier, le programme affiche (avec la fonction `print`)
@@ -242,21 +242,22 @@ pygame.init()
 screen = pygame.display.set_mode([20*30, 20*30])
 clock = pygame.time.Clock()
 while True:
-    for event in pygame.event.get():
-    if event.type == pygame.QUIT:
-        pygame.quit()
-        sys.exit()
-    elif event.type == pygame.KEYDOWN:
-        if event.key == pygame.K_q:
-            pygame.quit()
-            sys.exit()
-    screen.fill(white)
-    for x, y in snake:
-        rect = [x*20, y*20, 20, 20]
-        pygame.draw.rect(screen, black, rect)  
-    pygame.display.update()
-    clock.tick(1)
-```
+for event in pygame.event.get():
+if event.type == pygame.QUIT:
+pygame.quit()
+sys.exit()
+elif event.type == pygame.KEYDOWN:
+if event.key == pygame.K_q:
+pygame.quit()
+sys.exit()
+screen.fill(white)
+for x, y in snake:
+rect = [x*20, y*20, 20, 20]
+pygame.draw.rect(screen, black, rect)  
+ pygame.display.update()
+clock.tick(1)
+
+````
 </details>
 
 
@@ -269,7 +270,7 @@ Ensuite, nous allons faire bouger le serpent :
 
   ```python
   direction = [1, 0]
-  ```
+````
 
 - à chaque itération de la boucle, nous pouvons déplacer le serpent dans
   cette direction en "ajoutant" ce vecteur à la position de la tête du serpent
@@ -514,6 +515,7 @@ while True:
     pygame.display.set_caption(f"🐍 Score: {score}")
     clock.tick(1)
 ```
+
 </details>
 
 ## Annexe -- Codes RGB
@@ -522,14 +524,14 @@ La couleur d'un pixel est décrite par son [code RGB](https://fr.wikipedia.org/w
 l'intensité de ses composantes rouge, verte et bleue.
 On a par exemple :
 
-| R         | G        | B        | Couleur |
-|-----------|----------|----------|---------|
-|       255 |        0 |        0 |      🟥 |
-|         0 |      255 |        0 |      🟩 |
-|         0 |        0 |      255 |      🟦 |
-|       255 |      255 |      255 |      ⬜ |
-|         0 |        0 |        0 |      ⬛ |
-|       128 |       64 |        0 |      🟫 |
-|       255 |      128 |        0 |      🟧 |
-|       255 |      255 |        0 |      🟨 |
-|       106 |       13 |      173 |      🟪 |
+| R   | G   | B   | Couleur |
+| --- | --- | --- | ------- |
+| 255 | 0   | 0   | 🟥      |
+| 0   | 255 | 0   | 🟩      |
+| 0   | 0   | 255 | 🟦      |
+| 255 | 255 | 255 | ⬜      |
+| 0   | 0   | 0   | ⬛      |
+| 128 | 64  | 0   | 🟫      |
+| 255 | 128 | 0   | 🟧      |
+| 255 | 255 | 0   | 🟨      |
+| 106 | 13  | 173 | 🟪      |
