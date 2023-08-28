@@ -6,6 +6,8 @@ license: "[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)"
 layout: ../layouts/MDXLayout.astro
 ---
 
+export const debug = true;
+
 import Admonition from "/src/components/Admonition.astro";
 import { Image } from "astro:assets";
 
@@ -39,13 +41,15 @@ classique du jeu : nous réaliserons plusieurs versions d'un **programme qui mar
 (et pas un programme parfait) dont les fonctionnalités s'enrichiront à
 chaque nouvelle étape.
 
-## C'est parti !
+## Getting started
 
-Notre point de départ : un message dont la couleur varie avec le temps.
+Let's start with a message display whose color changes over time.
 
 <video controls width="768">
   <source src="../videos/hello-snake.webm" type="video/webm" />
 </video>
+
+The code of this application is:
 
 ```python
 import pyxel
@@ -56,27 +60,69 @@ def update():
 
 def draw():
     pyxel.cls(0)
-    pyxel.text(56, 54, "Hello, Snake!", pyxel.frame_count % 16)
+    color = pyxel.frame_count % 16
+    pyxel.text(56, 54, "Hello, Snake!", color)
 
-pyxel.init(160, 120, title="Hello Pyxel")
+pyxel.init(160, 120)
 pyxel.run(update, draw)
 ```
 
-## Comment ça marche ?
+Now we are going to slightly tweak this program until we understand 
+what's going on. 
+When it's necessary, search into Pyxel's [user's guide] and [reference 
+documentation].
 
-**TODO:**
+[user's guide]: https://github.com/kitao/pyxel#how-to-uses
+[reference documentation]: https://github.com/kitao/pyxel#api-reference
 
-- couleurs: faire le tour des possibles, renvoyer sur la "doc"?
+
+import palette from "/src/assets/pyxel-color-palette.png";
+
+### Colors
+
+Can you display the message in black on a white background instead?
+
+
+
+<Admonition type="solution" open={debug}>
+In the spirit of retro gaming, Pyxel can only display 16 colors.
+The standard palette from which you must pick your color is described [here][palette].
+
+<Image src={palette} alt="Pyxel's color palette" style="margin:auto;display:block;"/>
+
+
+The index of black is `0` and there is no pure white, but the closest is color
+`7`. 
+Therefore, the changes we need to perform are:
+
+[palette]: https://github.com/kitao/pyxel#color-palette
+
+
+```diff
+ def draw():
+-    pyxel.cls(0)
++    pyxel.cls(7)
+-    color = pyxel.frame_count % 16
++    color = 1
+     pyxel.text(56, 54, "Hello, Snake!", color)
+```
+</Admonition>
+
+[API]: https://github.com/kitao/pyxel#api-reference
+
+### Text & Geometry
 
 - Text: comprendre la taille (fixe) de chaque caractère,
   display d'une "grille" de caractères., comprendre comment est
   placé le "Hello world!", ajuster le programme pour que le texte
   soit toujours centré (même si plusieurs lignes ?).
 
-## Nombre d'images par seconde
+- Message translating from the right to the left?
 
-La fonction `time.time` de la bibliothèque standard Python renvoie le temps
-écoulé en secondes depuis le 1er janvier 1970 à midi.
+### Frame rate
+
+The `time` function from the `time` module of the Python standard library
+returns the time elapsed in seconds since January 1st, 1970 at noon.
 
 ```
 >>> import time
@@ -88,35 +134,34 @@ La fonction `time.time` de la bibliothèque standard Python renvoie le temps
 1692980872.3245282
 ```
 
-Utilisez-là pour mesurer le temps qui s'écoule entre deux appels à la fonction
-`draw` de Pyxel. Puis, affichez le nombre d'images par seconde
-(ou FPS pour _frames per second_) dans le coin en haut à gauche de la fenêtre.
+Use this function to measure the time elapsed between two calls to the `draw`
+function of Pyxel. Then, print the (approximate) number of frames per second 
+(FPS) in window top left corner.
 
 <video controls width="768">
   <source src="../videos/fps.webm" type="video/webm" />
 </video>
 
-<Admonition type="solution" open={false}>
-```python
-import time
-import pyxel
+<Admonition type="solution" open={debug}>
+```diff
+ import pyxel
++import time
 
-def update():
-    if pyxel.btnp(pyxel.KEY_Q):
-        pyxel.quit()
+ def update():
+     if pyxel.btnp(pyxel.KEY_Q):
+         pyxel.quit()
 
-def draw():
-    global t
-    t_new = time.time()
-    dt = t_new - t
-    t = t_new
-    fps = 1.0 / dt
-    pyxel.cls(0)
-    pyxel.text(0, 0, f"fps: {int(round(fps))}", 7)
-
-pyxel.init(160, 120, title="🐍 Snake")
-t = time.time()
-pyxel.run(update, draw)
+ def draw():
++    global t
++    t_new = time.time()
++    dt = t_new - t
++    t = t_new
++    fps = 1.0 / dt
++    fps = int(round(fps))
+     pyxel.cls(0)
+     color = pyxel.frame_count % 16
+     pyxel.text(56, 54, "Hello, Snake!", color)
++    pyxel.text(0, 0, f"fps: {fps}", 7)
 ```
 </Admonition>
 
@@ -127,6 +172,77 @@ pyxel.run(update, draw)
 
   - éventuellement: "P" pour pause ? Plus rien n'est mis à jour ?
    (sauf la détection de la touche "P")
+
+<Admonition type="solution" open={debug}>
+
+```diff
++ARROW_KEYS = [
++    pyxel.KEY_UP, 
++    pyxel.KEY_DOWN, 
++    pyxel.KEY_LEFT, 
++    pyxel.KEY_RIGHT
++]
++
++arrow_keys_pressed = None
+
+ def update():
++    global arrow_keys_pressed
+     if pyxel.btnp(pyxel.KEY_Q):
+        pyxel.quit()
++    arrow_keys_pressed = []
++    for key in ARROW_KEYS:
++        if pyxel.btn(key):
++            arrow_keys_pressed.append(key)
+```
+
+```python
+import pyxel
+
+ARROW_KEYS = [
+    pyxel.KEY_UP, 
+    pyxel.KEY_DOWN, 
+    pyxel.KEY_LEFT, 
+    pyxel.KEY_RIGHT
+]
+
+arrow_keys_pressed = None
+
+def update():
+    global arrow_keys_pressed
+    if pyxel.btnp(pyxel.KEY_Q):
+        pyxel.quit()
+    arrow_keys_pressed = []
+    for key in arrow_keys_pressed:
+        if pyxel.btn(key):
+            arrow_keys_pressed.append(key)
+
+def draw():
+    pyxel.cls(0)
+    if pyxel.KEY_UP in arrow_keys_pressed:
+        color = 7
+    else:
+        color = 13
+    pyxel.rect(10, 0, 10, 10, color)
+    if pyxel.KEY_LEFT in arrow_keys_pressed:
+        color = 7
+    else:
+        color = 13
+    pyxel.rect(0, 10, 10, 10, color)
+    if pyxel.KEY_DOWN in arrow_keys_pressed:
+        color = 7
+    else:
+        color = 13
+    pyxel.rect(10, 10, 10, 10, color)
+    if pyxel.KEY_RIGHT in arrow_keys_pressed:
+        color = 7
+    else:   
+        color = 13
+    pyxel.rect(20, 10, 10, 10, color)
+
+pyxel.init(30, 20)
+pyxel.run(update, draw)
+```
+</Admonition>
 
 ## Événements
 
@@ -176,7 +292,7 @@ Nous allons commencer par construire notre plateau de jeu ainsi :
 
 - le plateau de jeu est découpé en 30x30 cases,
 
-- chaque case fait 20 pixels de côté.
+- chaque case fait 10 pixels de côté.
 
 Pour vérifier la validité de ce plateau de jeu,
 écrivez un programme qui dessine un damier :
@@ -197,6 +313,26 @@ blue = 0
 color = [red, green, blue]
 pygame.draw.rect(screen, color, rect)
 ```
+
+<Admonition type="solution" open={debug}>
+```python
+import pyxel
+
+def update():
+    if pyxel.btnp(pyxel.KEY_Q):
+        pyxel.quit()
+
+def draw():
+    pyxel.cls(0)
+    for i in range(30):
+        for j in range(30):
+            if (i+j) % 2 == 0:
+                pyxel.rect(i*10, j*10, 10, 10, 7) 
+
+pyxel.init(300, 300)
+pyxel.run(update, draw)
+```
+</Admonition>
 
 ## Un serpent fixe
 
@@ -220,10 +356,9 @@ et `[12, 15]` est la tête :
 
 {/* ![](images/serpent.png) */}
 
-<details>
-<summary>
-**Solution**
-</summary>
+<Admonition type="solution" open={debug} >
+
+
 ```python
 import sys
 import pygame
@@ -256,7 +391,7 @@ pygame.draw.rect(screen, black, rect)
 clock.tick(1)
 
 ````
-</details>
+</Admonition>
 
 
 Un serpent qui bouge
@@ -268,7 +403,7 @@ Ensuite, nous allons faire bouger le serpent :
 
   ```python
   direction = [1, 0]
-````
+  ```
 
 - à chaque itération de la boucle, nous pouvons déplacer le serpent dans
   cette direction en "ajoutant" ce vecteur à la position de la tête du serpent
@@ -282,10 +417,8 @@ Aussi on peut commencer à envisager d'accélérer un peu le jeu à ce stade ...
 
 **Bonus.** Faites en sorte que le serpent ne puisse pas faire demi-tour.
 
-<details>
-<summary>
-**Solution**
-</summary>
+<Admonition type="solution" open={debug} >
+
 
 ```python
 import sys
@@ -334,7 +467,7 @@ while True:
     clock.tick(1)
 ```
 
-</details>
+</Admonition>
 
 ## Le fruit
 
@@ -355,10 +488,9 @@ On va procéder comme suit:
 
   {/* ![](images/manger.gif) */}
 
-<details>
-<summary>
-**Solution**
-</summary>
+<Admonition type="solution" open={debug} >
+
+
 
 ```python
 import random
@@ -419,7 +551,7 @@ while True:
     clock.tick(1)
 ```
 
-</details>
+</Admonition>
 
 ## Épilogue
 
@@ -438,10 +570,10 @@ fonctionnel :
   pygame.display.set_caption(f"🐍 Score: {score}")
   ```
 
-<details>
-<summary>
-**Solution**
-</summary>
+<Admonition type="solution" open={debug} >
+
+
+
 
 ```python
 import random
@@ -514,22 +646,4 @@ while True:
     clock.tick(1)
 ```
 
-</details>
-
-## Annexe -- Codes RGB
-
-La couleur d'un pixel est décrite par son [code RGB](https://fr.wikipedia.org/wiki/Rouge_vert_bleu) : un triplet d'entiers compris entre 0 et 255 qui déterminent
-l'intensité de ses composantes rouge, verte et bleue.
-On a par exemple :
-
-| R   | G   | B   | Couleur |
-| --- | --- | --- | ------- |
-| 255 | 0   | 0   | 🟥      |
-| 0   | 255 | 0   | 🟩      |
-| 0   | 0   | 255 | 🟦      |
-| 255 | 255 | 255 | ⬜      |
-| 0   | 0   | 0   | ⬛      |
-| 128 | 64  | 0   | 🟫      |
-| 255 | 128 | 0   | 🟧      |
-| 255 | 255 | 0   | 🟨      |
-| 106 | 13  | 173 | 🟪      |
+</Admonition>
