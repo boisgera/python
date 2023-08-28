@@ -1,0 +1,21 @@
+---
+---
+
+<>
+  <div class="grid">
+    <slot />
+  </div>
+  <style>
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-gap: 1rem;
+    }
+  </style>
+  <style is:global>  
+    img.img-full {
+      width: 100%;
+      height: 100%;
+    }
+  </style>
+</>

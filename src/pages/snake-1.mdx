@@ -98,28 +98,26 @@ Utilisez-là pour mesurer le temps qui s'écoule entre deux appels à la fonctio
 
 <Admonition type="solution" open={false}>
 ```python
-import math
 import time
 import pyxel
 
 def update():
-if pyxel.btnp(pyxel.KEY_Q):
-pyxel.quit()
+    if pyxel.btnp(pyxel.KEY_Q):
+        pyxel.quit()
 
 def draw():
-global t
-t_new = time.time()
-dt = t_new - t
-t = t_new
-fps = 1.0 / dt
-pyxel.cls(0)
-pyxel.text(0, 0, f"fps: {int(round(fps))}", 7)
+    global t
+    t_new = time.time()
+    dt = t_new - t
+    t = t_new
+    fps = 1.0 / dt
+    pyxel.cls(0)
+    pyxel.text(0, 0, f"fps: {int(round(fps))}", 7)
 
 pyxel.init(160, 120, title="🐍 Snake")
 t = time.time()
 pyxel.run(update, draw)
-
-````
+```
 </Admonition>
 
 ## Evènements

@@ -8,6 +8,7 @@ export default defineConfig({
   site: "http://localhost:3000",
   experimental: {
     assets: true,
+    viewTransitions: true,
   },
   integrations: [
     mdx({

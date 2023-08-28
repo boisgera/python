@@ -6,6 +6,20 @@ license: "[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)"
 layout: ../layouts/MDXLayout.astro
 ---
 
-- [Snake 0](./snake-0)
+import { Image } from "astro:assets";
+import Grid from "/src/components/Grid.astro";
 
-- [Snake 1](./snake-1)
+import snake from "/src/assets/snake.jpg";
+
+<Grid>
+  <a href="./snake-0" style="height:300px;">
+    <Image src={snake} class="img-full" style="object-fit:cover;" alt="Boa constrictor by Jan Kopřiva" />
+  </a>
+    <a href="./snake-1" style="height:300px;">
+    <Image src={snake} class="img-full" style="object-fit:cover;" alt="Boa constrictor by Jan Kopřiva" />
+  </a>
+  <div style="background:yellow;height:100px;" />
+  <div style="background:pink;height:100px;" />
+</Grid>
+
+

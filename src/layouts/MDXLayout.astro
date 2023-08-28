@@ -1,12 +1,11 @@
 ---
 import "@fontsource-variable/inter/index.css";
 import "@fontsource-variable/fira-code/index.css";
-
 const { frontmatter } = Astro.props;
 const { title, description } = frontmatter;
 ---
 
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fr">
   <head>
     <title>{title}</title>
@@ -26,7 +25,8 @@ const { title, description } = frontmatter;
         margin-top: 64px;
       }
 
-      pre.astro-code { /* pre:has(> code) support not there yet */
+      pre.astro-code {
+        /* pre:has(> code) support not there yet */
         border-radius: 0.25rem;
         overflow-x: auto;
         padding: 1rem 2rem;
@@ -46,7 +46,6 @@ const { title, description } = frontmatter;
     </style>
   </head>
   <body>
-    <main>
       <h1>{title}</h1>
       <slot />
     </main>
