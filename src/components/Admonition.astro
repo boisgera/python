@@ -3,14 +3,14 @@ import { Icon } from "astro-icon";
 
 interface Props {
   type?: "note" | "solution" | "warning";
-  label?: string;
+  title?: string;
   open?: boolean;
   lock?: boolean;
 }
 
 let {
   type = "note",
-  label = undefined,
+  title = undefined,
   open = true,
   lock = false,
 } = Astro.props;
@@ -47,7 +47,7 @@ const styles = {
 };
 
 let { icon, light, dark, local} = styles[type];
-label = label ? label : capitalize(type);
+title = title ? title : capitalize(type);
 icon = local ? icon : `tabler:${icon}`;
 ---
 
@@ -60,7 +60,7 @@ icon = local ? icon : `tabler:${icon}`;
         <span class="circle">
           <Icon name={icon} />
         </span>
-        <span style="font-weight:500;">{label}</span>
+        <span style="font-weight:500;">{title}</span>
       </span>
       <span class="minmax">
         <Icon class="closed" name="tabler:arrows-maximize" />

@@ -11,47 +11,39 @@ export const debug = false;
 import Admonition from "/src/components/Admonition.astro";
 import { Image } from "astro:assets";
 
+Projet original par Aurélien Noce (aka [@ushu](https://github.com/ushu)).
 
-## Test
 
-(doesn't work right now)
-
-```python title="imports.py" del={1} ins={2-3}
-import pyxel
-import time
-import keyboard
-import new
-```
 
 import snake from "/src/assets/snake.jpg";
 
 <Image src={snake} alt="Boa constrictor by Jan Kopřiva" />
 
-Projet original par Aurélien Noce (aka [@ushu](https://github.com/ushu)).
 
 {/* ## Table des matières */}
 
 ## Introduction
 
-Ce TP vous propose de développer un petit jeu en Python.
-Il constitue une introduction à la conception et à la réalisation
-d'un programme complet.
 
-Son sujet est un standard du jeu vidéo, le 🐍 [snake].
+This project you will develop a simple game in Python.
+This is meant to be an introduction to the design and implementation
+of a complete program.
 
-[[🎮 Snake!](https://kitao.github.io/pyxel/wasm/examples/07_snake.html) ;
-une version classique du snake, réalisée avec la plate-forme de retro-gaming
-Python [Pyxel](https://github.com/kitao/pyxel).](images/snake-pyxel.jpg)
+The subject is a standard of video games, the 🐍 [snake] game!
+Many variants of this game exist; [slither.io] is a good
+example of a modernized snake (and notably, massively multiplayer !).
 
-De nombreuses variantes de ce jeu existent ; [slither.io](https://slither.io)
-est un bon exemple de snake modernisé (et notamment, massivement multijoueur !).
+Don't be afraid, our objectives will be modest and therefore close to the
+classic version of the game: we will develop several versions of a
+**working program** (and not a perfect program) whose features will be
+enriched at each new step.
 
-[snake]: https://fr.wikipedia.org/wiki/Snake_(genre_de_jeu_vid%C3%A9o)
+Here is the kind of things that we expect to have at the end:
 
-Rassurez-vous, notre objectif sera modeste et donc proche de la version
-classique du jeu : nous réaliserons plusieurs versions d'un **programme qui marche**
-(et pas un programme parfait) dont les fonctionnalités s'enrichiront à
-chaque nouvelle étape.
+**TODO**
+
+[snake]: https://en.wikipedia.org/wiki/Snake_(video_game_genre)
+[slither.io]: https://slither.io
 
 ## Getting started
 
@@ -182,7 +174,7 @@ Let's build a game board
 
 - with each cell is 1 pixel large.
 
-<Admonition type="question" label="Don't you think that 1 pixel is too small?">
+<Admonition type="question" title="Don't you think that 1 pixel is too small?">
 Yes, it certainly would be if we were talking about real pixels! 
 But luckily for us, Pyxel automatically scales the display to fit the screen size. 
 Since we use a small display, it will zoom it quite a bit and we will be able to see every "pixel" clearly.
@@ -200,24 +192,17 @@ while, and remove it at the very last step.
 <Admonition type="solution" open={debug}>
 ```python
 import pyxel
-import random
 
 def update():
     if pyxel.btnp(pyxel.KEY_Q):
         pyxel.quit()
 
-fruit = [
-    random.randint(0, 29), 
-    random.randint(0, 29)
-]
-
 def draw():
-    pyxel.cls(13) 
+    pyxel.cls(13)
     for i in range(30):
         for j in range(30):
             if (i+j) % 2 == 0:
-                pyxel.pset(i, j, 7) 
-    pyxel.pset(fruit[0], fruit[1], 8)
+                pyxel.pset(i, j, 7)
 
 pyxel.init(30, 30)
 pyxel.run(update, draw)
@@ -239,16 +224,17 @@ import fruit from "/src/assets/fruit.png";
 <Admonition type="solution" open={debug}>
 ```python
 import pyxel 
-import random
+
+pyxel.init(30, 30)
+
+fruit = [
+    pyxel.rndi(0, 29), 
+    pyxel.rndi(0, 29)
+]
 
 def update():
     if pyxel.btnp(pyxel.KEY_Q):
         pyxel.quit()
-
-fruit = [
-    random.randint(0, 29), 
-    random.randint(0, 29)
-]
 
 def draw():
     pyxel.cls(13)
@@ -258,7 +244,6 @@ def draw():
                 pyxel.pset(i, j, 7) 
     pyxel.pset(fruit[0], fruit[1], 8)
 
-pyxel.init(30, 30)
 pyxel.run(update, draw)
 ```
 </Admonition>
@@ -290,11 +275,12 @@ import restingSnake from "/src/assets/resting-snake.png";
 
 ```python
 import pyxel
-import random
+
+pyxel.init(30, 30)
 
 fruit = [
-    random.randint(0, 29), 
-    random.randint(0, 29)
+    pyxel.rndi(0, 29), 
+    pyxel.rndi(0, 29)
 ]
 
 snake_geometry = [
@@ -320,7 +306,6 @@ def draw():
     head = snake_geometry[-1]
     pyxel.pset(head[0], head[1], 11)
 
-pyxel.init(30, 30)
 pyxel.run(update, draw)
 ```
 </Admonition>
@@ -338,11 +323,12 @@ pyxel.run(update, draw)
 
 ```python
 import pyxel
-import random
+
+pyxel.init(30, 30)
 
 fruit = [
-    random.randint(0, 29), 
-    random.randint(0, 29)
+    pyxel.rndi(0, 29), 
+    pyxel.rndi(0, 29)
 ]
 
 snake_geometry = [
@@ -374,7 +360,6 @@ def draw():
     head = snake_geometry[-1]
     pyxel.pset(head[0], head[1], 11)
 
-pyxel.init(30, 30)
 pyxel.run(update, draw)
 ```
 </Admonition>
@@ -388,11 +373,12 @@ or `↓` in the terminal.
 
 ```python
 import pyxel
-import random
+
+pyxel.init(30, 30)
 
 fruit = [
-    random.randint(0, 29), 
-    random.randint(0, 29)
+    pyxel.rndi(0, 29), 
+    pyxel.rndi(0, 29)
 ]
 
 snake_geometry = [
@@ -444,7 +430,6 @@ def draw():
     head = snake_geometry[-1]
     pyxel.pset(head[0], head[1], 11)
 
-pyxel.init(30, 30)
 pyxel.run(update, draw)
 ```
 </Admonition>
@@ -454,253 +439,303 @@ pyxel.run(update, draw)
 
 ## It's Aliiiiiiive!
 
-Ensuite, nous allons faire bouger le serpent :
+We are finally going to make the snake move!
 
-- nous créons un vecteur de "direction", par exemple
+  - We create a direction vector, such as
+ 
+    ```python
+    snake_direction = [1, 0]
+    ```
 
-  ```python
-  snake_direction = [1, 0]
-  ```
+  - At each update, we move the head of the snake in this direction
+    and the rest of its body follows.
 
-- à chaque itération de la boucle, nous pouvons déplacer le serpent dans
-  cette direction en "ajoutant" ce vecteur à la position de la tête du serpent
+  - Pressing an arrow key changes the direction of the snake.
 
-{/* ![](images/serpent-bouge.gif) */}
-
-Une fois que le serpent bouge, ajouter les commandes pour se déplacer dans
+  - Une fois que le serpent bouge, ajouter les commandes pour se déplacer dans
 les 4 directions, en appuyant sur les touches de direction du clavier.
 
-Aussi on peut commencer à envisager d'accélérer un peu le jeu à ce stade ...
-
-**Bonus.** Faites en sorte que le serpent ne puisse pas faire demi-tour.
-
-<Admonition type="solution" open={debug} >
-
-
-```python
-import sys
-import pygame
-
-white = [255, 255, 255]
-black = [0, 0, 0]
-snake = [
-    [10, 15],
-    [11, 15],
-    [12, 15],
-]
-direction = [1, 0]
-
-pygame.init()
-screen = pygame.display.set_mode([20*30, 20*30])
-clock = pygame.time.Clock()
-while True:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            pygame.quit()
-            sys.exit()
-        elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_q:
-                pygame.quit()
-                sys.exit()
-            if event.key == pygame.K_UP:
-                direction = [0.0, -1.0]
-            elif event.key == pygame.K_LEFT:
-                direction = [-1.0, 0.0]
-            elif event.key == pygame.K_DOWN:
-                direction = [0.0, 1.0]
-            elif event.key == pygame.K_RIGHT:
-                direction = [1.0, 0.0]
-    head = snake[-1]
-    new_head = [
-      head[0] + direction[0],
-      head[1] + direction[1]
-    ]
-    snake = snake[1:] + [new_head]
-    screen.fill(white)
-    for x, y in snake:
-        rect = [x*20, y*20, 20, 20]
-        pygame.draw.rect(screen, black, rect)
-    pygame.display.update()
-    clock.tick(1)
-```
-
+<Admonition type="warning" title="🗲 OMG it's so fast!">
+You may consider slowing down the game at this point ... at least while you
+are developing and testing it! Technically, you are searching to decrease the
+frame rate. 
 </Admonition>
 
-## Le fruit
 
-Il faut maintenant faire manger notre serpent.
-On va procéder comme suit:
-
-- on a toujours la position du serpent dans une variable `snake` :
-
-- on génère un "fruit", dans une position aléatoire
-
-  ```python
-  fruit = [10, 10]
-  ```
-
-- quand la tête du serpent mange le fruit,
-  on place un nouveau fruit à une position aléatoire
-  et on allonge le serpent d'une case
-
-  {/* ![](images/manger.gif) */}
-
-<Admonition type="solution" open={debug} >
-
-
-
+<Admonition type="solution" open={debug}>
 ```python
-import random
-import sys
-import pygame
+import pyxel
 
-white = [255, 255, 255]
-black = [0, 0, 0]
-red = [255, 0, 0]
-snake = [
+pyxel.init(30, 30, fps=10)
+
+fruit = [
+    pyxel.rndi(0, 29), 
+    pyxel.rndi(0, 29)
+]
+
+snake_geometry = [
     [10, 15],
     [11, 15],
     [12, 15],
 ]
-direction = [1, 0]
-fruit = [10, 10]
 
-pygame.init()
-screen = pygame.display.set_mode([20*30, 20*30])
-clock = pygame.time.Clock()
-while True:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            pygame.quit()
-            sys.exit()
-        elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_q:
-                pygame.quit()
-                sys.exit()
-            if event.key == pygame.K_UP:
-                direction = [0, -1]
-            elif event.key == pygame.K_LEFT:
-                direction = [-1, 0]
-            elif event.key == pygame.K_DOWN:
-                direction = [0, 1]
-            elif event.key == pygame.K_RIGHT:
-                direction = [1, 0]
-    head = snake[-1]
-    new_head = [
-      head[0] + direction[0],
-      head[1] + direction[1]
+snake_direction = [1, 0]
+ 
+checkerboard = False
+
+arrow_keys = [
+    pyxel.KEY_UP, 
+    pyxel.KEY_DOWN, 
+    pyxel.KEY_LEFT, 
+    pyxel.KEY_RIGHT
+]
+
+def update():
+    global checkerboard, snake_geometry, snake_direction
+    if pyxel.btnp(pyxel.KEY_Q):
+        pyxel.quit()
+    if pyxel.btnp(pyxel.KEY_C):
+        checkerboard = not checkerboard
+    arrow_keys_pressed = []
+    for key in arrow_keys:
+        if pyxel.btnp(key):
+            arrow_keys_pressed.append(key)
+    for key in arrow_keys_pressed:
+        if key == pyxel.KEY_UP:
+            snake_direction = [0, -1]
+        elif key == pyxel.KEY_DOWN:
+            snake_direction = [0, 1]
+        elif key == pyxel.KEY_LEFT:
+            snake_direction = [-1, 0]  
+        elif key == pyxel.KEY_RIGHT:
+            snake_direction = [1, 0]
+    snake_head = snake_geometry[-1]
+    new_snake_head = [
+      snake_head[0] + snake_direction[0],
+      snake_head[1] + snake_direction[1]
     ]
-    if new_head == fruit:
-        snake = snake + [new_head]
-        fruit = [
-            random.randint(0, 29),
-            random.randint(0, 29)
-        ]
-    else:
-        snake = snake[1:] + [new_head]
-    screen.fill(white)
-    for x, y in snake:
-        rect = [x*20, y*20, 20, 20]
-        pygame.draw.rect(screen, black, rect)
-    rect = [fruit[0]*20, fruit[1]*20, 20, 20]
-    pygame.draw.rect(screen, red, rect)
-    pygame.display.update()
-    clock.tick(1)
-```
+    snake_geometry = snake_geometry[1:] + [new_snake_head]
 
+def draw():
+    pyxel.cls(7)
+    if checkerboard:
+        pyxel.cls(13)
+        for i in range(30):
+            for j in range(30):
+                if (i+j) % 2 == 0:
+                    pyxel.pset(i, j, 7) 
+    pyxel.pset(fruit[0], fruit[1], 8)
+    for x, y in snake_geometry[:-1]:
+        pyxel.pset(x, y, 3)
+    head = snake_geometry[-1]
+    pyxel.pset(head[0], head[1], 11)
+
+pyxel.run(update, draw)
+```
 </Admonition>
 
-## Épilogue
 
-Il nous reste deux petits changements pour avoir un serpent complètement
-fonctionnel :
+## I am starving!
 
-- Il faut détecter si le serpent se mord la queue, ou touche un
-  des murs, ce qui est une condition d'échec.
+**TODO**
 
-- Enfin on peut afficher le score.
-  La façon la plus simple de procéder est de changer le titre de la fenêtre,
-  avec la fonction `set_caption` :
-
-  ```python
-  score = 0
-  pygame.display.set_caption(f"🐍 Score: {score}")
-  ```
-
-<Admonition type="solution" open={debug} >
-
-
-
-
+<Admonition type="solution" open={debug}>
 ```python
-import random
-import sys
-import pygame
+import pyxel
 
-white = [255, 255, 255]
-black = [0, 0, 0]
-red = [255, 0, 0]
-snake = [
+pyxel.init(30, 30, fps=10)
+
+fruit = None
+
+def spawn_new_fruit():
+    global fruit 
+    fruit = [
+        pyxel.rndi(0, 29), 
+        pyxel.rndi(0, 29)
+    ]
+
+spawn_new_fruit()
+
+snake_geometry = [
     [10, 15],
     [11, 15],
     [12, 15],
 ]
-direction = [1, 0]
-fruit = [10, 10]
-score = 0
 
-pygame.init()
-screen = pygame.display.set_mode([20*30, 20*30])
-clock = pygame.time.Clock()
-while True:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            pygame.quit()
-            sys.exit()
-        elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_q:
-                pygame.quit()
-                sys.exit()
-            if event.key == pygame.K_UP:
-                direction = [0, -1]
-            elif event.key == pygame.K_LEFT:
-                direction = [-1, 0]
-            elif event.key == pygame.K_DOWN:
-                direction = [0, 1]
-            elif event.key == pygame.K_RIGHT:
-                direction = [1, 0]
-    head = snake[-1]
-    new_head = [
-      head[0] + direction[0],
-      head[1] + direction[1]
+snake_direction = [1, 0]
+ 
+checkerboard = False
+
+arrow_keys = [
+    pyxel.KEY_UP, 
+    pyxel.KEY_DOWN, 
+    pyxel.KEY_LEFT, 
+    pyxel.KEY_RIGHT
+]
+
+def update():
+    global checkerboard, snake_geometry, snake_direction
+    if pyxel.btnp(pyxel.KEY_Q):
+        pyxel.quit()
+    if pyxel.btnp(pyxel.KEY_C):
+        checkerboard = not checkerboard
+    arrow_keys_pressed = []
+    for key in arrow_keys:
+        if pyxel.btnp(key):
+            arrow_keys_pressed.append(key)
+    for key in arrow_keys_pressed:
+        if key == pyxel.KEY_UP:
+            snake_direction = [0, -1]
+        elif key == pyxel.KEY_DOWN:
+            snake_direction = [0, 1]
+        elif key == pyxel.KEY_LEFT:
+            snake_direction = [-1, 0]  
+        elif key == pyxel.KEY_RIGHT:
+            snake_direction = [1, 0]
+    snake_head = snake_geometry[-1]
+    new_snake_head = [
+      snake_head[0] + snake_direction[0],
+      snake_head[1] + snake_direction[1]
     ]
-    if (
-        new_head in snake
-        or new_head[0] < 0
-        or new_head[0] >= 30
-        or new_head[1] < 0
-        or new_head[1] >= 30
-    ):
-        pygame.quit()
-        sys.exit()
-    if new_head == fruit:
-        score = score + 1
-        snake = snake + [new_head]
-        fruit = [
-            random.randint(0, 29),
-            random.randint(0, 29)
-        ]
+    if new_snake_head == fruit:
+        snake_geometry = snake_geometry + [new_snake_head]
+        spawn_new_fruit()
     else:
-        snake = snake[1:] + [new_head]
-    screen.fill(white)
-    for x, y in snake:
-        rect = [x*20, y*20, 20, 20]
-        pygame.draw.rect(screen, black, rect)
-    rect = [fruit[0]*20, fruit[1]*20, 20, 20]
-    pygame.draw.rect(screen, red, rect)
-    pygame.display.update()
-    pygame.display.set_caption(f"🐍 Score: {score}")
-    clock.tick(1)
-```
+        snake_geometry = snake_geometry[1:] + [new_snake_head]
 
+def draw():
+    pyxel.cls(7)
+    if checkerboard:
+        pyxel.cls(13)
+        for i in range(30):
+            for j in range(30):
+                if (i+j) % 2 == 0:
+                    pyxel.pset(i, j, 7) 
+    pyxel.pset(fruit[0], fruit[1], 8)
+    for x, y in snake_geometry[:-1]:
+        pyxel.pset(x, y, 3)
+    head = snake_geometry[-1]
+    pyxel.pset(head[0], head[1], 11)
+
+pyxel.run(update, draw)
+```
+</Admonition>
+
+## Epilog
+
+Obviously, there are a couple of things missing here.
+To begin with, we need to detect if the snake head collides with its body or with
+the walls, which is a failure condition and should stop the game.
+
+It would also be nice to have a "splash screen" that greets us when we start 
+the game and also to be able to restart it after we're dead!
+
+Click the Pyxel logo below to play the final result!
+
+<a href="../snake-game.html">
+<img src="../pyxel_logo_152x64.png" width="152" height="64" 
+style="margin-top:3rem; margin-bottom:3rem;"/>
+</a>
+
+
+
+<Admonition type="solution" open={debug}>
+```python
+import pyxel
+
+def spawn_new_fruit():
+    global fruit 
+    fruit = [
+        pyxel.rndi(0, 29), 
+        pyxel.rndi(0, 29)
+    ]
+
+def spawn_new_snake():
+    global snake_geometry, snake_direction
+    snake_geometry = [
+        [10, 15],
+        [11, 15],
+        [12, 15],
+    ]
+    snake_direction = [1, 0]
+ 
+checkerboard = False
+
+arrow_keys = [
+    pyxel.KEY_UP, 
+    pyxel.KEY_DOWN, 
+    pyxel.KEY_LEFT, 
+    pyxel.KEY_RIGHT
+]
+
+started = False
+
+def update():
+    global checkerboard, snake_geometry, snake_direction, started
+    if not started:
+        if pyxel.btnp(pyxel.KEY_SPACE):
+            started = True
+            spawn_new_snake()
+            spawn_new_fruit()
+        return
+    if pyxel.btnp(pyxel.KEY_Q):
+        pyxel.quit()
+    if pyxel.btnp(pyxel.KEY_C):
+        checkerboard = not checkerboard
+    arrow_keys_pressed = []
+    for key in arrow_keys:
+        if pyxel.btnp(key):
+            arrow_keys_pressed.append(key)
+    for key in arrow_keys_pressed:
+        if key == pyxel.KEY_UP:
+            snake_direction = [0, -1]
+        elif key == pyxel.KEY_DOWN:
+            snake_direction = [0, 1]
+        elif key == pyxel.KEY_LEFT:
+            snake_direction = [-1, 0]  
+        elif key == pyxel.KEY_RIGHT:
+            snake_direction = [1, 0]
+    snake_head = snake_geometry[-1]
+    new_snake_head = [
+      snake_head[0] + snake_direction[0],
+      snake_head[1] + snake_direction[1]
+    ]
+    if new_snake_head in snake_geometry:
+        started = False
+    elif ( 
+        new_snake_head[0] < 0 or 
+        new_snake_head[0] > 29 or 
+        new_snake_head[1] < 0 or 
+        new_snake_head[1] > 29
+        ):
+        started = False
+    elif new_snake_head == fruit:
+        snake_geometry = snake_geometry + [new_snake_head]
+        spawn_new_fruit()
+    else:
+        snake_geometry = snake_geometry[1:] + [new_snake_head]
+
+def draw():
+    pyxel.cls(7)
+    if not started:
+        pyxel.text(5, 3, "Press", 0)
+        pyxel.text(5, 9, "SPACE", pyxel.frame_count % 16)
+        pyxel.text(11, 15, "to", 0)
+        pyxel.text(5, 21, "start", 0)
+        return
+    if checkerboard:
+        pyxel.cls(13)
+        for i in range(30):
+            for j in range(30):
+                if (i+j) % 2 == 0:
+                    pyxel.pset(i, j, 7) 
+    pyxel.pset(fruit[0], fruit[1], 8)
+    for x, y in snake_geometry[:-1]:
+        pyxel.pset(x, y, 3)
+    head = snake_geometry[-1]
+    pyxel.pset(head[0], head[1], 11)
+
+pyxel.init(30, 30, fps=10)
+pyxel.run(update, draw)
+```
 </Admonition>
