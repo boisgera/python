@@ -1,7 +1,7 @@
 ---
-title: Le serpent
+title: The Snake Game
 author: "[Sébastien Boisgérault](mailto:Sebastien.Boisgerault@minesparis.psl.eu), 
-Mines Paris -- PSL"
+ITN, Mines Paris -- PSL"
 license: "[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)"
 layout: ../layouts/MDXLayout.astro
 ---
@@ -174,244 +174,292 @@ def draw():
 ```
 </Admonition>
 
-## Evènements
+## The Game Board
 
-  - évènement claviers: détecter les flèches, afficher les symboles,
-    avec ceux qui sont pressés d'une couleur différente (plus vive).
+Let's build a game board
 
-  - éventuellement: "P" pour pause ? Plus rien n'est mis à jour ?
-   (sauf la détection de la touche "P")
+- made of a square of 30x30 cells,
 
-<Admonition type="solution" open={debug}>
+- with each cell is 1 pixel large.
 
-```diff
-ARROW_KEYS = [
-    pyxel.KEY_UP, 
-    pyxel.KEY_DOWN, 
-    pyxel.KEY_LEFT, 
-    pyxel.KEY_RIGHT
-]
-
-arrow_keys_pressed = None
-
-def update():
-    global arrow_keys_pressed
-    if pyxel.btnp(pyxel.KEY_Q):
-       pyxel.quit()
-    arrow_keys_pressed = []
-    for key in ARROW_KEYS:
-        if pyxel.btn(key):
-            arrow_keys_pressed.append(key)
-```
-
-```python
-import pyxel
-
-ARROW_KEYS = [
-    pyxel.KEY_UP, 
-    pyxel.KEY_DOWN, 
-    pyxel.KEY_LEFT, 
-    pyxel.KEY_RIGHT
-]
-
-arrow_keys_pressed = None
-
-def update():
-    global arrow_keys_pressed
-    if pyxel.btnp(pyxel.KEY_Q):
-        pyxel.quit()
-    arrow_keys_pressed = []
-    for key in arrow_keys_pressed:
-        if pyxel.btn(key):
-            arrow_keys_pressed.append(key)
-
-def draw():
-    pyxel.cls(0)
-    if pyxel.KEY_UP in arrow_keys_pressed:
-        color = 7
-    else:
-        color = 13
-    pyxel.rect(10, 0, 10, 10, color)
-    if pyxel.KEY_LEFT in arrow_keys_pressed:
-        color = 7
-    else:
-        color = 13
-    pyxel.rect(0, 10, 10, 10, color)
-    if pyxel.KEY_DOWN in arrow_keys_pressed:
-        color = 7
-    else:
-        color = 13
-    pyxel.rect(10, 10, 10, 10, color)
-    if pyxel.KEY_RIGHT in arrow_keys_pressed:
-        color = 7
-    else:   
-        color = 13
-    pyxel.rect(20, 10, 10, 10, color)
-
-pyxel.init(30, 20)
-pyxel.run(update, draw)
-```
+<Admonition type="question" label="Don't you think that 1 pixel is too small?">
+Yes, it certainly would be if we were talking about real pixels! 
+But luckily for us, Pyxel automatically scales the display to fit the screen size. 
+Since we use a small display, it will zoom it quite a bit and we will be able to see every "pixel" clearly.
 </Admonition>
 
-## Événements
+To check that everything's ok, draw a checkerboard pattern like this:
 
-Pygame permet de spécifier comment réagir aux actions de l'utilisateur,
-par exemple son utilisation du clavier ou de la souris.
+import checkerboard from "/src/assets/checkerboard.png";
 
-Nous pouvons ainsi faire en sorte de forcer l'arrêt du programme lorsque
-l'utilisateur clique sur le bouton de fermeture de la fenêtre ou appuie sur
-la touche Q :
+<Image src={checkerboard} alt="A 30x30 checkerboard" />
 
-```python
-import random
-import sys
-import pygame
-
-pygame.init()
-screen = pygame.display.set_mode([300, 300])
-clock = pygame.time.Clock()
-
-while True:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            pygame.quit()
-            sys.exit()
-        elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_q:
-                pygame.quit()
-                sys.exit()
-    red = random.randint(0, 255)
-    green = random.randint(0, 255)
-    blue = random.randint(0, 255)
-    color = [red, green, blue]
-    screen.fill(color)
-    pygame.display.update()
-    clock.tick(1)
-````
-
-Modifier ce programme pour que lorsque l'utilisateur presse
-les flêches de son clavier, le programme affiche (avec la fonction `print`)
-les caractères `←`, `↑`, `→` ou `↓` dans le terminal.
-
-🗝️ Le code renvoyé par la flêche vers le haut est `pygame.K_UP` par exemple.
-
-## Le damier
-
-Nous allons commencer par construire notre plateau de jeu ainsi :
-
-- le plateau de jeu est découpé en 30x30 cases,
-
-- chaque case fait 10 pixels de côté.
-
-Pour vérifier la validité de ce plateau de jeu,
-écrivez un programme qui dessine un damier :
-
-{/* ![](images/damier.png) */}
-
-🗝️ Vous pouvez utiliser la méthode [`pygame.draw.rect`](https://www.pygame.org/docs/ref/draw.html#pygame.draw.rect) :
-
-```python
-x = 100
-y = 100
-width = 30
-height = 30
-rect = [x, y, width, height]
-red = 255
-green = 0
-blue = 0
-color = [red, green, blue]
-pygame.draw.rect(screen, color, rect)
-```
+We will keep this checkerboard in the background as "training wheels" for a 
+while, and remove it at the very last step.
 
 <Admonition type="solution" open={debug}>
 ```python
 import pyxel
+import random
 
 def update():
     if pyxel.btnp(pyxel.KEY_Q):
         pyxel.quit()
 
+fruit = [
+    random.randint(0, 29), 
+    random.randint(0, 29)
+]
+
 def draw():
-    pyxel.cls(0)
+    pyxel.cls(13) 
     for i in range(30):
         for j in range(30):
             if (i+j) % 2 == 0:
-                pyxel.rect(i*10, j*10, 10, 10, 7) 
+                pyxel.pset(i, j, 7) 
+    pyxel.pset(fruit[0], fruit[1], 8)
 
-pyxel.init(300, 300)
+pyxel.init(30, 30)
 pyxel.run(update, draw)
 ```
 </Admonition>
 
-## Un serpent fixe
+## The (Forbidden) Fruit
 
-> No no he's not dead, he's, he's restin'!
+Display a fruit at a random location on top of the checkerboard.
+A fruit is a simple 1x1 rectangle (a pixel!). Pick a color you like !
+When we say "random", we want the fruit location to be different each time
+you restart the program.
 
-L'étape suivante est de dessiner le serpent, comme une suite de segments
-représentés par des rectangles colorés.
-On veut dessiner le serpent aux coordonnées suivantes :
+
+import fruit from "/src/assets/fruit.png";
+
+<Image src={fruit} alt="A fruit at a random location" />
+
+<Admonition type="solution" open={debug}>
+```python
+import pyxel 
+import random
+
+def update():
+    if pyxel.btnp(pyxel.KEY_Q):
+        pyxel.quit()
+
+fruit = [
+    random.randint(0, 29), 
+    random.randint(0, 29)
+]
+
+def draw():
+    pyxel.cls(13)
+    for i in range(30):
+        for j in range(30):
+            if (i+j) % 2 == 0:
+                pyxel.pset(i, j, 7) 
+    pyxel.pset(fruit[0], fruit[1], 8)
+
+pyxel.init(30, 30)
+pyxel.run(update, draw)
+```
+</Admonition>
+
+## A Restin' Snake
+
+In the next step, we will represent the snake, as a sequence of pixels.
+Let's snake with the following simple sequence
 
 ```python
-snake = [
+snake_geometry = [
     [10, 15],
     [11, 15],
     [12, 15],
 ]
 ```
 
-pour obtenir un schéma comme suit ;
-disons pour fixer les idées que dans ce cas de figure `[10, 15]` est la queue
-et `[12, 15]` est la tête :
+Let's say that `[12, 15]` is the snake head.
+Use a dark green color to represent the snake body and a light green 
+for its head.
 
-{/* ![](images/serpent.png) */}
+
+import restingSnake from "/src/assets/resting-snake.png";
+
+<Image src={restingSnake} alt="A resting snake" />
+
 
 <Admonition type="solution" open={debug} >
 
-
 ```python
-import sys
-import pygame
+import pyxel
+import random
 
-white = [255, 255, 255]
-black = [0, 0, 0]
-snake = [
-[10, 15],
-[11, 15],
-[12, 15],
+fruit = [
+    random.randint(0, 29), 
+    random.randint(0, 29)
 ]
 
-pygame.init()
-screen = pygame.display.set_mode([20*30, 20*30])
-clock = pygame.time.Clock()
-while True:
-for event in pygame.event.get():
-if event.type == pygame.QUIT:
-pygame.quit()
-sys.exit()
-elif event.type == pygame.KEYDOWN:
-if event.key == pygame.K_q:
-pygame.quit()
-sys.exit()
-screen.fill(white)
-for x, y in snake:
-rect = [x*20, y*20, 20, 20]
-pygame.draw.rect(screen, black, rect)  
- pygame.display.update()
-clock.tick(1)
+snake_geometry = [
+    [10, 15],
+    [11, 15],
+    [12, 15],
+]
 
-````
+def update():
+    if pyxel.btnp(pyxel.KEY_Q):
+        pyxel.quit()
+
+def draw():
+    pyxel.cls(7)
+    for i in range(30):
+        pyxel.cls(13)
+        for j in range(30):
+            if (i+j) % 2 == 0:
+                pyxel.pset(i, j, 7) 
+    pyxel.pset(fruit[0], fruit[1], 8)
+    for x, y in snake_geometry[:-1]:
+        pyxel.pset(x, y, 3)
+    head = snake_geometry[-1]
+    pyxel.pset(head[0], head[1], 11)
+
+pyxel.init(30, 30)
+pyxel.run(update, draw)
+```
+</Admonition>
+
+## Events
+
+**TODO.** Checkerboard off by default, on/off with "C" key
+
+<video controls width="768">
+  <source src="../videos/checkerboard-on-off.webm" type="video/webm" />
+</video>
+
+
+<Admonition type="solution" open={debug} >
+
+```python
+import pyxel
+import random
+
+fruit = [
+    random.randint(0, 29), 
+    random.randint(0, 29)
+]
+
+snake_geometry = [
+    [10, 15],
+    [11, 15],
+    [12, 15],
+]
+
+checkerboard = False
+
+def update():
+    global checkerboard
+    if pyxel.btnp(pyxel.KEY_Q):
+        pyxel.quit()
+    if pyxel.btnp(pyxel.KEY_C):
+        checkerboard = not checkerboard
+
+def draw():
+    pyxel.cls(7)
+    if checkerboard:
+        pyxel.cls(13)
+        for i in range(30):
+            for j in range(30):
+                if (i+j) % 2 == 0:
+                    pyxel.pset(i, j, 7) 
+    pyxel.pset(fruit[0], fruit[1], 8)
+    for x, y in snake_geometry[:-1]:
+        pyxel.pset(x, y, 3)
+    head = snake_geometry[-1]
+    pyxel.pset(head[0], head[1], 11)
+
+pyxel.init(30, 30)
+pyxel.run(update, draw)
+```
+</Admonition>
+
+**TODO.** Modify the program so that when the user presses the arrow keys,
+the program displays (with the `print` function) the characters `←`, `↑`, `→`
+or `↓` in the terminal.
+
+
+<Admonition type="solution" open={debug}>
+
+```python
+import pyxel
+import random
+
+fruit = [
+    random.randint(0, 29), 
+    random.randint(0, 29)
+]
+
+snake_geometry = [
+    [10, 15],
+    [11, 15],
+    [12, 15],
+]
+
+checkerboard = False
+
+arrow_keys = [
+    pyxel.KEY_UP, 
+    pyxel.KEY_DOWN, 
+    pyxel.KEY_LEFT, 
+    pyxel.KEY_RIGHT
+]
+
+def update():
+    global checkerboard
+    if pyxel.btnp(pyxel.KEY_Q):
+        pyxel.quit()
+    if pyxel.btnp(pyxel.KEY_C):
+        checkerboard = not checkerboard
+    arrow_keys_pressed = []
+    for key in arrow_keys:
+        if pyxel.btnp(key):
+            arrow_keys_pressed.append(key)
+    for key in arrow_keys_pressed:
+        if key == pyxel.KEY_UP:
+            print("↑")
+        elif key == pyxel.KEY_DOWN:
+            print("↓")
+        elif key == pyxel.KEY_LEFT:
+            print("←")   
+        elif key == pyxel.KEY_RIGHT:
+            print("→")
+
+def draw():
+    pyxel.cls(7)
+    if checkerboard:
+        pyxel.cls(13)
+        for i in range(30):
+            for j in range(30):
+                if (i+j) % 2 == 0:
+                    pyxel.pset(i, j, 7) 
+    pyxel.pset(fruit[0], fruit[1], 8)
+    for x, y in snake_geometry[:-1]:
+        pyxel.pset(x, y, 3)
+    head = snake_geometry[-1]
+    pyxel.pset(head[0], head[1], 11)
+
+pyxel.init(30, 30)
+pyxel.run(update, draw)
+```
 </Admonition>
 
 
-Un serpent qui bouge
---------------------------------------------------------------------------------
+
+
+## It's Aliiiiiiive!
 
 Ensuite, nous allons faire bouger le serpent :
 
 - nous créons un vecteur de "direction", par exemple
 
   ```python
-  direction = [1, 0]
+  snake_direction = [1, 0]
   ```
 
 - à chaque itération de la boucle, nous pouvons déplacer le serpent dans

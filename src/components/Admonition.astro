@@ -24,22 +24,31 @@ const styles = {
     icon: "pencil",
     light: "#e0f2fe",
     dark: "#164e63",
+    local: false,
   },
   warning: {
     icon: "alert-triangle",
     light: "#ffedd5",
     dark: "#ea580c",
+    local: false,
+  },
+  question: {
+    icon: "help-circle",
+    light: "#c7d2fe",
+    dark: "#4f46e5",
+    local: true,
   },
   solution: {
     icon: "bulb",
     light: "#fbcfe8",
     dark: "#db2777",
+    local: false,
   },
 };
 
-const { icon, light, dark } = styles[type];
+let { icon, light, dark, local} = styles[type];
 label = label ? label : capitalize(type);
-
+icon = local ? icon : `tabler:${icon}`;
 ---
 
 <aside>
@@ -49,7 +58,7 @@ label = label ? label : capitalize(type);
     >
       <span style="display:flex;gap:0.5em;align-items:center;">
         <span class="circle">
-          <Icon name={`tabler:${icon}`} />
+          <Icon name={icon} />
         </span>
         <span style="font-weight:500;">{label}</span>
       </span>
