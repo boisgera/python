@@ -11,6 +11,18 @@ export const debug = true;
 import Admonition from "/src/components/Admonition.astro";
 import { Image } from "astro:assets";
 
+
+## Test
+
+(doesn't work right now)
+
+```python title="imports.py" del={1} ins={2-3}
+import pyxel
+import time
+import keyboard
+import new
+```
+
 import snake from "/src/assets/snake.jpg";
 
 <Image src={snake} alt="Boa constrictor by Jan Kopřiva" />
@@ -98,13 +110,10 @@ Therefore, the changes we need to perform are:
 [palette]: https://github.com/kitao/pyxel#color-palette
 
 
-```diff
- def draw():
--    pyxel.cls(0)
-+    pyxel.cls(7)
--    color = pyxel.frame_count % 16
-+    color = 1
-     pyxel.text(56, 54, "Hello, Snake!", color)
+```python
+def draw():
+    pyxel.cls(7)
+    pyxel.text(56, 54, "Hello, Snake!", 1)
 ```
 </Admonition>
 
@@ -143,25 +152,25 @@ function of Pyxel. Then, print the (approximate) number of frames per second
 </video>
 
 <Admonition type="solution" open={debug}>
-```diff
- import pyxel
-+import time
+```python
+import pyxel
+import time
 
- def update():
-     if pyxel.btnp(pyxel.KEY_Q):
-         pyxel.quit()
+def update():
+    if pyxel.btnp(pyxel.KEY_Q):
+        pyxel.quit()
 
- def draw():
-+    global t
-+    t_new = time.time()
-+    dt = t_new - t
-+    t = t_new
-+    fps = 1.0 / dt
-+    fps = int(round(fps))
-     pyxel.cls(0)
-     color = pyxel.frame_count % 16
-     pyxel.text(56, 54, "Hello, Snake!", color)
-+    pyxel.text(0, 0, f"fps: {fps}", 7)
+def draw():
+    global t
+    t_new = time.time()
+    dt = t_new - t
+    t = t_new
+    fps = 1.0 / dt
+    fps = int(round(fps))
+    pyxel.cls(0)
+    color = pyxel.frame_count % 16
+    pyxel.text(56, 54, "Hello, Snake!", color)
+    pyxel.text(0, 0, f"fps: {fps}", 7)
 ```
 </Admonition>
 
@@ -176,23 +185,23 @@ function of Pyxel. Then, print the (approximate) number of frames per second
 <Admonition type="solution" open={debug}>
 
 ```diff
-+ARROW_KEYS = [
-+    pyxel.KEY_UP, 
-+    pyxel.KEY_DOWN, 
-+    pyxel.KEY_LEFT, 
-+    pyxel.KEY_RIGHT
-+]
-+
-+arrow_keys_pressed = None
+ARROW_KEYS = [
+    pyxel.KEY_UP, 
+    pyxel.KEY_DOWN, 
+    pyxel.KEY_LEFT, 
+    pyxel.KEY_RIGHT
+]
 
- def update():
-+    global arrow_keys_pressed
-     if pyxel.btnp(pyxel.KEY_Q):
-        pyxel.quit()
-+    arrow_keys_pressed = []
-+    for key in ARROW_KEYS:
-+        if pyxel.btn(key):
-+            arrow_keys_pressed.append(key)
+arrow_keys_pressed = None
+
+def update():
+    global arrow_keys_pressed
+    if pyxel.btnp(pyxel.KEY_Q):
+       pyxel.quit()
+    arrow_keys_pressed = []
+    for key in ARROW_KEYS:
+        if pyxel.btn(key):
+            arrow_keys_pressed.append(key)
 ```
 
 ```python
