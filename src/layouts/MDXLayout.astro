@@ -1,27 +1,33 @@
 ---
 import "@fontsource-variable/inter/index.css";
 import "@fontsource-variable/fira-code/index.css";
-import { unified } from "unified";
-import remarkParse from "remark-parse";
-import remarkRehype from "remark-rehype";
-import rehypeStringify from "rehype-stringify";
 
-const { frontmatter } = Astro.props;
-const { title, description, author } = frontmatter;
-
-function md_to_html(markdown: string) {
-  return unified()
-    .use(remarkParse) // Parse markdown content to a syntax tree
-    .use(remarkRehype) // Turn markdown syntax tree to HTML syntax tree, ignoring embedded HTML
-    .use(rehypeStringify) // Serialize HTML syntax tree
-    .process(markdown)
-    .then((file) => String(file))
-    .catch((error) => {
-      throw error;
-    });
+interface Author {
+  name: string;
+  email?: string;
+  url?: string;
+  affiliation?: string;
+  twitter?: string;
+  github?: string;
+}
+interface Frontmatter {
+  title?: string;
+  description?: string;
+  url?: string;
+  image?: string;
+  authors?: Author[];
+  license?: string;
 }
 
-const author_html = await md_to_html(author);
+interface Props {
+  frontmatter: Frontmatter;
+}
+
+const { frontmatter } = Astro.props;
+const { title, description, authors } = frontmatter;
+
+const authors_text = (authors || []).map((author: any) => author.name).join(", "); 
+
 
 ---
 
@@ -74,7 +80,7 @@ const author_html = await md_to_html(author);
   <body>
     <main>
       <h1>{title}</h1>
-      <h2 set:html={author_html} />
+      <h2>{authors_text}<h2>
       <slot />
     </main>
   </body>
