@@ -1,7 +1,7 @@
 ---
 context:
 title: The Snake Game
-description: Nothing yet. But you can expect more very shortly
+description: Don't you think that it's only appropriate to discover Python with a snake game?
 date: "2023-09-06 11:00"
 authors: 
   - name: Sébastien Boisgérault
@@ -24,7 +24,7 @@ import Admonition from "/src/components/Admonition.astro";
 import Header from "/src/components/Header.astro";
 import { Image } from "astro:assets";
 
-<Header />
+<Header frontmatter={frontmatter}/>
 
 import snake from "/src/assets/snake.jpg";
 
