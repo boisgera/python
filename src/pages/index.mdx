@@ -10,16 +10,19 @@ import { Image } from "astro:assets";
 import Grid from "/src/components/Grid.astro";
 
 import snake from "/src/assets/snake.jpg";
+import maze from "/src/assets/maze.jpg";
+
 
 <Grid>
   <a href="./snake-0" style="height:300px;">
-    <Image src={snake} class="img-full" style="object-fit:cover;" alt="Boa constrictor by Jan Kopřiva" />
+    ...
   </a>
-    <a href="./snake-1" style="height:300px;">
-    <Image src={snake} class="img-full" style="object-fit:cover;" alt="Boa constrictor by Jan Kopřiva" />
+  <a href="./snake-1" style="height:300px;">
+    <Image transition:name="snakeImage"  src={snake} class="img-full" style="object-fit:cover;" alt="Boa constrictor by Jan Kopřiva" />
+  </a>
+  <a href="./snake-3" style="height:300px;">
+    <Image transition:name="mazeImage"  src={maze} class="img-full" style="object-fit:cover;" alt="Black Maze Wall by Mitchell Luo" />
   </a>
   <div style="background:yellow;height:100px;" />
   <div style="background:pink;height:100px;" />
 </Grid>
-
-

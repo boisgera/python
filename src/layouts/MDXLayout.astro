@@ -26,9 +26,9 @@ interface Props {
 const { frontmatter } = Astro.props;
 const { title, description, authors } = frontmatter;
 
-const authors_text = (authors || []).map((author: any) => author.name).join(", "); 
-
-
+const authors_text = (authors || [])
+  .map((author: any) => author.name)
+  .join(", ");
 ---
 
 <!DOCTYPE html>
@@ -51,7 +51,8 @@ const authors_text = (authors || []).map((author: any) => author.name).join(", "
         margin-top: 64px;
       }
 
-      img, video {
+      img,
+      video {
         margin: auto;
         display: block;
         margin-bottom: 1rem;
@@ -79,8 +80,8 @@ const authors_text = (authors || []).map((author: any) => author.name).join(", "
   </head>
   <body>
     <main>
-      <h1>{title}</h1>
-      <h2>{authors_text}<h2>
+      <!-- <h1>{title}</h1>
+      <h2>{authors_text}<h2> -->
       <slot />
     </main>
   </body>

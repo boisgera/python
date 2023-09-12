@@ -1,15 +1,19 @@
 ---
+context:
 title: The Snake Game
 description: Nothing yet. But you can expect more very shortly
+date: "2023-09-06 11:00"
 authors: 
   - name: Sébastien Boisgérault
+    title: Associate Professor
     email: Sebastien.Boisgerault@minesparis.psl.eu 
     url: https://eul.ink
     image: https://2.gravatar.com/avatar/39ec5d637b0753448b97a8e63855a45cb6708d033b656fe9f1d3314bb4bfb202?size=128
     affiliation: ITN, Mines Paris – PSL
-    twitter: "@boisgera"
-    github: "@boisgera"
-    linkedin: Sébastien Boisgérault
+    twitter: "boisgera"
+    github: "boisgera"
+    linkedin: "Sébastien Boisgérault"
+tags: [Python, pyxel, game, snake]
 license: "CC BY 4.0"
 layout: ../layouts/MDXLayout.astro
 ---
@@ -17,18 +21,20 @@ layout: ../layouts/MDXLayout.astro
 export const debug = false;
 
 import Admonition from "/src/components/Admonition.astro";
+import Header from "/src/components/Header.astro";
 import { Image } from "astro:assets";
 
-Projet original par Aurélien Noce (aka [@ushu](https://github.com/ushu)).
-
-
+<Header />
 
 import snake from "/src/assets/snake.jpg";
 
-<Image src={snake} alt="Boa constrictor by Jan Kopřiva" />
+<Image transition:name="snakeImage" src={snake} alt="Boa constrictor by Jan Kopřiva" style="border-radius: 0.375rem;"/>
 
 
-{/* ## Table des matières */}
+<Admonition type="note" title="Attribution" open={true} lock>
+The first version of this project was authored by Aurélien Noce (aka [@ushu](https://github.com/ushu)).
+</Admonition>
+
 
 ## Introduction
 
@@ -545,7 +551,15 @@ pyxel.run(update, draw)
 
 ## I am starving!
 
-**TODO**
+So far the fruit and the snake don't interact.
+Let's change that! Make sure that:
+
+  - when the snake head reaches the fruit, the fruit disappears,
+
+  - the snake grows by one pixel and
+
+  - a new fruit appears at a random location.
+
 
 <Admonition type="solution" open={debug}>
 ```python

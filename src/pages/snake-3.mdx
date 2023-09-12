@@ -1,0 +1,536 @@
+---
+context:
+title: Lost
+description: Nothing yet. But you can expect more very shortly
+date: "2023-09-06 11:00"
+authors: 
+  - name: Sébastien Boisgérault
+    title: Associate Professor
+    email: Sebastien.Boisgerault@minesparis.psl.eu 
+    url: https://eul.ink
+    image: https://2.gravatar.com/avatar/39ec5d637b0753448b97a8e63855a45cb6708d033b656fe9f1d3314bb4bfb202?size=128
+    affiliation: ITN, Mines Paris – PSL
+    twitter: "boisgera"
+    github: "boisgera"
+    linkedin: "Sébastien Boisgérault"
+tags: [Python, pyxel, game, snake]
+license: "CC BY 4.0"
+layout: ../layouts/MDXLayout.astro
+---
+
+export const debug = true;
+
+import Admonition from "/src/components/Admonition.astro";
+import Header from "/src/components/Header.astro";
+import { Image } from "astro:assets";
+
+<Header />
+
+import maze from "/src/assets/maze.jpg";
+
+<Image transition:name="mazeImage" src={maze} alt="Black Maze Wall by Mitchell Luo" style="border-radius: 0.375rem;"/>
+
+
+## Introduction
+
+For the sake of simplicity, we will consider here only mazes defined within
+a 30x30 grid. We will represent them in Python as sets of pairs of integers
+between 0 and 29, where each pair represents the coordinates of an empty
+cell of the maze. 
+The pair `(0, 0)` corresponds to the top left corner of the grid.
+
+import randomMaze from "/src/assets/random-maze.png";
+
+<figure>
+<Image src={randomMaze} alt="A Random Maze" style="border-radius: 0.375rem;margin-left:0; margin-right:0;"/>
+<figcaption>
+A maze generated (pseudo-)randomly with a mix of 75% empty cells (in white)
+and 25% walls (in black).
+</figcaption>
+</figure>
+
+## Maze Visualizer
+
+The [`random-maze.py`](../random-maze.py) file represents the maze above.
+
+  - Download it and have a look at its structure,
+
+  - Make a function `load_maze` that given the filename
+    of such a maze file returns the associated maze object. 
+    
+  - Name `random_maze` the maze object associated to the file
+    `"random-maze.py"`.
+
+<Admonition type="solution" open={debug}>
+
+
+```python
+def load_maze(filename):
+    file = open(filename, mode="rt", encoding="ascii")
+    maze_repr = file.read()
+    file.close()
+    maze = eval(maze_repr)
+    return maze
+
+random_maze = load_maze("random-maze.py")
+```
+
+</Admonition>
+
+### Visualization
+
+Develop with pygame a function `draw_maze` for maze visualization that
+works in the following context:
+
+```python
+import pyxel
+
+WIDTH, HEIGHT = 30, 30
+
+random_maze = ...
+
+pyxel.init(WIDTH, HEIGHT)
+draw_maze(maze=random_maze)
+pyxel.show()
+```
+
+<Admonition type="solution" open={debug}>
+
+```python
+BLACK = 0
+WHITE = 7  # Kinda (light grey)
+
+def draw_maze(maze):
+    pyxel.cls(BLACK)
+    for x, y in maze:
+        pyxel.pset(x, y, WHITE)
+```
+
+</Admonition>
+
+
+### Create your own maze
+
+... then save it in a file, using the same format as `random-maze.py`.
+
+<Admonition type="solution" open={debug}>
+
+For example to create a maze without walls:
+
+```python
+empty_maze = set()
+for y in range(0, HEIGHT):
+    for x in range(0, WIDTH):
+        empty_maze.add((x, y))
+```
+
+Then to save it:
+
+
+``` python
+empty_maze_repr = repr(empty_maze)
+file = open("empty_maze.py", mode="wt", encoding="ascii")
+file.write(empty_maze_repr)
+file.close()
+```
+
+</Admonition>
+
+
+## Graphs and Paths
+
+<Admonition type="definition">
+
+An (oriented and weighted) **graph**  is a triplet composed of:
+
+  - a set of **vertices** (or **nodes**),
+
+  - a set of (oriented) **edges** (or **arcs**), where
+    an oriented **edge** is a pair composed of a source vertex and a target vertex.
+
+  - a collection associating to each edge a numerical value called **weight**.
+
+A **path** in a graph is a sequence of vertices such that
+each element of the sequence and its successor form an edge of the graph.
+
+</Admonition>
+
+
+### Mazes and Graphs
+
+We would like to associate a graph with a maze whose
+
+  - vertices are the empty cells of the maze,
+
+  - edges represent the admissible movements from one cell to a neighboring cell
+    (the two cells are empty and share a side).
+
+  - the weight of each edge is 1; it represents the "cost" of moving
+    from one cell to a neighboring cell.
+
+What Python data structure would we naturally use
+to represent these graphs?
+
+<Admonition type="warning" title="Premature optimization is the root of all evil" open={debug}>
+At this stage, we are **not** looking here for the most compact or efficient 
+structure but to translate as literally as possible the mathematical description
+of the graph.
+</Admonition>
+
+
+Implement a function `maze_to_graph` which constructs the graph associated
+to a maze.
+
+
+<Admonition type="solution" open={debug}>
+
+It seems natural to represent the vertices as a set of pairs of integers, 
+the edges as a set of pairs of vertices and the weights as a dictionary having
+as keys the edges and as unique value the integer 1.
+
+
+```python
+TOP, RIGHT, DOWN, LEFT = (0, -1), (1, 0), (0, 1), (-1, 0) 
+
+def maze_to_graph(maze):
+    vertices = set(maze)
+    edges = set()
+    weights = {}
+    for vertex in vertices:
+        x, y = vertex
+        for (dx, dy) in [TOP, RIGHT, DOWN, LEFT]:
+            neighbor = (x + dx, y + dy)
+            if neighbor in vertices:
+                edge = (vertex, neighbor)
+                edges.add(edge)
+                weights[edge] = 1
+    return (vertices, edges, weights)
+  ```
+
+</Admonition>
+
+### Reachable Cells
+
+Implement a function `reachable_cells` which returns the set
+of cells of a maze `maze` which are reachable from
+the cell `source`.
+
+<figure>
+<video style="width:100%;margin-left:0; margin-right:0;" controls>
+  <source src="../reachable.webm"  type="video/webm" />
+</video>
+<figcaption>
+Computation of the cells reachable from the top-left corner. 
+The green cells are reachable cells whose neighbors 
+have between inspected; orange cells are reachable, 
+but their neighbors have not yet been inspected;
+Two group of empty cells, which stay white until the end, 
+are unreachable.
+</figcaption>
+</figure>
+
+
+
+<Admonition type="solution" open={debug}>
+
+```python
+def reachable_cells(maze, source):
+    vertices, edges, _ = maze_to_graph(maze)
+    todo = {source}
+    done = set()
+    while todo:
+        current = todo.pop()
+        neighbors = {
+            v for v in vertices 
+            if (current, v) in edges
+        }
+        for n in neighbors:
+            if n not in done:
+                todo.add(n)
+        done.add(current)
+    return done
+```
+</Admonition>
+
+Extend the function `draw_maze` to graphically differentiate
+a set of cells using a given color. 
+Then use it to represent the set
+of cells reachable from the top left corner of the maze
+`random_maze`.
+
+<Admonition type="solution" open={debug}>
+
+```python
+LIGHT_GREEN = 11
+
+def draw_cells(cells, color):
+    for x, y in cells:
+        pyxel.pset(x, y, color)
+
+def draw_maze(maze, cells=None):
+    pyxel.cls(BLACK)
+    draw_cells(maze, WHITE)
+    if cells is not None:
+        draw_cells(cells, LIGHT_GREEN)
+
+
+```
+
+```python
+TOP_LEFT = (0, 0)
+cells = reachable_cells(random_maze, source=TOP_LEFT)
+
+pyxel.init(WIDTH, HEIGHT)
+draw_maze(random_maze, cells)
+pyxel.show()
+```
+
+</Admonition>
+
+
+### Mazes and Paths
+
+Implement a function `path_from` which takes as arguments:
+
+  - `maze`: a 30x30 maze,
+
+  - `source`: a source cell,
+
+and returns
+
+    - `path`: a dictionary whose keys are cells and
+        whose values are paths. The path `path[target]` must join
+        `source` and `target` if `target` is reachable from `source`;
+        otherwise, `target` must not be a key of the dictionary.
+
+Use this function to find a path joining the top left and bottom right corners
+of the maze `random_maze` and graphically represent the result by updating
+your function `draw_maze`.
+
+[A path joining the top left and bottom right corners.
+This path minimizes the number of movements required
+(58 = 29 + 29); but it's a lucky shot,
+because nothing guaranteed a priori that this would be the case!](images/path.jpg)
+
+<Admonition type="solution" open={debug}>
+
+A possible solution consists in defining:
+
+```python
+def path_from(maze, source):
+    vertices, edges, _ = maze_to_graph(maze)
+    todo = set()
+    done = set()
+    path = {}
+    if source in maze:
+       todo.add(source)
+       path[source] = [source]
+    while todo:
+        current = todo.pop()
+        neighbors = {
+            v for v in vertices 
+            if (current, v) in edges
+        }
+        for n in neighbors:
+            if n not in done and n not in todo:
+                path[n] = path[current] + [n]
+                todo.add(n)
+        done.add(current)
+    return path
+```
+
+then to extend our function `draw_maze` as follows:
+
+```python
+PINK = (255, 128, 128)
+
+def draw_path(screen, path):
+    h = CELL_SIZE
+    for x, y in path:
+        pg.draw.rect(screen, PINK, (x * h, y * h, h, h))
+
+def draw_maze(maze, cells=None, path=None):
+    pg.init()
+    pg.display.set_caption("Labyrinthes")
+    width_height = (WIDTH * CELL_SIZE, HEIGHT * CELL_SIZE)
+    screen = pg.display.set_mode(width_height)
+    clock = pg.time.Clock()
+    while True:
+        events = pg.event.get()
+        if any(event.type == pg.QUIT for event in events):
+            break
+        draw_background(screen)
+        draw_walls(screen, maze)
+        if cells is not None:
+            draw_cells(screen)
+        if path is not None:
+            draw_path(screen, path)
+        pg.display.update()
+        clock.tick(FPS)
+    pg.quit()
+```
+
+We then exploit these functions as follows:
+
+```python
+target_to_path = path_from(random_maze, TOP_LEFT)
+BOTTOM_RIGHT = (WIDTH - 1, HEIGHT - 1)
+path = target_to_path[BOTTOM_RIGHT]
+draw_maze(random_maze, path=path)
+```
+</Admonition>
+
+Extend again the function `draw_maze` so that it accepts as
+additional argument the dictionary produced by `path_from` and
+displays each reachable cell in a color depending
+on the length of the path leading to it.
+
+Use this feature with the maze `random_maze` with as
+source the top left corner.
+
+[The map of the lengths of the paths from the top left corner (purple
+for small numbers, yellow for large numbers).](images/map.jpg)
+
+<Admonition type="note" open>
+We will be able to use the function `colormap` below which associates
+floating point numbers between `0.0` and `1.0` with an RGB triplet of integers
+representing a color exploitable with pygame.
+
+
+
+```python
+import matplotlib.cm  # matplotlib colormaps
+
+COLORMAP = matplotlib.cm.viridis
+
+def colormap(x):
+    x = float(x)
+    rgba = COLORMAP(x)
+    rgb = rgba[0:3]
+    RGB = [min(int(256 * c), 255) for c in rgb]
+    return RGB
+```
+
+```python
+assert colormap(0.0) == [68, 1, 84]     # purple
+assert colormap(0.5) == [32, 145, 140]  # turquoise
+assert colormap(1.0) == [254, 231, 36]  # yellow
+```
+</Admonition>
+
+<Admonition type="solution" open={debug}>
+
+```python
+def draw_map(screen, map):
+    h = CELL_SIZE
+    v_max = max(v for v in map.values())
+    for (x, y), v in map.items():
+        pg.draw.rect(
+            screen,
+            colormap(float(v / v_max)),
+            (x * h, y * h, h, h),
+        )
+
+def draw_maze(maze, cells=None, path=None, map=None):
+    pg.init()
+    pg.display.set_caption("Labyrinthes")
+    width_height = (WIDTH * CELL_SIZE, HEIGHT * CELL_SIZE)
+    screen = pg.display.set_mode(width_height)
+    clock = pg.time.Clock()
+    while True:
+        events = pg.event.get()
+        if any(event.type == pg.QUIT for event in events):
+            break
+        draw_background(screen)
+        draw_walls(screen, maze)
+        if cells is not None:
+            draw_cells(screen, cells)
+        if map is not None:
+            draw_map(screen, map)
+        if path is not None:
+            draw_path(screen, path)
+        pg.display.update()
+        clock.tick(FPS)
+    pg.quit()
+```
+
+```python
+map = {
+    target: len(path) - 1 
+    for target, path in target_to_path.items()
+}
+draw_maze(random_maze, map=map)
+```
+</Admonition>
+
+### Optimal Paths
+
+Can you find on the previous map targets where the path found
+is not of minimal length?
+
+Implement a function `shortest_path_from(maze, origin)` which returns a
+dictionary whose keys are the cells reachable from the origin
+and the values one of the associated shortest paths (requiring the least
+number of movements) joining the source and the target.
+
+You can test your result graphically by invoking `draw_maze`
+as in the previous question.
+
+[The map of the lengths of the shortest paths from the top left corner (purple
+for small numbers, yellow for large numbers).](images/optimal-map.jpg)
+
+
+<Admonition type="solution" open={debug}>
+
+By construction, if at each target cell the associated path is the shortest
+possible, the lengths of the paths between two neighboring empty cells can
+differ only by -1, 0 or 1.
+Therefore, it is sufficient to observe large color differences
+between neighboring cells of the map (corresponding to a difference in
+length equal to at least two) to conclude that we have found a non-optimal path.
+And this is indeed the case in a few places on the map of the lengths
+associated with the `path_from` algorithm.
+
+We will develop a new algorithm `shortest_path_from` which will
+guarantee that the length is actually minimal.
+
+
+```python
+import math
+
+def shortest_path_from(maze, source): 
+    vertices, edges, weight = maze_to_graph(maze)
+    distance, path = {}, {}
+    todo = {source}
+    distance[source] = 0
+    path[source] = [source]
+    while todo:
+        current = todo.pop()
+        neighbors = {
+            v for v in vertices 
+            if (current, v) in edges
+        }
+        for n in neighbors:
+            d = distance[current] + weight[(current, n)]
+            if d < distance.get(n, math.inf):
+                distance[n] = d
+                path[n] = path[current] + [n]
+                todo.add(n)
+    return path
+```
+
+We can display the corresponding map of lengths:
+
+
+```python
+target_to_path = shortest_path_from(random_maze, TOP_LEFT)
+map = {
+    target: len(path) - 1 
+    for target, path in target_to_path.items()
+}
+draw_maze(random_maze, map=map)
+```
+
+
+</Admonition>
+
