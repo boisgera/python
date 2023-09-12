@@ -22,6 +22,7 @@ export const debug = true;
 
 import Admonition from "/src/components/Admonition.astro";
 import Header from "/src/components/Header.astro";
+import { Icon } from "astro-icon";
 import { Image } from "astro:assets";
 
 <Header />
@@ -51,18 +52,71 @@ and 25% walls (in black).
 
 ## Maze Visualizer
 
-The [`random-maze.py`](../random-maze.py) file represents the maze above.
+We store the description of such mazes in files, using a 
+simple (but undocumented) file format. 
+For example the maze displayed above is stored as [`random-maze.py`](../random-maze.py).
 
-  - Download it and have a look at its structure,
+  - Download this example maze file.
+  
+  - Inspect it contents and make an educated guess
+    about the file format specification.
 
-  - Make a function `load_maze` that given the filename
-    of such a maze file returns the associated maze object. 
+  - Construct the maze object `random_maze` associated to this file. 
     
-  - Name `random_maze` the maze object associated to the file
-    `"random-maze.py"`.
 
 <Admonition type="solution" open={debug}>
 
+The `random-maze.py` file is an (ASCII) text file that contains:
+
+```python
+{
+    (15, 21),
+    (26, 21),
+    (7, 17),
+    ...
+    (18, 8),
+}
+```
+
+So to begin with, we can load this content as a string `random_maze_repr`:
+
+```python
+file = open("random-maze.py", mode="rt", encoding="ascii")
+random_maze_repr = file.read()
+file.close()
+```
+
+This string contains a sequence of integer pairs which seem to represent 
+the integer coordinates of the empty maze cells. 
+So, we could probably analyze the contents line by line, 
+extract the coordinates, etc. For example, the following code 
+make the job:
+
+```python
+random_maze = set()
+for line in random_maze_repr.splitlines():
+    line = line.strip()
+    if line not in ("{", "}", ""):
+        core = line[1:-2]
+        x, y = core.split(",")
+        x, y = int(x.strip()), int(y.strip())
+        random_maze.add((x, y))
+```
+
+But we can also notice that the string format is exactly the 
+representation that Python uses for sets of pairs of integers.
+In this case, that means that we can simply `eval` the string
+instead:
+
+```python
+random_maze = eval(maze_repr)
+```
+
+Additionally, this solution would work even if the file format
+does not guarantee that the coordinates are each on their own
+line.
+
+Finally, after a bit of clean-up, our integrated solution would be:
 
 ```python
 def load_maze(filename):
@@ -79,8 +133,8 @@ random_maze = load_maze("random-maze.py")
 
 ### Visualization
 
-Develop with pygame a function `draw_maze` for maze visualization that
-works in the following context:
+Develop a function `draw_maze` to display a maze.
+This function should work in the following context:
 
 ```python
 import pyxel
@@ -90,7 +144,7 @@ WIDTH, HEIGHT = 30, 30
 random_maze = ...
 
 pyxel.init(WIDTH, HEIGHT)
-draw_maze(maze=random_maze)
+draw_maze(random_maze)
 pyxel.show()
 ```
 
@@ -111,7 +165,8 @@ def draw_maze(maze):
 
 ### Create your own maze
 
-... then save it in a file, using the same format as `random-maze.py`.
+Design your own 30x30 maze, for example the empty maze, 
+a spiral, etc.
 
 <Admonition type="solution" open={debug}>
 
@@ -124,22 +179,13 @@ for y in range(0, HEIGHT):
         empty_maze.add((x, y))
 ```
 
-Then to save it:
-
-
-``` python
-empty_maze_repr = repr(empty_maze)
-file = open("empty_maze.py", mode="wt", encoding="ascii")
-file.write(empty_maze_repr)
-file.close()
-```
 
 </Admonition>
 
 
 ## Graphs and Paths
 
-<Admonition type="definition">
+<Admonition type="definition" title="Graph & Vertices, Edges, Weights">
 
 An (oriented and weighted) **graph**  is a triplet composed of:
 
@@ -150,26 +196,35 @@ An (oriented and weighted) **graph**  is a triplet composed of:
 
   - a collection associating to each edge a numerical value called **weight**.
 
+</Admonition>
+
+<Admonition type="definition" title="Path">
 A **path** in a graph is a sequence of vertices such that
 each element of the sequence and its successor form an edge of the graph.
+A path is said to **join** its first vertex to its last vertex.
 
 </Admonition>
 
 
 ### Mazes and Graphs
 
-We would like to associate a graph with a maze whose
+For each maze we define a graph
 
-  - vertices are the empty cells of the maze,
+  - whose vertices are the empty cells of the maze,
 
-  - edges represent the admissible movements from one cell to a neighboring cell
-    (the two cells are empty and share a side).
+  - whose edges represent the admissible movements from one cell to a neighboring cell
+    (the two cells are empty and share a side),
 
-  - the weight of each edge is 1; it represents the "cost" of moving
+  - for which the weight of each edge is 1; it represents the "cost" of moving
     from one cell to a neighboring cell.
 
-What Python data structure would we naturally use
-to represent these graphs?
+Given this definition
+
+  - What Python data structure would we naturally use
+    to represent these graphs?
+
+  - Implement a function `maze_to_graph` which build 
+    this graph from a maze.
 
 <Admonition type="warning" title="Premature optimization is the root of all evil" open={debug}>
 At this stage, we are **not** looking here for the most compact or efficient 
@@ -178,8 +233,7 @@ of the graph.
 </Admonition>
 
 
-Implement a function `maze_to_graph` which constructs the graph associated
-to a maze.
+
 
 
 <Admonition type="solution" open={debug}>
@@ -207,12 +261,12 @@ def maze_to_graph(maze):
     return (vertices, edges, weights)
   ```
 
-</Admonition>
+</Admonition> 
 
 ### Reachable Cells
 
 Implement a function `reachable_cells` which returns the set
-of cells of a maze `maze` which are reachable from
+of cells of a maze which are reachable from
 the cell `source`.
 
 <figure>
@@ -272,8 +326,6 @@ def draw_maze(maze, cells=None):
     draw_cells(maze, WHITE)
     if cells is not None:
         draw_cells(cells, LIGHT_GREEN)
-
-
 ```
 
 ```python
@@ -290,6 +342,7 @@ pyxel.show()
 
 ### Mazes and Paths
 
+<Admonition type="task" open>
 Implement a function `path_from` which takes as arguments:
 
   - `maze`: a 30x30 maze,
@@ -299,22 +352,25 @@ Implement a function `path_from` which takes as arguments:
 and returns
 
     - `path`: a dictionary whose keys are cells and
-        whose values are paths. The path `path[target]` must join
-        `source` and `target` if `target` is reachable from `source`;
-        otherwise, `target` must not be a key of the dictionary.
+        whose values are paths. 
+        
+The path `path[target]` must join `source` and `target` if `target` is reachable
+from `source`; otherwise, `target` must not be a key of the dictionary.
+</Admonition>
 
-Use this function to find a path joining the top left and bottom right corners
-of the maze `random_maze` and graphically represent the result by updating
-your function `draw_maze`.
-
-[A path joining the top left and bottom right corners.
-This path minimizes the number of movements required
-(58 = 29 + 29); but it's a lucky shot,
-because nothing guaranteed a priori that this would be the case!](images/path.jpg)
+<figure>
+<video style="width:100%;margin-left:0; margin-right:0;" controls>
+  <source src="../maze-path.webm"  type="video/webm" />
+</video>
+<figcaption>
+Computation of the cells reachable from the top-left corner,
+together with the path effectively used to joing them (in pink).
+</figcaption>
+</figure>
 
 <Admonition type="solution" open={debug}>
 
-A possible solution consists in defining:
+A possible solution is:
 
 ```python
 def path_from(maze, source):
@@ -338,39 +394,31 @@ def path_from(maze, source):
         done.add(current)
     return path
 ```
+</Admonition>
 
-then to extend our function `draw_maze` as follows:
+Use this function to find a path joining the top left and bottom right corners
+of the maze `random_maze` and graphically represent the result by updating
+your function `draw_maze`.
+
+**TODO.** Image
+
+<Admonition type="solution" open={debug}>
+
+We can extend our function `draw_maze` as follows:
 
 ```python
-PINK = (255, 128, 128)
-
-def draw_path(screen, path):
-    h = CELL_SIZE
-    for x, y in path:
-        pg.draw.rect(screen, PINK, (x * h, y * h, h, h))
+PINK = 14
 
 def draw_maze(maze, cells=None, path=None):
-    pg.init()
-    pg.display.set_caption("Labyrinthes")
-    width_height = (WIDTH * CELL_SIZE, HEIGHT * CELL_SIZE)
-    screen = pg.display.set_mode(width_height)
-    clock = pg.time.Clock()
-    while True:
-        events = pg.event.get()
-        if any(event.type == pg.QUIT for event in events):
-            break
-        draw_background(screen)
-        draw_walls(screen, maze)
-        if cells is not None:
-            draw_cells(screen)
-        if path is not None:
-            draw_path(screen, path)
-        pg.display.update()
-        clock.tick(FPS)
-    pg.quit()
+    pyxel.cls(BLACK)
+    draw_cells(maze, WHITE)
+    if cells is not None:
+        draw_cells(cells, LIGHT_GREEN)
+    if path is not None:
+        display_cells(path, PINK)
 ```
 
-We then exploit these functions as follows:
+and use it like that:
 
 ```python
 target_to_path = path_from(random_maze, TOP_LEFT)
@@ -379,6 +427,8 @@ path = target_to_path[BOTTOM_RIGHT]
 draw_maze(random_maze, path=path)
 ```
 </Admonition>
+
+## Color Maps
 
 Extend again the function `draw_maze` so that it accepts as
 additional argument the dictionary produced by `path_from` and

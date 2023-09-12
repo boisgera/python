@@ -2,7 +2,7 @@
 import { Icon } from "astro-icon";
 
 interface Props {
-  type?: "note" | "solution" | "warning" | "definition";
+  type?: "note" | "solution" | "warning" | "definition" | "task";
   title?: string;
   open?: boolean;
   lock?: boolean;
@@ -46,9 +46,15 @@ const styles = {
   },
   definition: {
     icon: "tag",
-    light: "#5eead4",
-    dark: "#0f766e",
+    light: "#ccfbf1",
+    dark: "#0d9488",
     local: false,
+  },
+  task: {
+    icon: "checklist",
+    light: "#cbd5e1",
+    dark: "#334155",
+    local: true,
   },
 };
 

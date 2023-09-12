@@ -51,11 +51,19 @@ const authors_text = (authors || [])
         margin-top: 64px;
       }
 
+      h3 {
+        margin-top: 32px;
+      }
+
       img,
       video {
         margin: auto;
         display: block;
-        margin-bottom: 1rem;
+        margin-bottom: 1.5rem;
+      }
+
+      figure {
+        margin-bottom: 1.5rem;
       }
 
       pre.astro-code {
@@ -64,8 +72,12 @@ const authors_text = (authors || [])
         overflow-x: auto;
         padding: 1rem 2rem;
       }
-      code {
+      :not(pre) > code {
         font-family: "Fira Code Variable", sans-serif;
+        background-color: #e2e8f0;
+        color: black;
+        border-radius: 0.25rem;
+        padding: 0rem 0.25rem;
       }
       pre > code {
         line-height: 1rem;
