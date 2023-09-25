@@ -17,21 +17,14 @@ jobs:
         with:
           node-version: "20"
 
-      - name: Install PNPM
-        run: npm install -g pnpm
-
       - name: Install project Dependencies
-        run: pnpm install
+        run: npm install
 
       - name: Patch astro config
         run: node patch-astro-config.js
 
       - name: Build
-        run: pnpm run build
-
-      # - name: Post-Build Setup
-      #   run: |
-      #     python patch-hrefs-for-gh-pages.py
+        run: npm run build
 
       - name: Deployment Setup
         run: |
