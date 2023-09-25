@@ -28,7 +28,7 @@ import { Image } from "astro:assets";
 
 import snake from "/src/assets/snake.jpg";
 
-<Image transition:name="snakeImage" src={snake} alt="Boa constrictor by Jan Kopřiva" style="border-radius: 0.375rem; width: 100%;"/>
+<Image transition:name="snakeImage" src={snake} alt="Boa constrictor by Jan Kopřiva" style="border-radius: 0.375rem; width: 100%; height: auto; height: auto;"/>
 
 
 <Admonition type="note" title="Attribution" open={true} lock>
@@ -63,7 +63,7 @@ Here is the kind of things that we expect to have at the end:
 
 Let's start with a message display whose color changes over time.
 
-<video controls width="768" style="border-radius: 0.375rem; width: 100%;">
+<video controls width="768" style="border-radius: 0.375rem; width: 100%; height: auto;">
   <source src="../videos/hello-snake.webm" type="video/webm"  />
 </video>
 
@@ -157,7 +157,7 @@ Use this function to measure the time elapsed between two calls to the `draw`
 function of Pyxel. Then, print the (approximate) number of frames per second 
 (FPS) in window top left corner.
 
-<video controls width="768"  style="border-radius: 0.375rem; width: 100%;">
+<video controls width="768"  style="border-radius: 0.375rem; width: 100%; height: auto;">
   <source src="../videos/fps.webm" type="video/webm" />
 </video>
 
@@ -202,7 +202,7 @@ To check that everything's ok, draw a checkerboard pattern like this:
 
 import checkerboard from "/src/assets/checkerboard.png";
 
-<Image src={checkerboard} alt="A 30x30 checkerboard"  style="border-radius: 0.375rem; width: 100%;"/>
+<Image src={checkerboard} alt="A 30x30 checkerboard"  style="border-radius: 0.375rem; width: 100%; height: auto;"/>
 
 We will keep this checkerboard in the background as "training wheels" for a 
 while, and remove it at the very last step.
@@ -237,7 +237,7 @@ you restart the program.
 
 import fruit from "/src/assets/fruit.png";
 
-<Image src={fruit} alt="A fruit at a random location"  style="border-radius: 0.375rem; width: 100%;"/>
+<Image src={fruit} alt="A fruit at a random location"  style="border-radius: 0.375rem; width: 100%; height: auto;"/>
 
 <Admonition type="solution" open={debug}>
 ```python
@@ -286,7 +286,7 @@ for its head.
 
 import restingSnake from "/src/assets/resting-snake.png";
 
-<Image src={restingSnake} alt="A resting snake"  style="border-radius: 0.375rem; width: 100%;"/>
+<Image src={restingSnake} alt="A resting snake"  style="border-radius: 0.375rem; width: 100%; height: auto;"/>
 
 
 <Admonition type="solution" open={debug} >
@@ -332,7 +332,7 @@ pyxel.run(update, draw)
 
 **TODO.** Checkerboard off by default, on/off with "C" key
 
-<video controls width="768"  style="border-radius: 0.375rem; width: 100%;">
+<video controls width="768"  style="border-radius: 0.375rem; width: 100%; height: auto;">
   <source src="../videos/checkerboard-on-off.webm" type="video/webm" />
 </video>
 
