@@ -1,75 +1,128 @@
 ---
-title: Démarrer avec Pyxel
-author: "[Sébastien Boisgérault](mailto:Sebastien.Boisgerault@minesparis.psl.eu), 
-Mines Paris -- PSL"
-license: "[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)"
+context:
+title: Getting Started with Pyxel
+description: Let's get out tools ready to develop Pyxel games and more!
+date: "2023-09-06 11:00"
+authors: 
+  - name: Sébastien Boisgérault
+    title: Associate Professor
+    email: Sebastien.Boisgerault@minesparis.psl.eu 
+    url: https://eul.ink
+    image: https://2.gravatar.com/avatar/39ec5d637b0753448b97a8e63855a45cb6708d033b656fe9f1d3314bb4bfb202?size=128
+    affiliation: ITN Mines Paris – PSL
+    twitter: "boisgera"
+    github: "boisgera"
+    linkedin: "Sébastien Boisgérault"
+tags: [Python, pyxel, game, snake]
+license: "CC BY 4.0" 
 layout: ../layouts/MDXLayout.astro
 ---
 
+export const debug = false;
 
-## Prérequis
+import Admonition from "/src/components/Admonition.astro";
+import Header from "/src/components/Header.astro";
+import { Image } from "astro:assets";
 
-⚠️ Ce qui suit suppose que vous avez installé Python avec `conda`
-et que vous avez un terminal `bash` fonctionnel sur votre ordinateur.
+<Header frontmatter={frontmatter}/>
 
-Commencez par créer un environnement nommé `snake`, dédié au TP et
-contenant Python 3.10
+import pyxelStudio from "/src/assets/pyxel-studio.png";
+
+<Image 
+ transition:name="pyxelStudio" 
+ src={pyxelStudio} 
+ width="768px"
+ alt="Pyxel Studio Editor" 
+ style="border-radius: 0.375rem;"/>
+
+## Quickstart
+
+Go to https://www.pyxelstudio.net and create a new project. 
+That's it, you're done!
+
+import pyxelStudio2 from "/src/assets/pyxel-studio-landing-page.png";
+
+<Image 
+ transition:name="pyxelStudio2" 
+ src={pyxelStudio2} 
+ width="768px"
+ alt="Pyxel Studio Landing Page" 
+ style="border-radius: 0.375rem;"/>
+
+
+## The Hard Way
+
+Useful if you want:
+
+  - to develop Python projects other than Pyxel games,
+
+  - to work locally on your computer and not depend on "the cloud",
+
+  - to benefit from a more feature-rich development environment.
+
+
+### Python
+
+I advise you to use Python 3.11 at the moment.
+You can get it from the [official Python website],
+or use the [miniconda][miniconda] or [anaconda][anaconda] package
+managers instead ; they are very handy in my opinion to manage 
+multiple Python projects.
+
+[official Python website]: https://www.python.org/downloads/
+[miniconda]: https://docs.conda.io/projects/miniconda/en/latest/miniconda-install.html
+[anaconda]: https://www.anaconda.com/download/
+
+### Visual Studio Code
+
+  - Install [Visual Studio Code][VS-Code], then
+
+  - Install the Microsoft [Python extension for Visual Studio Code][Python-VS-Code].
+
+[VS-Code]: https://code.visualstudio.com
+[Python-VS-Code]: https://marketplace.visualstudio.com/items?itemName=ms-python.python
+
+### Install Pyxel
+
+Use `pip` to install `pyxel` ; in a terminal, type:
 
 ```bash
-(base) $ conda create -n snake python=3.10
+pip install pyxel
 ```
 
-Puis activez-le
+## Troubleshooting
 
-```bash
-(base) $ conda activate snake
-```
+Common issues that you may have with "the hard way":
 
-Vous devriez alors avoir une nouvelle invite de commande :
+<Admonition type="warning" title="Pyxel is not found" open={debug}>
+You have installed Pyxel with pip but Visual Studio Code cannot find it?
+It is likely not using the same Python environment as the one
+you used to install Pyxel.
 
-```
-(snake) $
-```
+  - In your terminal, type:
+  
+    ```bash
+    python -c "import sys; print(sys.executable)"
+    ```
+ 
+    to know to which Python interpreter `python` refers to. 
+   
+  - In Visual Studio Code, open the command palette with `Ctrl+Shift+P` 
+    and type `Python: Select Interpreter` to select this Python interpreter.
 
-<details>
-<summary>
-**Dépannage 🛠️** 
-</summary>
+  - Install explicitly pyxel for this interpreter with:
 
----
+    ```bash
+    python -m pip install pyxel
+    ```
 
-Si vous ne voyez pas l'invite de commande `(snake) $` alors
+    (your `pip` executable may refer to another Python interpreter.)
 
-1. exécutez la commande
+</Admonition>
 
-   ```bash
-   $ conda init bash
-   ```
 
-   puis
 
-2. créez un nouveau terminal.
 
----
 
-</details>
 
-Installez ensuite le module `pygame` avec `pip` dans cet environnement :
 
-```bash
-(snake) $ pip install pygame
-```
-
-Pour tester votre installation, lancez le programme d'exemple :
-
-```bash
-(snake) $ python -m pygame.examples.aliens
-```
-
-## Avec Visual Studio Code
-
-**Suggestion #1.**  Installez l'[extension de VS Code pour Python](https://marketplace.visualstudio.com/items?itemName=ms-python.python).
-
-**Suggestion #2.** Indiquez à VS Code (et pas uniquement au terminal)
-qu'on souhaite travailler dans l'environnement conda `snake` :
-cliquez dans la bannière du bas la zone qui indique le Python courant.
