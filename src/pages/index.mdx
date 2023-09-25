@@ -11,11 +11,11 @@ import Grid from "/src/components/Grid.astro";
 
 import snake from "/src/assets/snake.jpg";
 import maze from "/src/assets/maze.jpg";
-
+import pyxelStudio from "/src/assets/pyxel-studio.png";
 
 <Grid>
   <a href="./snake-0" style="height:300px;">
-    ...
+    <Image transition:name="pyxelStudio"  src={pyxelStudio} class="img-full" style="object-fit:cover;" alt="Pyxel Studio" />
   </a>
   <a href="./snake-1" style="height:300px;">
     <Image transition:name="snakeImage"  src={snake} class="img-full" style="object-fit:cover;" alt="Boa constrictor by Jan Kopřiva" />
