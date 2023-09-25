@@ -58,7 +58,7 @@ const styles = {
   },
 };
 
-let { icon, light, dark, local} = styles[type];
+let { icon, light, dark, local } = styles[type];
 title = title ? title : capitalize(type);
 icon = local ? icon : `tabler:${icon}`;
 ---
@@ -86,6 +86,23 @@ icon = local ? icon : `tabler:${icon}`;
     </div>
   </details>
 </aside>
+<script>
+  if (document.startViewTransition) {
+    const details = document.querySelectorAll("details");
+    details.forEach((detail) => {
+      detail.addEventListener("click", (event) => {
+        event.preventDefault();
+        document.startViewTransition(() => detail.toggleAttribute("open"))
+      });
+    });
+  }
+</script>
+<style is:global>
+  /* ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: 2s;
+  } */
+</style>
 <style define:vars={{ light, dark }}>
   aside {
     border: 0.125rem solid var(--dark); /* sky-700 */
