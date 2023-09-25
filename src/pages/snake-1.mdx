@@ -106,7 +106,11 @@ Can you display the message in black on a white background instead?
 In the spirit of retro gaming, Pyxel can only display 16 colors.
 The standard palette from which you must pick your color is described [here][palette].
 
-<Image src={palette} alt="Pyxel's color palette" style="margin:auto;display:block;width:100%;"/>
+<Image 
+   src={palette} 
+   alt="Pyxel's color palette" 
+   style={`margin:auto; display:block; width:min(100%,${palette.width}px); height: auto;`}
+/>
 
 
 The index of black is `0` and there is no pure white, but the closest is color
