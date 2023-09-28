@@ -1,0 +1,695 @@
+---
+context:
+title: The Great Refactoring
+description: Time to clean up our code before it gets out of hand!
+date: "2023-09-06 11:00"
+authors: 
+  - name: Sébastien Boisgérault
+    title: Associate Professor
+    email: Sebastien.Boisgerault@minesparis.psl.eu 
+    url: https://eul.ink
+    image: https://2.gravatar.com/avatar/39ec5d637b0753448b97a8e63855a45cb6708d033b656fe9f1d3314bb4bfb202?size=128
+    affiliation: ITN Mines Paris – PSL
+    twitter: "boisgera"
+    github: "boisgera"
+    linkedin: "Sébastien Boisgérault"
+tags: [Python, pyxel, game, snake]
+license: "CC BY 4.0"
+layout: ../layouts/MDXLayout.astro
+---
+
+export const debug = false;
+
+import Admonition from "/src/components/Admonition.astro";
+import Header from "/src/components/Header.astro";
+import { Image } from "astro:assets";
+
+<Header frontmatter={frontmatter}/>
+
+import snake from "/src/assets/snake.jpg";
+
+<Image transition:name="snakeImage" src={snake} alt="Boa constrictor by Jan Kopřiva" style="border-radius: 0.375rem; width: 100%; height: auto; height: auto;"/>
+
+
+Introduction
+--------------------------------------------------------------------------------
+
+In this tutorial, we will continue to develop our snake game.
+
+We will add a few features, but before that, we will do some **refactoring**,
+i.e., restructure our existing code -- with constant features -- using some
+"best practices" that will (hopefully!) make it easier to maintain and
+extend.
+
+Here is a reminder of the current project state:
+
+<Admonition type="note" open={debug}>
+```python
+import pyxel
+
+def spawn_new_fruit():
+    global fruit 
+    fruit = [
+        pyxel.rndi(0, 29), 
+        pyxel.rndi(0, 29)
+    ]
+
+def spawn_new_snake():
+    global snake_geometry, snake_direction
+    snake_geometry = [
+        [10, 15],
+        [11, 15],
+        [12, 15],
+    ]
+    snake_direction = [1, 0]
+ 
+arrow_keys = [
+    pyxel.KEY_UP, 
+    pyxel.KEY_DOWN, 
+    pyxel.KEY_LEFT, 
+    pyxel.KEY_RIGHT
+]
+
+snake_geometry = None
+snake_direction = None
+
+def update():
+    global snake_geometry, snake_direction
+    if snake_geometry is None:
+        spawn_new_snake()
+        spawn_new_fruit()
+    if pyxel.btnp(pyxel.KEY_Q):
+        pyxel.quit()
+    arrow_keys_pressed = []
+    for key in arrow_keys:
+        if pyxel.btnp(key):
+            arrow_keys_pressed.append(key)
+    for key in arrow_keys_pressed:
+        if key == pyxel.KEY_UP:
+            snake_direction = [0, -1]
+        elif key == pyxel.KEY_DOWN:
+            snake_direction = [0, 1]
+        elif key == pyxel.KEY_LEFT:
+            snake_direction = [-1, 0]  
+        elif key == pyxel.KEY_RIGHT:
+            snake_direction = [1, 0]
+    snake_head = snake_geometry[-1]
+    new_snake_head = [
+      snake_head[0] + snake_direction[0],
+      snake_head[1] + snake_direction[1]
+    ]
+    if new_snake_head in snake_geometry:
+        return
+    elif ( 
+        new_snake_head[0] < 0 or 
+        new_snake_head[0] > 29 or 
+        new_snake_head[1] < 0 or 
+        new_snake_head[1] > 29
+        ):
+        return
+    elif new_snake_head == fruit:
+        snake_geometry = snake_geometry + [new_snake_head]
+        spawn_new_fruit()
+    else:
+        snake_geometry = snake_geometry[1:] + [new_snake_head]
+
+def draw():
+    pyxel.cls(7)
+    pyxel.pset(fruit[0], fruit[1], 8)
+    for x, y in snake_geometry[:-1]:
+        pyxel.pset(x, y, 3)
+    head = snake_geometry[-1]
+    pyxel.pset(head[0], head[1], 11)
+
+pyxel.init(30, 30, fps=10)
+pyxel.run(update, draw)
+```
+</Admonition>
+
+
+## No More Magic
+
+<Admonition type="solution" open={debug}>
+```python
+import pyxel
+
+# Screen Size
+WIDTH = HEIGHT = 30
+
+# Frame Rate
+FPS = 10
+
+# Colors
+BLACK = 0
+WHITE = 7
+RED =  8
+DARK_GREEN = 3
+LIGHT_GREEN = 11
+
+# Geometry
+UP = [0, -1]
+RIGHT = [1, 0]
+DOWN = [0, 1]
+LEFT = [-1, 0]
+
+
+def spawn_new_fruit():
+    global fruit 
+    fruit = [
+        pyxel.rndi(0, WIDTH - 1), 
+        pyxel.rndi(0, HEIGHT - 1)
+    ]
+
+def spawn_new_snake():
+    global snake_geometry, snake_direction
+    snake_geometry = [
+        [10, 15],
+        [11, 15],
+        [12, 15],
+    ]
+    snake_direction = RIGHT
+ 
+ARROW_KEYS = [
+    pyxel.KEY_UP, 
+    pyxel.KEY_DOWN, 
+    pyxel.KEY_LEFT, 
+    pyxel.KEY_RIGHT
+]
+
+snake_geometry = None
+snake_direction = None
+
+def update():
+    global snake_geometry, snake_direction
+    if snake_geometry is None:
+        spawn_new_snake()
+        spawn_new_fruit()
+    if pyxel.btnp(pyxel.KEY_Q):
+        pyxel.quit()
+    arrow_keys_pressed = []
+    for key in ARROW_KEYS:
+        if pyxel.btnp(key):
+            arrow_keys_pressed.append(key)
+    for key in arrow_keys_pressed:
+        if key == pyxel.KEY_UP:
+            snake_direction = UP
+        elif key == pyxel.KEY_DOWN:
+            snake_direction = DOWN
+        elif key == pyxel.KEY_LEFT:
+            snake_direction = LEFT  
+        elif key == pyxel.KEY_RIGHT:
+            snake_direction = RIGHT
+    snake_head = snake_geometry[-1]
+    new_snake_head = [
+      snake_head[0] + snake_direction[0],
+      snake_head[1] + snake_direction[1]
+    ]
+    if new_snake_head in snake_geometry:
+        return
+    elif ( 
+        new_snake_head[0] < 0 or 
+        new_snake_head[0] > WIDTH - 1 or 
+        new_snake_head[1] < 0 or 
+        new_snake_head[1] > HEIGHT - 1
+        ):
+        return
+    elif new_snake_head == fruit:
+        snake_geometry = snake_geometry + [new_snake_head]
+        spawn_new_fruit()
+    else:
+        snake_geometry = snake_geometry[1:] + [new_snake_head]
+
+def draw():
+    pyxel.cls(WHITE)
+    pyxel.pset(fruit[0], fruit[1], RED)
+    for x, y in snake_geometry[:-1]:
+        pyxel.pset(x, y, DARK_GREEN)
+    head = snake_geometry[-1]
+    pyxel.pset(head[0], head[1], LIGHT_GREEN)
+
+pyxel.init(WIDTH, HEIGHT, fps=FPS)
+pyxel.run(update, draw)
+```
+</Admonition>
+
+## Moar Functions
+
+<Admonition type="solution" open={debug}>
+```python
+import pyxel
+
+# Screen Size
+WIDTH = HEIGHT = 30
+
+# Frame Rate
+FPS = 10
+
+# Colors
+BLACK = 0
+WHITE = 7
+RED =  8
+DARK_GREEN = 3
+LIGHT_GREEN = 11
+
+# Geometry
+UP = [0, -1]
+RIGHT = [1, 0]
+DOWN = [0, 1]
+LEFT = [-1, 0]
+
+
+def spawn_new_fruit():
+    global fruit 
+    fruit = [
+        pyxel.rndi(0, WIDTH - 1), 
+        pyxel.rndi(0, HEIGHT - 1)
+    ]
+
+def spawn_new_snake():
+    global snake_geometry, snake_direction
+    snake_geometry = [
+        [10, 15],
+        [11, 15],
+        [12, 15],
+    ]
+    snake_direction = RIGHT
+ 
+ARROW_KEYS = [
+    pyxel.KEY_UP, 
+    pyxel.KEY_DOWN, 
+    pyxel.KEY_LEFT, 
+    pyxel.KEY_RIGHT
+]
+
+snake_geometry = None
+snake_direction = None
+
+def handle_events():
+    global snake_direction
+    if pyxel.btnp(pyxel.KEY_Q):
+        pyxel.quit()
+    arrow_keys_pressed = []
+    for key in ARROW_KEYS:
+        if pyxel.btnp(key):
+            arrow_keys_pressed.append(key)
+    for key in arrow_keys_pressed:
+        if key == pyxel.KEY_UP:
+            snake_direction = UP
+        elif key == pyxel.KEY_DOWN:
+            snake_direction = DOWN
+        elif key == pyxel.KEY_LEFT:
+            snake_direction = LEFT  
+        elif key == pyxel.KEY_RIGHT:
+            snake_direction = RIGHT
+
+def move_snake():
+    global snake_geometry, fruit
+    snake_head = snake_geometry[-1]
+    new_snake_head = [
+      snake_head[0] + snake_direction[0],
+      snake_head[1] + snake_direction[1]
+    ]
+    if new_snake_head in snake_geometry:
+        return
+    elif ( 
+        new_snake_head[0] < 0 or 
+        new_snake_head[0] > WIDTH - 1 or 
+        new_snake_head[1] < 0 or 
+        new_snake_head[1] > HEIGHT - 1
+        ):
+        return
+    elif new_snake_head == fruit:
+        snake_geometry = snake_geometry + [new_snake_head]
+        spawn_new_fruit()
+    else:
+        snake_geometry = snake_geometry[1:] + [new_snake_head]
+
+def update():
+    if snake_geometry is None:
+        spawn_new_snake()
+        spawn_new_fruit()
+    handle_events()
+    move_snake()
+
+
+def draw():
+    pyxel.cls(WHITE)
+    pyxel.pset(fruit[0], fruit[1], RED)
+    for x, y in snake_geometry[:-1]:
+        pyxel.pset(x, y, DARK_GREEN)
+    head = snake_geometry[-1]
+    pyxel.pset(head[0], head[1], LIGHT_GREEN)
+
+pyxel.init(WIDTH, HEIGHT, fps=FPS)
+pyxel.run(update, draw)
+```
+</Admonition>
+
+## Moar Moar Functions
+
+<Admonition type="solution" open={debug}>
+```python
+import pyxel
+
+# Screen Size
+WIDTH = HEIGHT = 30
+
+# Frame Rate
+FPS = 10
+
+# Colors
+BLACK = 0
+WHITE = 7
+RED =  8
+DARK_GREEN = 3
+LIGHT_GREEN = 11
+
+# Geometry
+UP = [0, -1]
+RIGHT = [1, 0]
+DOWN = [0, 1]
+LEFT = [-1, 0]
+
+
+def spawn_new_fruit():
+    global fruit 
+    fruit = [
+        pyxel.rndi(0, WIDTH - 1), 
+        pyxel.rndi(0, HEIGHT - 1)
+    ]
+
+def spawn_new_snake():
+    global snake_geometry, snake_direction
+    snake_geometry = [
+        [10, 15],
+        [11, 15],
+        [12, 15],
+    ]
+    snake_direction = RIGHT
+ 
+ARROW_KEYS = [
+    pyxel.KEY_UP, 
+    pyxel.KEY_DOWN, 
+    pyxel.KEY_LEFT, 
+    pyxel.KEY_RIGHT
+]
+
+snake_geometry = None
+snake_direction = None
+
+def handle_events():
+    global snake_direction
+    if pyxel.btnp(pyxel.KEY_Q):
+        pyxel.quit()
+    arrow_keys_pressed = []
+    for key in ARROW_KEYS:
+        if pyxel.btnp(key):
+            arrow_keys_pressed.append(key)
+    for key in arrow_keys_pressed:
+        if key == pyxel.KEY_UP:
+            snake_direction = UP
+        elif key == pyxel.KEY_DOWN:
+            snake_direction = DOWN
+        elif key == pyxel.KEY_LEFT:
+            snake_direction = LEFT  
+        elif key == pyxel.KEY_RIGHT:
+            snake_direction = RIGHT
+
+def collision(new_snake_head):
+    if new_snake_head in snake_geometry:
+        return True
+    elif (
+        new_snake_head[0] < 0 or 
+        new_snake_head[0] > WIDTH - 1 or 
+        new_snake_head[1] < 0 or 
+        new_snake_head[1] > HEIGHT - 1
+        ):
+        return True
+    else:
+        return False
+
+
+def move_snake():
+    global snake_geometry, fruit
+    snake_head = snake_geometry[-1]
+    new_snake_head = [
+      snake_head[0] + snake_direction[0],
+      snake_head[1] + snake_direction[1]
+    ]
+    if collision(new_snake_head):
+        return
+    elif new_snake_head == fruit:
+        snake_geometry = snake_geometry + [new_snake_head]
+        spawn_new_fruit()
+    else:
+        snake_geometry = snake_geometry[1:] + [new_snake_head]
+
+def update():
+    if snake_geometry is None:
+        spawn_new_snake()
+        spawn_new_fruit()
+    handle_events()
+    move_snake()
+
+
+def draw():
+    pyxel.cls(WHITE)
+    pyxel.pset(fruit[0], fruit[1], RED)
+    for x, y in snake_geometry[:-1]:
+        pyxel.pset(x, y, DARK_GREEN)
+    head = snake_geometry[-1]
+    pyxel.pset(head[0], head[1], LIGHT_GREEN)
+
+pyxel.init(WIDTH, HEIGHT, fps=FPS)
+pyxel.run(update, draw)
+```
+</Admonition>
+
+## Generic Event Handling
+
+Our current event `handle_events` code is not completely satisfying: if we
+need to manage more events, for example if we want to add a pause feature,
+we need to modify and grow the function.
+
+To prevent this, we replace it with the following generic event handling system,
+in which we never change the `handle_events` function when we introduce new
+events:
+
+```python
+event_handlers = []
+
+def register(event, handler):
+    event_handlers.append([event, handler])
+
+def handle_events():
+    for event, handler in event_handlers:
+        if pyxel.btnp(event):
+            handler()
+```
+
+Initially, this `handle_events` function does nothing, but we can register
+actions associated to events using the `register` function. For example,
+to quit the game when the `Q` key is pressed, we can write:
+
+```python
+register(pyxel.KEY_Q, pyxel.quit)
+```
+
+Use this new system to handle the arrows key press: define appropriate
+`move_up`, `move_right`, `move_down`, and `move_left` actions, and 
+register them with the appropriate events.
+
+
+<Admonition type="solution" open={debug}>
+```python
+def move_up():
+    global snake_direction
+    snake_direction = UP
+
+def move_right():
+    global snake_direction
+    snake_direction = RIGHT
+
+def move_down():
+    global snake_direction
+    snake_direction = DOWN
+
+def move_left():
+    global snake_direction
+    snake_direction = LEFT
+
+register(pyxel.KEY_UP, move_up)
+register(pyxel.KEY_RIGHT, move_right)
+register(pyxel.KEY_DOWN, move_down)
+register(pyxel.KEY_LEFT, move_left)
+```
+</Admonition>
+
+Use this new system to pause the game when the `P` key is pressed (you will need
+to slightly modify the `move_snake` function).
+
+<Admonition type="solution" open={debug}>
+```python
+paused = False
+
+def pause():
+    global paused
+    paused = not paused
+
+register(pyxel.KEY_P, pause)
+
+def move_snake():
+    global snake_geometry, fruit
+    if paused:
+        return
+    ...
+
+```
+</Admonition>
+
+
+## Final
+
+
+<Admonition type="solution" open={debug}>
+
+```python
+# Screen Size
+WIDTH = HEIGHT = 30
+
+# Frame Rate
+FPS = 10
+
+# Colors
+BLACK = 0
+WHITE = 7
+RED =  8
+DARK_GREEN = 3
+LIGHT_GREEN = 11
+
+# Geometry
+UP = [0, -1]
+RIGHT = [1, 0]
+DOWN = [0, 1]
+LEFT = [-1, 0]
+
+
+```
+
+```python
+import pyxel
+from constants import *
+
+fruit = None
+
+def spawn_new_fruit():
+    global fruit 
+    fruit = [
+        pyxel.rndi(0, WIDTH - 1), 
+        pyxel.rndi(0, HEIGHT - 1)
+    ]
+
+snake_geometry = None
+snake_direction = None
+
+def spawn_new_snake():
+    global snake_geometry, snake_direction
+    snake_geometry = [
+        [10, 15],
+        [11, 15],
+        [12, 15],
+    ]
+    snake_direction = RIGHT
+ 
+event_handlers = []
+
+def register(event, handler):
+    event_handlers.append([event, handler])
+
+def handle_events():
+    for event, handler in event_handlers:
+        if pyxel.btnp(event):
+            handler()
+
+register(pyxel.KEY_Q, pyxel.quit)
+
+def move_up():
+    global snake_direction
+    snake_direction = UP
+
+def move_right():
+    global snake_direction
+    snake_direction = RIGHT
+
+def move_down():
+    global snake_direction
+    snake_direction = DOWN
+
+def move_left():
+    global snake_direction
+    snake_direction = LEFT
+
+register(pyxel.KEY_UP, move_up)
+register(pyxel.KEY_RIGHT, move_right)
+register(pyxel.KEY_DOWN, move_down)
+register(pyxel.KEY_LEFT, move_left)
+
+paused = False
+
+def pause():
+    global paused
+    paused = not paused
+
+register(pyxel.KEY_P, pause)
+
+def collision(new_snake_head):
+    if new_snake_head in snake_geometry:
+        return True
+    elif (
+        new_snake_head[0] < 0 or 
+        new_snake_head[0] > WIDTH - 1 or 
+        new_snake_head[1] < 0 or 
+        new_snake_head[1] > HEIGHT - 1
+        ):
+        return True
+    else:
+        return False
+
+
+def move_snake():
+    global snake_geometry, fruit
+    if paused:
+        return
+    snake_head = snake_geometry[-1]
+    new_snake_head = [
+      snake_head[0] + snake_direction[0],
+      snake_head[1] + snake_direction[1]
+    ]
+    if collision(new_snake_head):
+        return
+    elif new_snake_head == fruit:
+        snake_geometry = snake_geometry + [new_snake_head]
+        spawn_new_fruit()
+    else:
+        snake_geometry = snake_geometry[1:] + [new_snake_head]
+
+def update():
+    if snake_geometry is None:
+        spawn_new_snake()
+        spawn_new_fruit()
+    handle_events()
+    move_snake()
+
+def draw():
+    pyxel.cls(WHITE)
+    pyxel.pset(fruit[0], fruit[1], RED)
+    for x, y in snake_geometry[:-1]:
+        pyxel.pset(x, y, DARK_GREEN)
+    head = snake_geometry[-1]
+    pyxel.pset(head[0], head[1], LIGHT_GREEN)
+
+pyxel.init(WIDTH, HEIGHT, fps=FPS)
+pyxel.run(update, draw)
+```
+
+</Admonition>
