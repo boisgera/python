@@ -63,8 +63,7 @@ Useful if you want:
 
 ### Python
 
-I advise you to use Python 3.11 at the moment.
-You can get it from the [official Python website],
+You can get the latest release of Python from the [official Python website],
 or use the [miniconda][miniconda] or [anaconda][anaconda] package
 managers instead ; they are very handy in my opinion to manage 
 multiple Python projects.
@@ -84,7 +83,7 @@ multiple Python projects.
 
 ### Install Pyxel
 
-Use `pip` to install `pyxel` ; in a terminal, type:
+Use `pip` to install Pyxel (there is no conda package for it).
 
 ```bash
 pip install pyxel
@@ -120,7 +119,20 @@ you used to install Pyxel.
 
 </Admonition>
 
+<Admonition type="warning" title="undefined symbol: SDL_Metal_DestroyView" open={debug}>
 
+[@mgmalheiros] has analyzed this issue on [GitHub][issue-SDL_Metal_DestroyView]. 
+A workaround is to use an older version of Pyxel:
+
+```bash
+pip install pyxel==1.9.7
+```
+
+
+</Admonition>
+
+[@mgmalheiros]: https://github.com/mgmalheiros
+[issue-SDL_Metal_DestroyView]: https://github.com/kitao/pyxel/issues/484#issuecomment-1678251568
 
 
 

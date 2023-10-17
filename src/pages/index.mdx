@@ -7,24 +7,19 @@ layout: ../layouts/MDXLayout.astro
 ---
 
 import { Image } from "astro:assets";
-import Grid from "/src/components/Grid.astro";
+import Card from "/src/components/Card.astro";
+import List from "/src/components/List.astro";
 
+import pyxelStudio from "/src/assets/pyxel-studio.png";
 import snake from "/src/assets/snake.jpg";
 import blacksmith from "/src/assets/blacksmith.jpg";
 import maze from "/src/assets/maze.jpg";
-import pyxelStudio from "/src/assets/pyxel-studio.png";
 
-<Grid>
-  <a href="./snake-0" style="height:300px;">
-    <Image transition:name="pyxelStudio"  src={pyxelStudio} class="img-full" style="object-fit:cover;" alt="Pyxel Studio" />
-  </a>
-  <a href="./snake-1" style="height:300px;">
-    <Image transition:name="snakeImage"  src={snake} class="img-full" style="object-fit:cover;" alt="Boa constrictor by Jan Kopřiva" />
-  </a>
-   <a href="./snake-2" style="height:300px;">
-    <Image transition:name="blacksmith"  src={blacksmith} class="img-full" style="object-fit:cover;" alt="Boa constrictor by Jan Kopřiva" />
-  </a> 
-  <a href="./snake-3" style="height:300px;">
-    <Image transition:name="mazeImage"  src={maze} class="img-full" style="object-fit:cover;" alt="Black Maze Wall by Mitchell Luo" />
-  </a>
-</Grid>
+<h1 style="margin-bottom:4.5rem;"> Python </h1>
+
+<List>
+  <Card image={pyxelStudio} link="./snake-0" title="Getting Started with Pyxel" />
+  <Card image={snake} link="./snake-1" title="The Snake Game" />
+  <Card image={blacksmith} link="./snake-2" title="The Great Refactoring" />
+  <Card image={maze} link="./snake-3" title="Lost" />
+</List>

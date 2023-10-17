@@ -1,0 +1,10 @@
+---
+import { Image } from "astro:assets";
+const {title, image, link} = Astro.props;
+
+---
+
+<a href={link} style="margin-bottom:3rem; text-decoration:none;">
+  <Image transition:name="fade" src={image} class="img-full" style="object-fit:cover;height:300px;" alt={title}/>
+  <h2 style="margin-top:0px;">{title}</h2>
+</a>
