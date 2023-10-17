@@ -35,6 +35,12 @@ import maze from "/src/assets/maze.jpg";
 
 ## Introduction
 
+The aim of this project is to develop an "automatic navigation system" for
+our snake, to allow it to reach the fruit despite a complex environment 
+with rocks that should be avoided.
+
+## Getting Started
+
 For the sake of simplicity, we will consider here only mazes defined within
 a 30x30 grid. We will represent them in Python as sets of pairs of integers
 between 0 and 29, where each pair represents the coordinates of an empty
@@ -153,7 +159,7 @@ pyxel.show()
 
 ```python
 BLACK = 0
-WHITE = 7  # Kinda (light grey)
+WHITE = 7  # ℹ️ actually, light grey
 
 def draw_maze(maze):
     pyxel.cls(BLACK)
@@ -216,16 +222,17 @@ For each maze we define a graph
   - whose edges represent the admissible movements from one cell to a neighboring cell
     (the two cells are empty and share a side),
 
-  - for which the weight of each edge is 1; it represents the "cost" of moving
-    from one cell to a neighboring cell.
+  - for which the weight of each edge is 1; it represents the number of 
+    elementary actions (or "cost") needed to move from one cell to a 
+    neighboring cell.
 
 Given this definition
 
   - What Python data structure would we naturally use
     to represent these graphs?
 
-  - Implement a function `maze_to_graph` which build 
-    this graph from a maze.
+  - Implement a function `maze_to_graph` which builds 
+    the graph associated to a maze.
 
 <Admonition type="warning" title="Premature optimization is the root of all evil" open={debug}>
 At this stage, we are **not** looking here for the most compact or efficient 
@@ -401,7 +408,15 @@ Use this function to find a path joining the top left and bottom right corners
 of the maze `random_maze` and graphically represent the result by updating
 your function `draw_maze`.
 
-**TODO.** Image
+import mazePath from "/src/assets/maze-path.png";
+
+
+<figure>
+<Image src={mazePath} alt="Path to the bottom right corner" style="border-radius: 0.375rem;margin-left:0; margin-right:0;"/>
+<figcaption>
+A path that joins the top left corner and the bottom right one (in pink).
+</figcaption>
+</figure>
 
 <Admonition type="solution" open={debug}>
 
@@ -416,7 +431,7 @@ def draw_maze(maze, cells=None, path=None):
     if cells is not None:
         draw_cells(cells, LIGHT_GREEN)
     if path is not None:
-        display_cells(path, PINK)
+        draw_cells(path, PINK)
 ```
 
 and use it like that:
@@ -429,7 +444,7 @@ draw_maze(random_maze, path=path)
 ```
 </Admonition>
 
-
+{/* 
 ### Optimal Paths
 
 Can you find on the previous map targets where the path found
@@ -500,4 +515,4 @@ draw_maze(random_maze, map=map)
 
 
 </Admonition>
-
+ */}
