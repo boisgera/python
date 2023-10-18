@@ -1,7 +1,7 @@
 import * as fs from "fs";
 
 const patch = {
-  base: "python",
+  base: "/python",
   site: "https://boisgera.github.io",
 };
 
