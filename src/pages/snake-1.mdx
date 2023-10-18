@@ -18,7 +18,7 @@ license: "CC BY 4.0"
 layout: ../layouts/MDXLayout.astro
 ---
 
-export const debug = false;
+export const debug = true;
 
 import Admonition from "/src/components/Admonition.astro";
 import Header from "/src/components/Header.astro";
@@ -58,16 +58,28 @@ classic version of the game: we will develop several versions of a
 **working program** (and not a perfect program) whose features will be
 enriched at each new step.
 
-Here is the kind of things that we expect to have at the end (click to play):
+Here is the kind of things that we expect to have at the end of this project
+(click to play!):
+
+import snakeGame from "/src/assets/web-snake-game.png";
+
 
 <a href="../snake-game">
+<Image
+  src={snakeGame}
+  alt="A Pyxel Snake Game"
+  style="border-radius: 0.375rem; width: 100%; height: auto; height: auto;"
+/>
+</a>
+
+{/* <a href="../snake-game">
   <img
     src="../pyxel_logo_152x64.png"
     width="152"
     height="64"
     style="margin-top:3rem; margin-bottom:3rem;"
   />
-</a>
+</a> */}
 
 ## Getting started
 
@@ -139,15 +151,6 @@ def draw():
 
 [API]: https://github.com/kitao/pyxel#api-reference
 
-### Text & Geometry
-
-- Text: comprendre la taille (fixe) de chaque caractère,
-  display d'une "grille" de caractères., comprendre comment est
-  placé le "Hello world!", ajuster le programme pour que le texte
-  soit toujours centré (même si plusieurs lignes ?).
-
-- Message translating from the right to the left?
-
 ### Frame rate
 
 The `time` function from the `time` module of the Python standard library
@@ -181,22 +184,21 @@ import pyxel
 import time
 
 def update():
-if pyxel.btnp(pyxel.KEY_Q):
-pyxel.quit()
+    if pyxel.btnp(pyxel.KEY_Q):
+        pyxel.quit()
 
 def draw():
-global t
-t_new = time.time()
-dt = t_new - t
-t = t_new
-fps = 1.0 / dt
-fps = int(round(fps))
-pyxel.cls(0)
-color = pyxel.frame_count % 16
-pyxel.text(56, 54, "Hello, Snake!", color)
-pyxel.text(0, 0, f"fps: {fps}", 7)
-
-````
+    global t
+    t_new = time.time()
+    dt = t_new - t
+    t = t_new
+    fps = 1.0 / dt
+    fps = int(round(fps))
+    pyxel.cls(0)
+    color = pyxel.frame_count % 16
+    pyxel.text(56, 54, "Hello, Snake!", color)
+    pyxel.text(0, 0, f"fps: {fps}", 7)
+```
 </Admonition>
 
 ## The Game Board
@@ -239,11 +241,11 @@ def draw():
 
 pyxel.init(30, 30)
 pyxel.run(update, draw)
-````
+```
 
 </Admonition>
 
-## The (Forbidden) Fruit
+## The Forbidden Fruit
 
 Display a fruit at a random location on top of the checkerboard.
 A fruit is a simple 1x1 rectangle (a pixel!). Pick a color you like!
@@ -265,25 +267,24 @@ import pyxel
 pyxel.init(30, 30)
 
 fruit = [
-pyxel.rndi(0, 29),
-pyxel.rndi(0, 29)
+    pyxel.rndi(0, 29),
+    pyxel.rndi(0, 29)
 ]
 
 def update():
-if pyxel.btnp(pyxel.KEY_Q):
-pyxel.quit()
+    if pyxel.btnp(pyxel.KEY_Q):
+        pyxel.quit()
 
 def draw():
-pyxel.cls(13)
-for i in range(30):
-for j in range(30):
-if (i+j) % 2 == 0:
-pyxel.pset(i, j, 7)
-pyxel.pset(fruit[0], fruit[1], 8)
+    pyxel.cls(13)
+    for i in range(30):
+        for j in range(30):
+            if (i+j) % 2 == 0:
+             pyxel.pset(i, j, 7)
+    pyxel.pset(fruit[0], fruit[1], 8)
 
 pyxel.run(update, draw)
-
-````
+```
 </Admonition>
 
 ## A Restin' Snake
@@ -297,7 +298,7 @@ snake_geometry = [
     [11, 15],
     [12, 15],
 ]
-````
+```
 
 Let's say that `[12, 15]` is the snake head.
 Use a dark green color to represent the snake body and a light green
@@ -439,14 +440,14 @@ import pyxel
 pyxel.init(30, 30, fps=10)
 
 fruit = [
-pyxel.rndi(0, 29),
-pyxel.rndi(0, 29)
+    pyxel.rndi(0, 29),
+    pyxel.rndi(0, 29)
 ]
 
 snake_geometry = [
-[10, 15],
-[11, 15],
-[12, 15],
+    [10, 15],
+    [11, 15],
+    [12, 15],
 ]
 
 snake_direction = [1, 0]
@@ -454,47 +455,46 @@ snake_direction = [1, 0]
 checkerboard = False
 
 arrow_keys = [
-pyxel.KEY_UP,
-pyxel.KEY_DOWN,
-pyxel.KEY_LEFT,
-pyxel.KEY_RIGHT
+    pyxel.KEY_UP,
+    pyxel.KEY_DOWN,
+    pyxel.KEY_LEFT,
+    pyxel.KEY_RIGHT
 ]
 
 def update():
-global snake_geometry, snake_direction
-if pyxel.btnp(pyxel.KEY_Q):
-pyxel.quit()
-arrow_keys_pressed = []
-for key in arrow_keys:
-if pyxel.btnp(key):
-arrow_keys_pressed.append(key)
-for key in arrow_keys_pressed:
-if key == pyxel.KEY_UP:
-snake_direction = [0, -1]
-elif key == pyxel.KEY_DOWN:
-snake_direction = [0, 1]
-elif key == pyxel.KEY_LEFT:
-snake_direction = [-1, 0]  
- elif key == pyxel.KEY_RIGHT:
-snake_direction = [1, 0]
-snake_head = snake_geometry[-1]
-new_snake_head = [
-snake_head[0] + snake_direction[0],
-snake_head[1] + snake_direction[1]
-]
-snake_geometry = snake_geometry[1:] + [new_snake_head]
+    global snake_geometry, snake_direction
+    if pyxel.btnp(pyxel.KEY_Q):
+        pyxel.quit()
+    arrow_keys_pressed = []
+    for key in arrow_keys:
+        if pyxel.btnp(key):
+            arrow_keys_pressed.append(key)
+    for key in arrow_keys_pressed:
+        if key == pyxel.KEY_UP:
+            snake_direction = [0, -1]
+    elif key == pyxel.KEY_DOWN:
+        snake_direction = [0, 1]
+    elif key == pyxel.KEY_LEFT:
+        snake_direction = [-1, 0]  
+    elif key == pyxel.KEY_RIGHT:
+        snake_direction = [1, 0]
+    snake_head = snake_geometry[-1]
+    new_snake_head = [
+        snake_head[0] + snake_direction[0],
+        snake_head[1] + snake_direction[1]
+    ]
+    snake_geometry = snake_geometry[1:] + [new_snake_head]
 
 def draw():
-pyxel.cls(7)
-pyxel.pset(fruit[0], fruit[1], 8)
-for x, y in snake_geometry[:-1]:
-pyxel.pset(x, y, 3)
-head = snake_geometry[-1]
-pyxel.pset(head[0], head[1], 11)
+    pyxel.cls(7)
+    pyxel.pset(fruit[0], fruit[1], 8)
+    for x, y in snake_geometry[:-1]:
+        pyxel.pset(x, y, 3)
+    head = snake_geometry[-1]
+    pyxel.pset(head[0], head[1], 11)
 
-    pyxel.run(update, draw)
-
-````
+pyxel.run(update, draw)
+```
 
 </Admonition>
 
@@ -590,7 +590,7 @@ def draw():
     pyxel.pset(head[0], head[1], 11)
 
 pyxel.run(update, draw)
-````
+```
 
 </Admonition>
 
