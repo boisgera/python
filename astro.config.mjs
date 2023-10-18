@@ -3,7 +3,7 @@ import mdx from "@astrojs/mdx";
 
 export default defineConfig({
   base: "",
-  site: "http://localhost:3000",
+  site: "https://boisgera.github.io/python/", // "http://localhost:3000",
   integrations: [
     mdx({
       syntaxHighlight: "shiki",
