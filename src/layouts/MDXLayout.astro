@@ -27,13 +27,7 @@ interface Props {
 const { frontmatter } = Astro.props;
 const { title, description, authors } = frontmatter;
 
-const authors_text = (authors || [])
-  .map((author: any) => author.name)
-  .join(", ");
-
-const site = Astro.site?.href;
-const base = import.meta.env.BASE_URL;
-const root = site + base;
+const base = import.meta.env.BASE_URL || "/";
 
 ---
 
@@ -41,7 +35,6 @@ const root = site + base;
 <html lang="fr">
   <head>
     <title>{title}</title>
-    <base href={root} />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -117,11 +110,9 @@ const root = site + base;
   </head>
   <body>
     <nav>
-      <a href={import.meta.env.BASE_URL}><Icon name="python" style="width:2rem;height:2rem;"></a>
+      <a href={base}><Icon name="python" style="width:2rem;height:2rem;"></a>
     </nav>
     <main>
-      <!-- <h1>{title}</h1>
-      <h2>{authors_text}<h2> -->
       <slot />
     </main>
   </body>

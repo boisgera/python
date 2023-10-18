@@ -2,8 +2,9 @@ import { defineConfig } from "astro/config";
 import mdx from "@astrojs/mdx";
 
 export default defineConfig({
-  base: "",
-  site: "http://localhost:4321",
+  /* ℹ️ GitHub pages config */
+  // base: "/python", 
+  // site: "https://boisgera.github.io/python", 
   integrations: [
     mdx({
       syntaxHighlight: "shiki",
