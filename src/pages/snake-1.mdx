@@ -18,7 +18,7 @@ license: "CC BY 4.0"
 layout: ../layouts/MDXLayout.astro
 ---
 
-export const debug = true;
+export const debug = false;
 
 import Admonition from "/src/components/Admonition.astro";
 import Header from "/src/components/Header.astro";
@@ -48,6 +48,15 @@ What matters is the learning experience:
 you will discover how to design and implement a complete application, 
 by starting with a simple program and adding features one by one.
 
+<Admonition type="warning" title="Your code is ugly!" open={false}>
+At this stage, we won't focus at all on the aesthestics of the code,
+so don't worry if you find that our solutions do not "look good"
+(they don't).
+But they work! 
+However, code readability & maintainability are important issues
+and we will come back to this issue in the [next session](../snake-2).
+</Admonition>
+
 [Pyxel]: https://github.com/kitao/pyxel
 
 [snake game]: https://en.wikipedia.org/wiki/Snake_(video_game_genre)
@@ -57,7 +66,6 @@ By the end of this project, you will have something like this:
 
 <div style="position:relative;">
 <video
-  controls
   width="768"
   style="border-radius: 0.375rem; width: 100%; height: auto;"
   autoplay loop
@@ -72,6 +80,8 @@ display:flex; align-items: center; justify-content: center;">
 </div>
 </a>
 </div>
+
+
 
 Inside a square arena, you control a 🐍 snake:
 
@@ -91,9 +101,9 @@ Inside a square arena, you control a 🐍 snake:
 Let's start with a message display whose color changes over time.
 
 <video
-  controls
   width="768"
   style="border-radius: 0.375rem; width: 100%; height: auto;"
+  autoplay loop
 >
   <source src="../videos/hello-snake.webm" type="video/webm" />
 </video>
@@ -128,7 +138,11 @@ import palette from "/src/assets/pyxel-color-palette.png";
 
 ### Colors
 
-Can you display the message in black on a white background instead?
+Let's tweak the colors a little:
+
+- Display a white background (instead of the black one).
+
+- Display the "Hello Snake!" message in black (not flickering).
 
 <Admonition type="solution" open={debug}>
 In the spirit of retro gaming, Pyxel can only display 16 colors.
@@ -137,7 +151,7 @@ The standard palette from which you must pick your color is described [here][pal
 <Image
   src={palette}
   alt="Pyxel's color palette"
-  style={`margin:auto; display:block; width:min(100%,${palette.width}px); height: auto;`}
+  style={`margin:auto; display:block; width:min(100%,${palette.width}px); height: auto; margin-bottom:2rem;`}
 />
 
 The index of black is `0` and there is no pure white, but the closest is color
@@ -149,7 +163,7 @@ Therefore, the changes we need to perform are:
 ```python
 def draw():
     pyxel.cls(7)
-    pyxel.text(56, 54, "Hello, Snake!", 1)
+    pyxel.text(56, 54, "Hello, Snake!", 0)
 ```
 
 </Admonition>
@@ -158,8 +172,27 @@ def draw():
 
 ### Frame rate
 
-The `time` function from the `time` module of the Python standard library
-returns the time elapsed in seconds since January 1st, 1970 at noon.
+
+To get a feel of the rythm at which the Pyxel application is running:
+
+  - Measure the time elapsed between two calls to the `draw`
+    function of Pyxel. 
+
+  - Print the number of frames per second
+    (FPS) in the window top left corner.
+
+<video
+  width="768"
+  style="border-radius: 0.375rem; width: 100%; height: auto;"
+  autoplay loop
+>
+  <source src="../videos/fps.webm" type="video/webm" />
+</video>
+
+<Admonition type="note" title="Time in the Python standard library" open={debug}>
+The `time` function, from the `time` module,
+returns the time elapsed in seconds since January 1st, 1970 at noon
+(the "Unix epoch").
 
 ```
 >>> import time
@@ -170,18 +203,10 @@ returns the time elapsed in seconds since January 1st, 1970 at noon.
 >>> time.time()
 1692980872.3245282
 ```
+</Admonition>
 
-Use this function to measure the time elapsed between two calls to the `draw`
-function of Pyxel. Then, print the (approximate) number of frames per second
-(FPS) in window top left corner.
 
-<video
-  controls
-  width="768"
-  style="border-radius: 0.375rem; width: 100%; height: auto;"
->
-  <source src="../videos/fps.webm" type="video/webm" />
-</video>
+
 
 <Admonition type="solution" open={debug}>
 ```python
@@ -214,10 +239,12 @@ Let's build a game board
 
 - with each cell is 1 pixel large.
 
-<Admonition type="question" title="Don't you think that 1 pixel is too small?">
+<Admonition type="question" title="But 1 pixel is too small!" open={debug}>
 Yes, it certainly would be if we were talking about real pixels!
-But luckily for us, Pyxel automatically scales the display to fit the screen size.
-Since we use a small display, it will zoom it quite a bit and we will be able to see every "pixel" clearly.
+But Pyxel automatically scales the display 
+to fit the screen size.
+Since we use a small 30x30 display, it will zoom it quite a bit and we will be 
+able to see every "virtual pixel" clearly.
 </Admonition>
 
 To check that everything's ok, draw a checkerboard pattern like this:
@@ -226,8 +253,8 @@ import checkerboard from "/src/assets/checkerboard.png";
 
 <Image src={checkerboard} alt="A 30x30 checkerboard"  style="border-radius: 0.375rem; width: 100%; height: auto;"/>
 
-You may keep this checkerboard in the background as "training wheels" for a
-while, and remove it when you're ready.
+(You may keep this checkerboard in the background as "training wheels" for a
+while, and remove it when you're ready.)
 
 <Admonition type="solution" open={debug}>
 ```python
@@ -305,7 +332,7 @@ snake_geometry = [
 ]
 ```
 
-Let's say that `[12, 15]` is the snake head.
+Let's say that the last list item (here `[12, 15]`) represents the snake head.
 Use a dark green color to represent the snake body and a light green
 for its head.
 
@@ -349,8 +376,8 @@ def draw():
     pyxel.pset(fruit[0], fruit[1], 8)
     for x, y in snake_geometry[:-1]:
         pyxel.pset(x, y, 3)
-    head = snake_geometry[-1]
-    pyxel.pset(head[0], head[1], 11)
+    snake_head = snake_geometry[-1]
+    pyxel.pset(snake_head[0], snake_head[1], 11)
 
 pyxel.run(update, draw)
 ```
@@ -413,8 +440,8 @@ def draw():
     pyxel.pset(fruit[0], fruit[1], 8)
     for x, y in snake_geometry[:-1]:
         pyxel.pset(x, y, 3)
-    head = snake_geometry[-1]
-    pyxel.pset(head[0], head[1], 11)
+    snake_head = snake_geometry[-1]
+    pyxel.pset(snake_head[0], snake_head[1], 11)
 
 pyxel.run(update, draw)
 ```
@@ -432,7 +459,7 @@ We are finally going to make the snake move!
 
 - Pressing an arrow key changes the direction of the snake.
 
-<Admonition type="warning" title="OMG it's so fast!">
+<Admonition type="warning" title="OMG it's so fast!" open={debug}>
   You may consider slowing down the game at this point ... at least while you
   are developing and testing it! Technically, you are searching to decrease the
   frame rate.
@@ -456,8 +483,6 @@ snake_geometry = [
 ]
 
 snake_direction = [1, 0]
-
-checkerboard = False
 
 arrow_keys = [
     pyxel.KEY_UP,
@@ -495,8 +520,8 @@ def draw():
     pyxel.pset(fruit[0], fruit[1], 8)
     for x, y in snake_geometry[:-1]:
         pyxel.pset(x, y, 3)
-    head = snake_geometry[-1]
-    pyxel.pset(head[0], head[1], 11)
+    snake_head = snake_geometry[-1]
+    pyxel.pset(snake_head[0], snake_head[1], 11)
 
 pyxel.run(update, draw)
 ```
@@ -522,8 +547,6 @@ import pyxel
 
 pyxel.init(30, 30, fps=10)
 
-fruit = None
-
 def spawn_new_fruit():
     global fruit
     fruit = [
@@ -541,8 +564,6 @@ snake_geometry = [
 
 snake_direction = [1, 0]
 
-checkerboard = False
-
 arrow_keys = [
     pyxel.KEY_UP,
     pyxel.KEY_DOWN,
@@ -551,11 +572,9 @@ arrow_keys = [
 ]
 
 def update():
-    global checkerboard, snake_geometry, snake_direction
+    global snake_geometry, snake_direction
     if pyxel.btnp(pyxel.KEY_Q):
         pyxel.quit()
-    if pyxel.btnp(pyxel.KEY_C):
-        checkerboard = not checkerboard
     arrow_keys_pressed = []
     for key in arrow_keys:
         if pyxel.btnp(key):
@@ -582,17 +601,11 @@ def update():
 
 def draw():
     pyxel.cls(7)
-    if checkerboard:
-        pyxel.cls(13)
-        for i in range(30):
-            for j in range(30):
-                if (i+j) % 2 == 0:
-                    pyxel.pset(i, j, 7)
     pyxel.pset(fruit[0], fruit[1], 8)
     for x, y in snake_geometry[:-1]:
         pyxel.pset(x, y, 3)
-    head = snake_geometry[-1]
-    pyxel.pset(head[0], head[1], 11)
+    snake_head = snake_geometry[-1]
+    pyxel.pset(snake_head[0], snake_head[1], 11)
 
 pyxel.run(update, draw)
 ```
@@ -608,10 +621,10 @@ to the initial demo:
 
 - the snake cannot get out of the arena and
 
-- the snake should not be able to go through the rocks (yes, there are rocks!).
+- the snake should not be able to go through the rocks (yes, there are rocks now!).
 
 Since we are not too cruel, the snake doesn't die when such a collision occurs.
-Instead, he loses one segment of it tail, until only the head remains.
+Instead, he loses one segment of it body (by frame), until only the head remains.
 
 Implements these changes!
 
@@ -645,7 +658,12 @@ for i in range(30):
         if (i+j) % 5 == 0 and (i-j) % 11 == 0:
             rocks.append([i, j])
 
-arrow_keys = [pyxel.KEY_UP, pyxel.KEY_DOWN, pyxel.KEY_LEFT, pyxel.KEY_RIGHT]
+arrow_keys = [
+    pyxel.KEY_UP, 
+    pyxel.KEY_DOWN, 
+    pyxel.KEY_LEFT, 
+    pyxel.KEY_RIGHT
+]
 
 def update():
     global snake_geometry, snake_direction
@@ -693,8 +711,8 @@ def draw():
         pyxel.pset(x, y, 0)
     for x, y in snake_geometry[:-1]:
         pyxel.pset(x, y, 3)
-    head = snake_geometry[-1]
-    pyxel.pset(head[0], head[1], 11)
+    snake_head = snake_geometry[-1]
+    pyxel.pset(snake_head[0], snake_head[1], 11)
 
 pyxel.run(update, draw)
 ```
