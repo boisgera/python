@@ -97,8 +97,8 @@ This string contains a sequence of integer pairs which seem to represent
 the integer coordinates of the empty maze cells. 
 So, we could probably analyze the contents line by line, 
 extract the coordinates, etc. For example, the following code 
-make the job:
-
+makes the job:
+ 
 ```python
 random_maze = set()
 for line in random_maze_repr.splitlines():
@@ -120,8 +120,8 @@ random_maze = eval(maze_repr)
 ```
 
 Additionally, this solution would work even if the file format
-does not guarantee that the coordinates are each on their own
-line.
+had a more compact representation where there are several coordinates 
+on the same line.
 
 Finally, after a bit of clean-up, our integrated solution would be:
 
@@ -146,7 +146,8 @@ This function should work in the following context:
 ```python
 import pyxel
 
-WIDTH, HEIGHT = 30, 30
+WIDTH = 30
+HEIGHT = 30
 
 random_maze = ...
 
@@ -159,12 +160,20 @@ pyxel.show()
 
 ```python
 BLACK = 0
-WHITE = 7  # ℹ️ actually, light grey
+WHITE = 7  # ℹ️ light grey tbh
+
+def display(color, pixels=None):
+    if pixels is None:
+        pyxel.cls(color)
+    elif len(pixels) >= 1 and type(pixels[0]) == int:
+        display(color, [pixels])
+    else:
+        for x, y in pixels:
+            pyxel.pset(x, y, color)
 
 def draw_maze(maze):
-    pyxel.cls(BLACK)
-    for x, y in maze:
-        pyxel.pset(x, y, WHITE)
+    display(BLACK)
+    display(WHITE, maze)
 ```
 
 </Admonition>
@@ -252,7 +261,7 @@ as keys the edges and as unique value the integer 1.
 
 
 ```python
-TOP, RIGHT, DOWN, LEFT = (0, -1), (1, 0), (0, 1), (-1, 0) 
+UP, RIGHT, DOWN, LEFT = (0, -1), (1, 0), (0, 1), (-1, 0) 
 
 def maze_to_graph(maze):
     vertices = set(maze)
@@ -260,7 +269,7 @@ def maze_to_graph(maze):
     weights = {}
     for vertex in vertices:
         x, y = vertex
-        for (dx, dy) in [TOP, RIGHT, DOWN, LEFT]:
+        for (dx, dy) in [UP, RIGHT, DOWN, LEFT]:
             neighbor = (x + dx, y + dy)
             if neighbor in vertices:
                 edge = (vertex, neighbor)
@@ -286,8 +295,8 @@ Computation of the cells reachable from the top-left corner.
 The green cells are reachable cells whose neighbors 
 have between inspected; orange cells are reachable, 
 but their neighbors have not yet been inspected;
-Two group of empty cells, which stay white until the end, 
-are unreachable.
+Two groups of empty cells stay white until the end, 
+and hence are unreachable.
 </figcaption>
 </figure>
 
@@ -325,23 +334,20 @@ of cells reachable from the top left corner of the maze
 ```python
 LIGHT_GREEN = 11
 
-def draw_cells(cells, color):
-    for x, y in cells:
-        pyxel.pset(x, y, color)
-
 def draw_maze(maze, cells=None):
-    pyxel.cls(BLACK)
-    draw_cells(maze, WHITE)
+    display(BLACK)
+    display(maze, WHITE, maze)
     if cells is not None:
-        draw_cells(cells, LIGHT_GREEN)
+        display(cells, LIGHT_GREEN)
 ```
 
 ```python
 TOP_LEFT = (0, 0)
+
 cells = reachable_cells(random_maze, source=TOP_LEFT)
 
 pyxel.init(WIDTH, HEIGHT)
-draw_maze(random_maze, cells)
+draw_maze(maze=random_maze, cells=cells)
 pyxel.show()
 ```
 
@@ -426,12 +432,12 @@ We can extend our function `draw_maze` as follows:
 PINK = 14
 
 def draw_maze(maze, cells=None, path=None):
-    pyxel.cls(BLACK)
-    draw_cells(maze, WHITE)
+    display(BLACK)
+    display(maze, WHITE, maze)
     if cells is not None:
-        draw_cells(cells, LIGHT_GREEN)
+        display(cells, LIGHT_GREEN)
     if path is not None:
-        draw_cells(path, PINK)
+        display(path, PINK)
 ```
 
 and use it like that:
@@ -442,6 +448,223 @@ BOTTOM_RIGHT = (WIDTH - 1, HEIGHT - 1)
 path = target_to_path[BOTTOM_RIGHT]
 draw_maze(random_maze, path=path)
 ```
+</Admonition>
+
+## Snake Game: Autopilot
+
+Go back to the snake game of the previous session, discard the user inputs
+and instead use your brand new path finding algorithm to select the snake
+next move.
+
+<div style="position:relative;">
+<video
+  width="768"
+  style="border-radius: 0.375rem; width: 100%; height: auto;"
+  autoplay loop
+>
+  <source src="../videos/autopilot.webm" type="video/webm" />
+</video>
+<a href="../autopilot" style="color:black;text-decoration:none;line-height:1rem">
+<div style="position: absolute; top: 1rem; left: 1rem; background-color: white;
+padding: 0.0rem; border-radius:100%; width:3rem; height:3rem; font-size:36px;
+display:flex; align-items: center; justify-content: center;">
+<span style="position: relative; top:-2px;">🎮</span>
+</div>
+</a>
+</div>
+
+<Admonition type="solution" open={debug}>
+`constants.py`:
+```python
+import pyxel
+
+# Geometry
+WIDTH = 30
+HEIGHT = 30
+
+# Frame rate
+FPS = 10
+
+# Colors
+BLACK = 0
+WHITE = 7
+PINK = 8
+DARK_GREEN = 3
+LIGHT_GREEN = 11
+
+# Directions
+UP = [0, -1]
+RIGHT = [1, 0]
+DOWN = [0, 1]
+LEFT = [-1, 0]
+ARROW_KEYS = [
+    pyxel.KEY_UP, 
+    pyxel.KEY_DOWN, 
+    pyxel.KEY_LEFT, 
+    pyxel.KEY_RIGHT
+]
+```
+
+`maze.py`:
+```python
+from constants import UP, RIGHT, DOWN, LEFT
+
+def maze_to_graph(maze):
+    vertices = set(maze)
+    edges = set()
+    weights = {}
+    for vertex in vertices:
+        x, y = vertex
+        for (dx, dy) in [UP, RIGHT, DOWN, LEFT]:
+            neighbor = (x + dx, y + dy)
+            if neighbor in vertices:
+                edge = (vertex, neighbor)
+                edges.add(edge)
+                weights[edge] = 1
+    return (vertices, edges, weights)
+
+def path_from(maze, source):
+    vertices, edges, _ = maze_to_graph(maze)
+    todo = set()
+    done = set()
+    path = {}
+    if source in maze:
+       todo.add(source)
+       path[source] = [source]
+    while todo:
+        current = todo.pop()
+        neighbors = {
+            v for v in vertices 
+            if (current, v) in edges
+        }
+        for n in neighbors:
+            if n not in done and n not in todo:
+                path[n] = path[current] + [n]
+                todo.add(n)
+        done.add(current)
+    return path
+```
+
+`snake.py`:
+```python
+import pyxel
+from constants import *
+from maze import path_from
+
+def spawn_new_rocks():
+    global rocks
+    rocks = []
+    for i in range(WIDTH):
+        for j in range(HEIGHT):
+            if (i+j) % 5 == 0 and (i-j) % 11 == 0:
+                rocks.append((i, j))
+
+def spawn_new_snake():
+    global snake_geometry, snake_direction
+    snake_geometry = [
+        (10, 15),
+        (11, 15),
+        (12, 15),
+    ]
+    snake_direction = RIGHT
+
+def spawn_new_fruit():
+    global fruit
+    while True:
+        fruit = (pyxel.rndi(0, WIDTH-1), pyxel.rndi(0, HEIGHT-1))
+        if fruit not in snake_geometry and fruit not in rocks:
+            break
+
+def spawn_everything():
+    spawn_new_rocks()
+    spawn_new_snake()
+    spawn_new_fruit()
+
+path_to_fruit = None
+
+def compute_path_to_fruit():
+    head, body = snake_geometry[-1], snake_geometry[:-1]
+    maze = {(i, j) for j in range(HEIGHT) for i in range(WIDTH)}
+    maze = maze - set(rocks)
+    maze = maze - set(body)
+    path_map = path_from(maze, head)
+    if fruit in path_map:
+        return path_map[fruit]
+    else:
+        return None
+
+def select_move():
+    global snake_direction, path_to_fruit
+    if path_to_fruit is None or len(path_to_fruit) == 1:
+        path_to_fruit = compute_path_to_fruit()
+    if path_to_fruit is not None:
+        current, next = path_to_fruit[0], path_to_fruit[1]
+        snake_direction = (next[0] - current[0], next[1] - current[1])
+        del path_to_fruit[0]
+
+def crash(head):
+    """
+    Returns True if the snake crashes: 
+      - into itself, 
+      - into a rock, 
+      - or into the arena wall.
+    """
+    return (
+        head in snake_geometry
+        or head in rocks
+        or (
+        head[0] < 0
+        or head[0] > WIDTH-1
+        or head[1] < 0
+        or head[1] > HEIGHT-1
+        )
+    )
+
+def snake_move():
+    global snake_geometry, fruit
+    snake_head = snake_geometry[-1]
+    new_snake_head = (
+        snake_head[0] + snake_direction[0],
+        snake_head[1] + snake_direction[1],
+    )
+    if crash(new_snake_head): # 💀
+        # 🐍 keep the old head and shrink the tail
+        snake_geometry = snake_geometry[1:-1] + [snake_head]
+    elif new_snake_head == fruit: # 🍓
+        # 🐍 move the head and grow the tail
+        snake_geometry = snake_geometry + [new_snake_head]
+        spawn_new_fruit()
+    else:
+        # 🐍 move the head; the tail follows
+        snake_geometry = snake_geometry[1:] + [new_snake_head]
+
+def update():
+    select_move()
+    snake_move()
+
+def display(color, pixels=None):
+    if pixels is None:
+        pyxel.cls(color)
+    elif len(pixels) >= 1 and isinstance(pixels[0], int):
+        display(color, [pixels])
+    else:
+        for x, y in pixels:
+            pyxel.pset(x, y, color)
+
+def draw():
+    display(WHITE)
+    snake_body = snake_geometry[:-1]
+    snake_head = snake_geometry[-1]
+    display(DARK_GREEN, snake_body)
+    display(LIGHT_GREEN, snake_head)
+    display(BLACK, rocks)
+    display(PINK, fruit)
+
+pyxel.init(WIDTH, HEIGHT, fps=FPS)
+spawn_everything()
+pyxel.run(update, draw)
+```
+
 </Admonition>
 
 {/* 
