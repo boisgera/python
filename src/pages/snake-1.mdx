@@ -635,15 +635,6 @@ import pyxel
 
 pyxel.init(30, 30, fps=10)
 
-def spawn_new_fruit():
-    global fruit
-    while True:
-        fruit = [pyxel.rndi(0, 29), pyxel.rndi(0, 29)]
-        if fruit not in snake_geometry and fruit not in rocks:
-            break
-
-spawn_new_fruit()
-
 snake_geometry = [
     [10, 15],
     [11, 15],
@@ -657,6 +648,15 @@ for i in range(30):
     for j in range(30):
         if (i+j) % 5 == 0 and (i-j) % 11 == 0:
             rocks.append([i, j])
+
+def spawn_new_fruit():
+    global fruit
+    while True:
+        fruit = [pyxel.rndi(0, 29), pyxel.rndi(0, 29)]
+        if fruit not in snake_geometry and fruit not in rocks:
+            break
+
+spawn_new_fruit()
 
 arrow_keys = [
     pyxel.KEY_UP, 
@@ -682,21 +682,21 @@ def update():
             snake_direction = [-1, 0]
         elif key == pyxel.KEY_RIGHT:
             snake_direction = [1, 0]
-            snake_head = snake_geometry[-1]
-        new_snake_head = [
-            snake_head[0] + snake_direction[0],
-            snake_head[1] + snake_direction[1],
-        ]
-        if (
-            new_snake_head in snake_geometry
-            or new_snake_head in rocks
-            or (
-            new_snake_head[0] < 0
-            or new_snake_head[0] > 29
-            or new_snake_head[1] < 0
-            or new_snake_head[1] > 29
-            )
-        ):
+    snake_head = snake_geometry[-1]
+    new_snake_head = [
+        snake_head[0] + snake_direction[0],
+        snake_head[1] + snake_direction[1],
+    ]
+    if (
+        new_snake_head in snake_geometry
+        or new_snake_head in rocks
+        or (
+        new_snake_head[0] < 0
+        or new_snake_head[0] > 29
+        or new_snake_head[1] < 0
+        or new_snake_head[1] > 29
+        )
+    ):
         snake_geometry = snake_geometry[1:-1] + [snake_head]
     elif new_snake_head == fruit:
         snake_geometry = snake_geometry + [new_snake_head]
