@@ -63,10 +63,7 @@ Useful if you want:
 
 ### Python
 
-You can get a recent release of Python from the [official Python website],
-or use the [miniconda][miniconda] or [anaconda][anaconda] package
-managers instead ; they are very handy in my opinion to manage 
-multiple Python projects.
+You can get Python from the [official Python website] or from [conda-forge](#conda). 
 
 [official Python website]: https://www.python.org/downloads/
 [miniconda]: https://docs.conda.io/projects/miniconda/en/latest/miniconda-install.html
@@ -97,6 +94,66 @@ Use `pip` to install Pyxel (there is no conda package for it).
 ```bash
 pip install pyxel
 ```
+
+## Conda
+
+The use of conda is very beneficial if you work on several Python projects 
+and/or need some of the packages available on [conda-forge](https://anaconda.org/conda-forge/repo)
+but not on [PyPi](https://pypi.org/). The "conda way" is supported by several tools, for example
+[Anaconda](https://www.anaconda.com/download), 
+[Miniconda](https://docs.conda.io/projects/miniconda/en/latest/),
+or more recently [Mamba & Micromamba](https://mamba.readthedocs.io/en/latest/) and
+[Pixi](https://prefix.dev/docs/pixi/overview).
+
+<Admonition type="note" title="Classic conda workflow" open={debug}>
+
+  - **Once and for all.** Integrate conda and your shell; for example for `bash`:
+
+    ```bash
+    conda init bash
+    ```
+
+    then restart your terminal.
+
+  - **For each new project.** Create a new empty conda environment
+
+    ```bash
+    conda create --name my_new_project
+    ```
+
+    Activate it
+
+    ```bash
+    conda activate my_new_project
+    ```
+
+    then install what you need from conda-forge, for example
+
+    ```bash
+    conda install -c conda-forge python=3.11 pip jupyter numpy
+    ```
+
+    then use `pip` if you also need packages from PyPi, for example:
+
+    ```bash
+    pip install pyxel
+    ```
+
+    Then, when you're done working on your project for the day
+
+    ```bash
+    conda deactivate
+    ```
+
+  - **To resume your work.**
+
+    ```bash
+    conda activate my_new_project
+    ```
+</Admonition>
+
+
+
 
 ## Troubleshooting
 
