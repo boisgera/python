@@ -36,13 +36,13 @@ import burger from "/src/assets/burger.jpg";
 />
 
 
-Au commencement ...
+At the beginning ...
 ================================================================================
 
-[Flet](https://flet.dev/) est une bibliothèque Python permettant de réaliser
-des applications graphiques. 
+[Flet](https://flet.dev/) is a Python library for building graphical user interfaces.
 
-Mettez en oeuvre l'exemple donné dans [l'introduction de sa documentation](https://flet.dev/docs/) pour vous familiariser avec elle.
+Implement the example given in [its documentation](https://flet.dev/docs/) to get
+familiar with it.
 
 import counter from "/src/assets/flet-counter.png";
 
@@ -52,12 +52,11 @@ import counter from "/src/assets/flet-counter.png";
   style="border-radius: 0.375rem; width: 75%; height: auto; height: auto;"
 />
 
-Architecture graphique
+Graphical Architecture
 ================================================================================
 
-Développez l'architecture graphique d'une application de commande de
-menu, représentée dans la figure ci-dessous :
-
+Develop the graphical architecture of a menu ordering application, represented
+in the figure below:
 
 import burgerGUI from "/src/assets/burger-gui.png";
 
@@ -67,22 +66,20 @@ import burgerGUI from "/src/assets/burger-gui.png";
   style="border-radius: 0.375rem; width: 75%; height: auto; height: auto;"
 />
 
+You will have to explore the documentation of the
+[components](https://flet.dev/docs/controls) offered by flet.
 
-Vous allez pour ce faire devoir explorer la documentation des 
-[composants](https://flet.dev/docs/controls) proposés par flet.
+At first:
 
-Dans un premier temps :
+  - Nothing is "functional" in your interface:
+    all numeric values are coded "hard-coded",
+    nothing happens when you click on a button, etc.
 
-  - Rien n'est "fonctionnel" dans votre interface: 
-    toutes les valeurs numériques sont codées "en dur",
-    il ne se passe rien quand on clique sur un bouton, etc.
+  - Don't worry if the appearance of your interface is not exactly
+    the same as the one given in the example. It will always be time to come back
+    later to refine this representation.
 
-  - Ne vous en faites pas si l'apparence de votre interface n'est pas exactement
-    la même que celle donnée en exemple. Il sera toujours temps d'y revenir
-    plus tard pour affiner cette représentation.
-
-Vous pouvez utiliser [https://emojipedia.org] pour trouvez les émojis dont
-vous avez besoin (🍔 hamburger, 🍟 frites, etc.)
+You can use https://emojipedia.org to find the emojis you need (🍔 hamburger, 🍟 fries, etc.)
 
 <Admonition type="solution" open={debug}>
 
@@ -192,18 +189,18 @@ app(target=main)
 </Admonition>
 
 
-Composant sur mesure
+Custom Component
 ================================================================================
 
-La documentation de flet explique comment vous pouvez créer 
-[vos propres composants](https://flet.dev/docs/guides/python/user-controls). 
-Utilisée judicieusement, cette possibilité devait vous permettre
-de rendre l'architecture de votre application de commande plus lisible.
+The flet documentation explains how you can create
+[your own components](https://flet.dev/docs/guides/python/user-controls).
+Used wisely, this possibility should allow you to make the architecture of your
+command application more readable.
 
-Idéalement, on souhaiterait avoir un composant `Product` qui prend en charge
-la représentation d'un produit, l'affichage de son prix ainsi que le comptage
-du nombre d'unités que le client souhaite en commander. L'application qui
-en résulte pourrait alors prendre la forme suivante :
+Ideally, we would like to have a `Product` component that takes care of
+the representation of a product, the display of its price as well as the counting
+of the number of units that the customer wishes to order. The resulting application
+could then take the following form:
 
 ```python
 from flet import app, icons
@@ -261,9 +258,8 @@ def main(page):
 app(target=main)
 ```
 
-Développez une classe `Product` dans un fichier `product.py` pour faire en
-sorte que cette nouveau programme fonctionne (comme précédemment).
-
+Develop a class `Product` in a file `product.py` so that this new program works
+(as before). 
 
 <Admonition type="solution" open={debug}>
 
@@ -305,13 +301,13 @@ class Product(UserControl):
 </Admonition>
 
 
-Composant localement fonctionnel
+Locally Functional Component
 ================================================================================
 
-Faites en sorte que les boutons `+` et `-` de votre composant `Product`
-incrémentent et décrémentent la quantité du produit. Ne vous préocuppez
-pas encore du total de la commande. Par contre, assurez-vous que la 
-quantité d'unité commandée d'un produit ne puisse pas être négative.
+Make sure that the `Product` component is functional locally. That is to say,
+that the buttons `+` and `-` of a product only affect the quantity of this product
+and not the quantity of another product. Do not worry about the total of the order
+for the moment. However, make sure that the quantity of a product cannot be negative.
 
 <Admonition type="solution" open={debug}>
 
@@ -374,23 +370,23 @@ class Product(UserControl):
 </Admonition>
 
 
-Composant pleinement fonctionnel
+Fully Functional Component
 ================================================================================
 
-Il manque deux choses à notre composant produit :
+Two things are missing from our product component:
 
-  - Un attribut (ou une propriété) `total` qui permet de savoir
-    combien le nombre d'unités choisi de ce composant va coûter.
+  - An attribute (or property) `total` that allows to know
+    how much the chosen number of units of this component will cost.
 
     ```python
     hamburgers = Product("🍔", 5.95)
     hamburgers.total  # 0.0 initially
     ```
 
-  - Un "hook" (optionnel) permettant de signaler à l'utilisateur du composant 
-    que le nombre d'unités (et donc le coût) de ce produit a changé. 
-    Ce hook prendra la forme d'une fonction de callback que l'on fournit 
-    au produit lors de sa construction:
+  - A (optional) hook to signal to the user of the component
+    that the number of units (and therefore the cost) of this product has changed.
+    This hook will take the form of a callback function that we provide
+    to the product when it is constructed:
    
     ```python
     def print_hamburgers_total(event):
@@ -399,7 +395,7 @@ Il manque deux choses à notre composant produit :
     hamburgers = Product("🍔", 5.95, on_change=print_hamburgers_total)
     ```
 
-Réalisez les changements nécessaires dans `product.py`. 
+Make the necessary changes to the `Product` component so that it is fully functional.
 
 <Admonition type="solution" open={debug}>
 
@@ -474,10 +470,10 @@ class Product(UserControl):
 
 </Admonition>
 
-Intégration
+Integration
 ================================================================================
 
-Complétez votre application pour que le total de la commande soit toujours à jour.
+Complete your application so that the total of the order is always up to date.
 
 <Admonition type="solution" open={debug}>
 
