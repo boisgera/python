@@ -225,7 +225,7 @@ def draw():
     dt = t_new - t
     t = t_new
     fps = 1.0 / dt
-    fps = int(round(fps))
+    fps = round(fps)
     pyxel.cls(0)
     color = pyxel.frame_count % 16
     pyxel.text(56, 54, "Hello, Snake!", color)
