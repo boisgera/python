@@ -273,24 +273,18 @@ from flet import (
     Row,
     Text,
     TextField,
-    UserControl,
 )
 
 
-class Product(UserControl):
+class Product(Row):
     def __init__(self, emoji, price):
-        super().__init__()
         self.price = price
         self.emoji = emoji
-
-    def build(self):
-        return Row(
+        super().__init__(
             [
                 Text(self.emoji, size=50),
                 Text(f"{self.price:.2f} €"),
-                Container(
-                    width=100, content=TextField(value="0")
-                ),
+                Container(width=100, content=TextField(value="0")),
                 IconButton(icon=icons.ADD),
                 IconButton(icon=icons.REMOVE),
             ],
@@ -320,16 +314,32 @@ from flet import (
     Row,
     Text,
     TextField,
-    UserControl,
 )
 
-
-class Product(UserControl):
+class Product(Row):
     def __init__(self, emoji, price):
-        super().__init__()
         self.price = price
         self.emoji = emoji
         self.quantity = 0
+        more = IconButton(
+            icon=icons.ADD, on_click=self.add_one
+        )
+        less = IconButton(
+            icon=icons.REMOVE, on_click=self.remove_one
+        )
+        self.price_field = TextField(
+            value=str(self.quantity), read_only=True
+        )
+        super().__init__(
+            [
+                Text(self.emoji, size=50),
+                Text(f"{self.price:.2f} €"),
+                Container(width=100, content=self.price_field),
+                more,
+                less,
+            ],
+            alignment=MainAxisAlignment.CENTER,
+        )
 
     def add_one(self, event):
         self.quantity += 1
@@ -341,30 +351,6 @@ class Product(UserControl):
         self.quantity = max(self.quantity, 0)
         self.price_field.value = str(self.quantity)
         self.update()
-
-    def build(self):
-        more = IconButton(
-            icon=icons.ADD, on_click=self.add_one
-        )
-        less = IconButton(
-            icon=icons.REMOVE, on_click=self.remove_one
-        )
-        self.price_field = TextField(
-            value=str(self.quantity), read_only=True
-        )
-
-        return Row(
-            [
-                Text(self.emoji, size=50),
-                Text(f"{self.price:.2f} €"),
-                Container(
-                    width=100, content=self.price_field
-                ),
-                more,
-                less,
-            ],
-            alignment=MainAxisAlignment.CENTER,
-        )
 ```
 
 </Admonition>
@@ -405,25 +391,40 @@ from flet import icons
 from flet import MainAxisAlignment
 from flet import (
     IconButton,
-    Container
+    Container,
     Row,
     Text,
     TextField,
-    UserControl,
 )
-
 
 def do_nothing(event):
     pass
 
-
-class Product(UserControl):
+class Product(Row):
     def __init__(self, emoji, price, on_change=None):
-        super().__init__()
         self.price = price
         self.emoji = emoji
         self.quantity = 0
-        self.on_change = on_change or do_nothing
+        self.on_change = on_change if on_change else do_nothing
+        more = IconButton(
+            icon=icons.ADD, on_click=self.add_one
+        )
+        less = IconButton(
+            icon=icons.REMOVE, on_click=self.remove_one
+        )
+        self.price_field = TextField(
+            value=str(self.quantity), read_only=True
+        )
+        super().__init__(
+            [
+                Text(self.emoji, size=50),
+                Text(f"{self.price:.2f} €"),
+                Container(width=100, content=self.price_field),
+                more,
+                less,
+            ],
+            alignment=MainAxisAlignment.CENTER,
+        )
 
     def get_total(self):
         return self.price * self.quantity
@@ -442,30 +443,6 @@ class Product(UserControl):
         self.price_field.value = str(self.quantity)
         self.on_change(event)
         self.update()
-
-    def build(self):
-        more = IconButton(
-            icon=icons.ADD, on_click=self.add_one
-        )
-        less = IconButton(
-            icon=icons.REMOVE, on_click=self.remove_one
-        )
-        self.price_field = TextField(
-            value=str(self.quantity), read_only=True
-        )
-
-        return Row(
-            [
-                Text(self.emoji, size=50),
-                Text(f"{self.price:.2f} €"),
-                Container(
-                    width=100, content=self.price_field
-                ),
-                more,
-                less,
-            ],
-            alignment=MainAxisAlignment.CENTER,
-        )
 ```
 
 </Admonition>
