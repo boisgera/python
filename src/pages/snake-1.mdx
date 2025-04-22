@@ -502,12 +502,12 @@ def update():
     for key in arrow_keys_pressed:
         if key == pyxel.KEY_UP:
             snake_direction = [0, -1]
-    elif key == pyxel.KEY_DOWN:
-        snake_direction = [0, 1]
-    elif key == pyxel.KEY_LEFT:
-        snake_direction = [-1, 0]  
-    elif key == pyxel.KEY_RIGHT:
-        snake_direction = [1, 0]
+        elif key == pyxel.KEY_DOWN:
+            snake_direction = [0, 1]
+        elif key == pyxel.KEY_LEFT:
+            snake_direction = [-1, 0]  
+        elif key == pyxel.KEY_RIGHT:
+            snake_direction = [1, 0]
     snake_head = snake_geometry[-1]
     new_snake_head = [
         snake_head[0] + snake_direction[0],
