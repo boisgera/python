@@ -39,27 +39,6 @@ const base = import.meta.env.BASE_URL || "/";
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
-    <script>
-      /* Patch Chrome: click anywhere on details closes them, while the proper
-         behavior is to close on summary click only.
-         ⚠️ This patch will make all clickable content inside details inert.
-       */
-      const isChromium = 
-        !!window.chrome && 
-        (!!window.chrome.webstore || !!window.chrome.runtime) ||
-        /Chrome|Chromium|CriOS|Edg/.test(navigator.userAgent);
-      console.log("isChromium:", isChromium);
-      if (isChromium) {
-        document.addEventListener('click', (e) => {
-          const details = e.target.closest('details');
-          if (details && !e.target.closest('summary')) {
-            console.log("bug about to happen ...")
-            e.preventDefault();
-          }
-        }, 
-        { capture: true });
-      }
-    </script>
     <style is:global>
       html {
         hyphens: auto;
