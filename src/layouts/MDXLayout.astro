@@ -53,6 +53,7 @@ const base = import.meta.env.BASE_URL || "/";
         document.addEventListener('click', (e) => {
           const details = e.target.closest('details');
           if (details && !e.target.closest('summary')) {
+            console.log("bug about to happen ...")
             e.preventDefault();
           }
         }, 
