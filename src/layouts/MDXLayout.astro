@@ -48,6 +48,7 @@ const base = import.meta.env.BASE_URL || "/";
         !!window.chrome && 
         (!!window.chrome.webstore || !!window.chrome.runtime) ||
         /Chrome|Chromium|CriOS|Edg/.test(navigator.userAgent);
+      console.log("isChromium:", isChromium);
       if (isChromium) {
         document.addEventListener('click', (e) => {
           const details = e.target.closest('details');
