@@ -369,9 +369,8 @@ def update():
         pyxel.quit()
 
 def draw():
-    pyxel.cls(7)
+    pyxel.cls(13)
     for i in range(30):
-        pyxel.cls(13)
         for j in range(30):
             if (i+j) % 2 == 0:
                 pyxel.pset(i, j, 7)
