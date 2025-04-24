@@ -519,7 +519,7 @@ Its extension can be written:
 def display(color, pixels=None):
     if pixels is None:
         pyxel.cls(color)
-    elif len(pixels) >= 1 and type(pixels[0]) == int:
+    elif len(pixels) >= 1 and type(list(pixels)[0]) == int:
         display(color, [pixels])
     else:
         for x, y in pixels:
