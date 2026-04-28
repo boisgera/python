@@ -35,7 +35,7 @@ import pyxelStudio from "/src/assets/pyxel-studio.png";
  alt="Pyxel Studio Editor" 
  style="border-radius: 0.375rem; width: 100%; height: auto;"/>
 
-## Quickstart
+# Quickstart
 
 Go to https://www.pyxelstudio.net and create a new project. 
 That's it, you're done!
@@ -50,7 +50,7 @@ import pyxelStudio2 from "/src/assets/pyxel-studio-landing-page.png";
  style="border-radius: 0.375rem; width: 100%; height: auto;"/>
 
 
-## The Hard Way
+# The Hard Way
 
 Useful if you want:
 
@@ -61,15 +61,7 @@ Useful if you want:
   - to benefit from a more feature-rich development environment.
 
 
-### Python
-
-You can get Python from the [official Python website] or from [conda-forge](#conda). 
-
-[official Python website]: https://www.python.org/downloads/
-[miniconda]: https://docs.conda.io/projects/miniconda/en/latest/miniconda-install.html
-[anaconda]: https://www.anaconda.com/download/
-
-### Visual Studio Code
+## Visual Studio Code
 
   - Install [Visual Studio Code][VS-Code], then
 
@@ -87,73 +79,58 @@ You can get Python from the [official Python website] or from [conda-forge](#con
 [Github Copilot on Github]: https://docs.github.com/en/copilot/quickstart
 [Global Campus]: https://education.github.com/
 
-### Install Pyxel
 
-Use `pip` to install Pyxel (there is no conda package for it).
+## Pixi
+
+The [Pixi] package manager can help you to handle Python environments and 
+dependencies, especially if you need some of the Python packages of [PyPi]
+but also some of the packages of [conda-forge] (which include both Python and 
+non-Python software).
+
+[Pixi]: https://prefix.dev/docs/pixi/overview
+[conda-forge]: https://conda-forge.org
+[PyPi]: https://pypi.org
+
+<Admonition type="note" title="Pixi worflow" open={debug}>
+
+[Install pixi](https://pixi.prefix.dev/latest/installation/), 
+then for each new project, create a new empty pixi environment
 
 ```bash
-pip install pyxel
+pixi my_new_project
 ```
 
-## Conda
+Then get into the newly created directory `my_new_project` 
 
-The use of conda is very beneficial if you work on several Python projects 
-and/or need some of the packages available on [conda-forge](https://anaconda.org/conda-forge/repo)
-but not on [PyPi](https://pypi.org/). The "conda way" is supported by several tools, for example
-[Anaconda](https://www.anaconda.com/download), 
-[Miniconda](https://docs.conda.io/projects/miniconda/en/latest/),
-or more recently [Mamba & Micromamba](https://mamba.readthedocs.io/en/latest/) and
-[Pixi](https://prefix.dev/docs/pixi/overview).
+```bash
+cd my_new_project
+```
 
-<Admonition type="note" title="Classic conda workflow" open={debug}>
+and install what you need 
+from conda-forge, for example
 
-  - **Once and for all.** Integrate conda and your shell; for example for `bash`:
+```bash
+pixi install python
+```
+then if you also need packages from PyPi, like pyxel, install them with
 
-    ```bash
-    conda init bash
-    ```
+```bash
+pixi install --pypi pyxel
+```
+Develop your project with your favorite editor, for example Visual Studio Code,
+and when you need to run your code, just type
 
-    then restart your terminal.
+```bash
+pixi run python my_app.py
+```
 
-  - **For each new project.** Create a new empty conda environment
-
-    ```bash
-    conda create --name my_new_project
-    ```
-
-    Activate it
-
-    ```bash
-    conda activate my_new_project
-    ```
-
-    then install what you need from conda-forge, for example
-
-    ```bash
-    conda install -c conda-forge python=3.11 pip jupyter numpy
-    ```
-
-    then use `pip` if you also need packages from PyPi, for example:
-
-    ```bash
-    pip install pyxel
-    ```
-
-    Then, when you're done working on your project for the day
-
-    ```bash
-    conda deactivate
-    ```
-
-  - **To resume your work.**
-
-    ```bash
-    conda activate my_new_project
-    ```
 </Admonition>
 
+An good alternative to Pixi for pure Python projects is [uv].
 
+[uv]: https://docs.astral.sh/uv/
 
+{/*
 
 ## Troubleshooting
 
@@ -200,7 +177,7 @@ pip install pyxel==1.9.7
 [@mgmalheiros]: https://github.com/mgmalheiros
 [issue-SDL_Metal_DestroyView]: https://github.com/kitao/pyxel/issues/484#issuecomment-1678251568
 
-
+*/}
 
 
 

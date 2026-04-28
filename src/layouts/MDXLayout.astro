@@ -1,7 +1,7 @@
 ---
 import "@fontsource-variable/inter/index.css";
 import "@fontsource-variable/fira-code/index.css";
-import { Icon } from 'astro-icon';
+import { Icon } from "astro-icon";
 
 interface Author {
   name: string;
@@ -29,15 +29,16 @@ const { title, description, authors } = frontmatter;
 
 const base = import.meta.env.BASE_URL || "/";
 
+export const github = "https://github.com/boisgera/python";
 ---
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
   <head>
     <title>{title}</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href={base + "/favicon.svg"} />
     <meta name="generator" content={Astro.generator} />
     <style is:global>
       html {
@@ -51,6 +52,15 @@ const base = import.meta.env.BASE_URL || "/";
       p {
         margin-top: 0rem;
         margin-bottom: 2rem;
+      }
+
+      a:link, a:visited {
+        color: #000000;
+      }
+      a:hover, a:active {
+        color: #2563eb;
+      a {
+        transition: color 0.15s ease;
       }
 
       h1 {
@@ -73,11 +83,22 @@ const base = import.meta.env.BASE_URL || "/";
         margin: auto;
         display: block;
         margin-bottom: 1.5rem;
-        box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        box-shadow:
+          0 4px 6px -1px rgb(0 0 0 / 0.1),
+          0 2px 4px -2px rgb(0 0 0 / 0.1);
       }
 
       figure {
         margin-bottom: 1.5rem;
+      }
+
+      .dull {
+        filter: grayscale(60%) brightness(0.85);
+        transition: filter 0.3s ease;
+      }
+
+      .dull:hover {
+        filter: none;
       }
 
       pre.astro-code {
@@ -107,13 +128,30 @@ const base = import.meta.env.BASE_URL || "/";
       background-repeat: repeat;
       } */
     </style>
+<script>
+document.querySelectorAll('details').forEach(details => {
+  details.addEventListener('click', (e) => {
+    const summary = details.querySelector('summary');
+    if (!summary) return;
+
+    // If the click is NOT on summary → block it
+    if (!summary.contains(e.target)) {
+      e.stopPropagation();
+      e.preventDefault();
+    }
+  }, true); // 👈 use capture phase
+});
+</script>
   </head>
-  <body>
-    <nav>
-      <a href={base}><Icon name="python" style="width:2rem;height:2rem;"></a>
-    </nav>
+</html>
+<body>
+  <nav>
+    <a href={base}><Icon name="python" style="width:2rem;height:2rem;" /></a>
+    <a href="https://github.com/boisgera/python"
+      ><Icon name="github" style="width:2rem;height:2rem;" /></a
+    >
     <main>
       <slot />
     </main>
-  </body>
-</html>
+  </nav>
+</body>
