@@ -1,0 +1,911 @@
+---
+context:
+title: Control flow
+description: Be water my friend
+date: "2026-04-18 18:00"
+authors: 
+  - name: Sébastien Boisgérault
+    title: Associate Professor
+    email: Sebastien.Boisgerault@minesparis.psl.eu 
+    url: https://eul.ink
+    image: https://2.gravatar.com/avatar/39ec5d637b0753448b97a8e63855a45cb6708d033b656fe9f1d3314bb4bfb202?size=128
+    affiliation: ITN Mines Paris – PSL
+    twitter: "boisgera"
+    github: "boisgera"
+    linkedin: "Sébastien Boisgérault"
+tags: [Python, pyxel, game, snake]
+license: "CC BY 4.0" 
+layout: ../layouts/MDXLayout.astro
+---
+
+export const debug = true;
+
+import Admonition from "/src/components/Admonition.astro";
+import Header from "/src/components/Header.astro";
+import { Image } from "astro:assets";
+
+<Header frontmatter={frontmatter}/>
+
+# Introduction
+
+By default, a computer program executes the instructions in the order
+in which they are provided, line by line, and stops once the last 
+instruction has been executed.
+
+```python
+# file: main.py
+print("Hey!")
+print("Ho!")
+print("Let's go!")
+```
+
+```console
+$ python main.py
+Hey!
+Ho!
+Let's go!
+```
+
+However, **branching** allows you to control this execution flow when needed. 
+In Python, branching constructs include:
+
+ 1. [**Conditional execution**](#conditional-execution)
+ 2. [**Loops**](#loops)
+ 3. [**Function calls**](#function-calls)
+ 4. [**Exceptions**](#exceptions)
+
+# Conditional execution
+
+## Booleans
+
+The boolean type `bool` can take two values: `False` and `True`.
+
+### Logic 
+
+The logical operators "not" (¬), "and" (∧) and "or" (∨)
+are denoted in Python by the keywords `not`, `and` and `or`, 
+and evaluate as follows:
+
+| Symbol | Operator | Expression        | Value   |
+|:------:|----------|-------------------|---------|
+| ¬      | `not`    | `not False`       | `True`  |
+| ¬      | `not`    | `not True`        | `False` |
+| ∧      | `and`   | `False and False`  | `False` |
+| ∧      | `and`   | `False and True`   | `False` |
+| ∧      | `and`   | `True and False`   | `False` |
+| ∧      | `and`   | `True and True`    | `True`  |
+| ∨      | `or`    | `False or False`   | `False` |
+| ∨      | `or`    | `False or True`    | `True`  |
+| ∨      | `or`    | `True or False`    | `True`  |
+| ∨      | `or`    | `True or True`     | `True`  |
+
+### Comparison
+
+Python objects can be compared using the operators `==` (equal)
+and `!=` (not equal).
+
+```python
+>>> 0 == 0
+True
+>>> 0 == 1
+False
+>>> "A" == "A"
+True
+>>> "A" == "B"
+False
+>>> [1, 2, 3] == [1, 2, 3]
+True
+>>> [1, 2, 3] == [4, 5, 6]
+False
+```
+
+If the objects are of an ordered type (e.g., integers, floating-point
+numbers, etc.), you can also use `<` (strictly less than),
+`<=` (less than or equal to), `>` (strictly greater than) and `>=` (greater
+than or equal to).
+
+The ordering depends on the type of the object; for example, for strings,
+lexicographic order is used:
+
+```python
+>>> "ABC" < "XYZ"
+True
+```
+
+### Membership
+
+The operators `in` and `not in` allow you to test whether an object
+belongs to a container (a list, a string, a set, etc.):
+
+```python
+>>> 1 in [1, 2, 3]
+True
+>>> 0 in [1, 2, 3]
+False
+>>> 1 not in [1, 2, 3]
+False
+>>> 0 not in [1, 2, 3]
+True
+```
+
+```python
+>>> 1 in set([1, 2, 3])
+True
+>>> 0 in set()
+False
+>>> "Hello" in "Hello world!"
+True
+>>> "x" in {"x": 0.0, "y": 1.0}
+True
+```
+
+
+### Equality and Identity
+
+The **equality** of `x` and `y` is tested with the operator `==`:
+
+```python
+x == y
+```
+
+
+Their **identity** is tested with the keyword `is`:
+
+```python
+x is y
+```
+
+The negation of these properties is tested with `!=` and `is not`:
+
+```python
+x != y
+```
+
+```python
+x is not y
+```
+
+
+<Admonition type="note" title="Terminology" open={true}>
+
+- You can use the term **is equal to** to affirm equality between objects
+and simply **is** to affirm that they have the same identity 
+(using the term "identical" here would be a misnomer).
+
+- Equality between objects is sometimes called **structural equality**
+and identity between objects **referential equality**.
+
+</Admonition>
+
+
+The identity `x is y` means that the variables `x` and `y` refer to the
+same Python object: the data is at the same address in memory. A perfect
+copy of an object will therefore have a different identity from the
+original, while it will be considered equal to the original. However, if two
+objects are identical (in the sense of: have the same identity, are a single
+unique object), then they are necessarily equal.
+
+####
+
+As an example, let's consider the three lists `a`, `b` and `c`:
+
+```python
+>>> a = [1, 2, 3]
+>>> b = [1, 2, 3]
+>>> c = b
+```
+
+The lists `a` and `b` are equal, as are `b` and `c`, but they are not
+identical—they do not designate the same object (in memory);
+the variables `b` and `c`, on the other hand, designate the same object:
+
+```python
+>>> a == b
+True
+>>> b == c
+True
+>>> a is b
+False
+>>> b is c
+True
+```
+
+You can verify that `b` and `c` designate the same object by evaluating
+the **identifier** of these objects (an integer) with the function `id`:
+
+```python
+>>> id(a)
+140636096399680
+>>> id(b)
+140636098130688
+>>> id(c)
+140636098130688
+>>> id(a) == id(b)
+False
+>>> id(b) == id(c)
+True
+```
+
+One important consequence of this distinction: modifications to the list
+(designated by) `b` will affect the list `c` (which is the same object), but
+not the list `a` (which is a distinct object):
+
+```python
+>>> b.append(4)
+>>> b
+[1, 2, 3, 4]
+>>> c
+[1, 2, 3, 4]
+>>> a
+[1, 2, 3]
+```
+
+<Admonition type="warning" title="To be or not to be" open={true}>
+
+Although composed of two keywords separated by a space, `is not` is
+an operator in its own right. The expression `x is not y` is equivalent
+to `not (x is y)` ... but more readable! If you need to use
+`is` and `not` as distinct operators, to mean `x is (not y)`,
+you should keep the parentheses. Thus, with
+
+```python
+>>> x = 1
+>>> y = True
+```
+
+we have
+
+``` python
+>>> x is not y
+True
+>>> x is y
+False
+>>> not (x is y)
+True
+```
+
+but
+
+```python
+>>> not y
+False
+>>> x is (not y)
+False
+```
+</Admonition>
+
+
+### Priorities
+
+📖 [Python Language Reference / Expressions / Operator Precedence][precedence]
+
+[precedence]: https://docs.python.org/3/reference/expressions.html#operator-precedence
+
+Some boolean expressions may seem ambiguous; you could a priori 
+interpret the expression `not x and y or z` in multiple ways,
+for example as `(not x) and (y or z)` or as `not (x and (y or z))`.
+To resolve this ambiguity, Python defines a precedence list between
+expressions; from highest to lowest precedence, we have:
+
+ 1. Function call
+ 2. `in`, `not in`, `is`, `is not`, `<`, `<=`, `>`, `>=`, `!=`, `==`
+ 3. `not`
+ 4. `and`
+ 5. `or`
+
+ The expression `not x and y or z` is therefore interpreted as
+ `((not x) and y) or z.`
+
+### Explicit Conversions
+
+#### 🏷️ Boolean Value
+We say that a value `x` is:
+
+ - **false-ish** if `bool(x)` is `False`,
+ - **true-ish** if `bool(x)` is `True`.
+
+####
+
+The conversion table above applies to the most common types:
+
+| `type(x)`   | `bool(x) is False` | `bool(x) is True` |
+|:------------|--------------------|-------------------|
+| `type(None)`| Always             | Never             |
+| `bool`      | `x == False`       | `x != True`       |
+| `int`       | `x == 0`           | `x != 0`          |
+| `float`     | `x == 0.0`         | `x != 0.0`        |
+| `complex`   | `x == 0.0j`        | `x != 0.0j`       |
+| `str`       | `x == ""`          | `x != ""`         |
+| `bytes`     | `x == b""`         | `x != b""`        |
+| `tuple`     | `x == ()`          | `x != ()`         |
+| `list`      | `x == []`          | `x != []`         |
+| `set`       | `x == set()`       | `x != set()`      |
+| `dict`      | `x == {}`          | `x != {}`         |
+
+
+<Admonition type="note" title='Numbers & Collections' open={true}>
+For all the standard types listed above:
+
+ - `None` (the sole instance of the associated type!) is false-ish:
+
+   ```python
+   >>> bool(None)
+   False
+   ```
+
+ - If `x` is numeric (`bool`, `int`, `float`, `complex`), 
+   it is true-ish if and only if it is non-zero:
+
+   ```python
+   bool(x) == (x == 0)
+   ```
+
+ - If `x` is a collection (`str`, `bytes`, `tuple`, `list`, `set`, `dict`),
+   it is true-ish if and only if it is empty:
+
+   ```python
+   bool(x) == (len(x) == 0)
+   ```
+</Admonition>
+
+<Admonition type="note" title='Default Value' open={true}>
+
+For all the types listed above, you will notice that there is a unique 
+value that is false-ish; all other values are true-ish.
+The value in question is the one obtained by calling the type's constructor
+without arguments:
+
+```python
+>>> types = [type(None), bool, int, float, complex, str, bytes, tuple, list, set, dict]
+>>> for T in types:
+...     val = T()
+...     print(repr(val))
+... 
+
+False
+0
+0.0
+0j
+''
+b''
+()
+[]
+{}
+set()
+>>> assert all(bool(T()) is False for T in types)
+```
+</Admonition>
+
+
+## `If`
+
+The keyword `if` and the associated keywords `elif` and `else` allow
+conditional execution of code.
+
+```python
+if condition_1:
+    ... # block 1
+elif condition_2:
+    ... # block 2
+elif condition_3:
+    ... # block 3
+...
+else:
+    ... # block n
+```
+
+The `elif` and `else` clauses are optional. The keyword `elif` should be
+understood as a shortcut for `else if`: the code above is equivalent to:
+
+```python
+if condition_1:
+    ... # block 1
+else: 
+    if condition_2:
+        ... # block 2
+    else:
+        if condition_3:
+            ... # block 3
+        ...
+        else:
+            ... # block n
+```
+The expressions `condition_*` are implicitly converted to booleans and
+determine what the execution flow will be.
+
+# Loops
+
+## `While`
+
+The `while` loop executes as long as its condition is (false-ish:
+
+```python
+>>> numbers = [1, 2, 3]
+>>> while numbers:
+...     number = numbers.pop(0)
+...     print(number)
+...
+1
+2
+3
+```
+
+## `For`
+
+The `for` loop allows you to iterate over all elements of a collection:
+
+```python
+>>> numbers = [1, 2, 3]
+>>> for number in numbers:
+...     print(number)
+...
+1
+2
+3
+```
+
+Refer to the section [Iteration and Comprehension](../iteration-and-comprehension/index.html) for more details.
+
+## Exiting Loops
+
+The execution of `while` and `for` loops can be interrupted, either to
+go directly to the next iteration, with the keyword `continue`,
+or to terminate the loop entirely, with the keyword `break`.
+
+For example:
+
+```python
+>>> i = -1
+>>> while i < 6:
+...     i += 1
+...     if i % 2 == 0:  # i is even
+...         continue
+...     print(i)
+...
+1
+3
+5
+```
+
+and
+
+```python
+>>> i = 0
+>>> while True:
+...     if i >= 3:
+...         break
+...     print(i)
+...     i += 1
+...
+0
+1
+2
+```
+
+The same mechanism applies to `for` loops. Note the optional `else` clause
+associated with `for` loops, which is only executed if no `break`
+occurred.
+
+```python
+>>> for i in [1, 2, 3]:
+...     print(i)
+... else:
+...     print("ok")
+...
+1
+2
+3
+ok
+```
+
+## Function calls
+
+When a function is called, its code is executed, and then execution resumes
+the normal execution flow.
+
+```python
+>>> def print_ho():
+...     print("Ho!")
+...
+>>> print("Hey!")
+>>> print_ho()
+>>> print("Let's go!")
+Hey!
+Ho!
+Let's go!
+```
+
+This principle applies recursively (a function can call functions,
+which can themselves call functions, etc.)
+
+## Exceptions
+
+### Errors
+
+In case of an invalid operation, Python raises an error; for example if you 
+divide $1$ by $0$, compute $\sqrt{-1}$ or evaluate the absolute value
+of an empty list, you will observe the following messages:
+
+```python
+>>> 1.0 / 0.0
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+ZeroDivisionError: float division by zero
+```
+
+```python
+>>> import math
+>>> math.sqrt(-1)
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+ValueError: math domain error
+```
+
+```python
+>>> abs([])
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+TypeError: bad operand type for abs(): 'list'
+```
+
+Technically, Python raises an error by **raising an exception**.
+In interactive mode, the exception manifests as follows:
+
+ - a **traceback** pointing to the origin of the error:
+   
+   `File "<stdin>", line 1, in <module>`
+   
+   (here rather uninformative, we must admit.)
+
+ - an **exception** type:
+   
+   - `ZeroDivisionError`, 
+   
+   - `ValueError` and 
+   
+   - `TypeError`.
+
+ - an **explanatory** message:
+   
+   - `"division by zero"`, 
+   
+   - `"math domain error"`, 
+
+   - `"bad operand type for abs(): 'list'"`
+
+
+### Consequences of an Exception
+
+When an exception is raised in interactive mode (Python REPL, Jupyter
+notebook, etc.), the environment handles the exception;
+it signals that an exception occurred, but you can continue to
+type commands.
+
+However, in the classic execution of a Python program,
+in the absence of specific exception handling, the occurrence of an
+exception abruptly halts the program. For example, executing the Python
+program
+
+```python
+# file: main.py
+print("Hello")
+1 / 0
+print("world!")
+```
+
+leads to the following output
+
+``` bash
+$ python main.py
+Hello
+Traceback (most recent call last):
+  File "main.py", line 3, in <module>
+    1 / 0
+ZeroDivisionError: division by zero
+```
+
+<Admonition type="note" title="Terminal & Errors" open={true}>
+
+To be more precise: the string `"Hello"` is printed to standard output,
+the error message is directed to standard error (file descriptor 2),
+and an exit code (different from 0, which corresponds to error-free
+execution) is emitted:
+
+``` bash
+$ python main.py 2>error.txt
+Hello
+$ echo $?
+1
+$ cat error.txt
+Traceback (most recent call last):
+  File "main.py", line 3, in <module>
+    1 / 0
+ZeroDivisionError: division by zero
+```
+</Admonition>
+
+
+
+In any case, the string `"world!"` will never be printed. The classic linear
+execution flow is thus disrupted by the exception.
+
+### Exception Handling
+
+Exceptions that occur can be **caught** and handled as you wish
+before they cause the program to stop.
+
+For example:
+
+```python
+>>> def ratio(numerator, denominator):
+...     try:
+...         return numerator / denominator
+...     except ZeroDivisionError as error:
+...         message = "denominator is equal to zero."
+...         raise ValueError(message) from error
+...
+>>> ratio(640, 480)
+1.3333333333333333
+>>> ratio(640, 0)
+Traceback (most recent call last):
+  File "<stdin>", line 3, in ratio
+ZeroDivisionError: division by zero
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "<stdin>", line 6, in ratio
+ValueError: denominator is equal to zero.
+```
+
+```python
+>>> import math
+>>> x = 4
+>>> try:
+...     r = math.sqrt(x)
+... except ValueError:
+...     r = math.sqrt(-x)
+...
+>>> r
+2.0
+```
+
+```python
+>>> xs = [0.0, 1.0, -1.0, "Hello!", [], 1.0j, None, 42]
+>>> abs_xs = []
+>>> for x in xs:
+...     try:
+...         abs_xs.append(abs(x))
+...     except TypeError:
+...         abs_xs.append(None)
+...
+>>> abs_xs
+[0.0, 1.0, 1.0, None, None, 1.0, None, 42]
+
+```
+
+### Raising an Exception
+
+You can **raise** an exception using the keyword `raise`.
+
+#### Simulation
+
+For example, to reproduce the errors we have encountered so far:
+
+```python
+>>> # 1 / 0
+>>> raise ZeroDivisionError("float division by zero")
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+ZeroDivisionError: float division by zero
+```
+
+```python
+>>> # math.sqrt(-1)
+>>> raise ValueError("math domain error")
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+ValueError: math domain error
+```
+
+```python
+>>> # abs([])
+>>> raise TypeError("bad operand type for abs(): 'list'")
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+TypeError: bad operand type for abs(): 'list'
+```
+
+#### A More Realistic Example
+You can quickly define a factorial function:
+
+```python
+import math
+
+def factorial(n):
+    integers = range(1, n+1) # 1, 2, 3, ..., n (iterable)
+    return math.prod(integers)
+```
+
+which gives the correct result "when all goes well"
+
+```python
+>>> factorial(0)
+1
+>>> factorial(1)
+1
+>>> factorial(2)
+2
+>>> factorial(3)
+6
+>>> factorial(10)
+3628800
+>>> factorial(20)
+2432902008176640000
+```
+
+But in case of an error with the argument type, the associated error is somewhat
+cryptic:
+
+```python
+>>> factorial("100")
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "<stdin>", line 2, in factorial
+TypeError: can only concatenate str (not "int") to str
+```
+
+It is possible to do better, for example with the following code:
+
+```python
+def factorial(n):
+    if not isinstance(n, int):
+        message = f"{n!r} is not an integer"
+        raise TypeError(message)
+    integers = range(1, n+1) # 1, 2, 3, ..., n (iterable)
+    return math.prod(integers)
+```
+
+You will then get the more explicit error
+
+```python
+>>> factorial("100")
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "<stdin>", line 4, in factorial
+TypeError: '100' is not an integer
+```
+
+But even then we can still have surprises. Thus, if `n` is an integer but it is
+strictly negative, `factorial` will evaluate `math.prod([])`, which equals 1.
+
+```python
+>>> factorial(-1)
+1
+```
+
+Let's fix this flaw in our implementation!
+
+```python
+def factorial(n):
+    if not isinstance(n, int):
+        message = f"{n!r} is not an integer."
+        raise TypeError(message)
+    if n < 0:
+        message = f"{n} < 0."
+        raise ValueError(message) 
+    integers = range(1, n+1) # 1, 2, 3, ..., n (iterable)
+    return math.prod(integers)
+```
+
+```python
+>>> factorial(-1)
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "<stdin>", line 7, in factorial
+ValueError: -1 < 0.
+```
+
+<Admonition type="note" title="It's easier to ask forgiveness than it is to get permission." open={true}>
+
+A quote from [Grace Hopper], which corresponds to a classic error-handling
+style in Python. Instead of pre-emptively testing all possible error
+conditions, which can be tedious, 
+you "do what you have to do" and then analyze the result
+and handle any resulting errors if necessary. 
+In the case of the factorial function, this style could translate as follows:
+
+```python
+def factorial(n):
+    try:
+        if n < 0:
+            message = f"{n} < 0."
+            raise ValueError(message) 
+        integers = range(1, n+1) # 1, 2, 3, ..., n (iterable)
+        return math.prod(integers)
+    except TypeError:
+        message = f"{n!r} is not an integer."
+        raise TypeError(message)
+```
+
+```python
+>>> factorial(-1)
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "<stdin>", line 5, in factorial
+ValueError: -1 < 0.
+```
+
+```python
+>>> factorial("100")
+Traceback (most recent call last):
+  File "<stdin>", line 3, in <module>
+  TypeError: '<' not supported between instances of 'str' and 'int'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "<stdin>", line 11, in factorial
+  TypeError: '100' is not an integer.
+```
+
+[Grace Hopper]: https://en.wikipedia.org/wiki/Grace_Hopper
+</Admonition>
+
+### Exceptions & Flow Control
+
+It may not be obvious that exceptions -- ostensibly intended to
+describe errors -- provide a powerful flow control mechanism.
+And yet it is the case!
+
+As an example, let's show how an exception allows us to exit
+from multiple nested loops (unlike the keyword `break`).
+We can thus use (for example) the exception `StopIteration`
+in the following code:
+
+```python
+>>> try:
+...     for i in range(10):
+...         for j in range(10):
+...             for k in range(10):
+...                 print(i, j, k)
+...                 if i + j + k == 7:
+...                     raise StopIteration() 
+... except StopIteration:
+...     pass
+...
+0 0 0
+0 0 1
+0 0 2
+0 0 3
+0 0 4
+0 0 5
+0 0 6
+0 0 7
+```
+
+Note that this usage is not as exotic as it might seem.
+Indeed, Python itself uses (implicitly) the exception `StopIteration`
+in `for` loops to signal the exhaustion of an iterable.
+
+Thus the code
+
+```python
+for i in [1, 2, 3]:
+    print(i)
+```
+
+is (schematically) equivalent to:
+
+```python
+it = iter([1, 2, 3])
+while True:
+    try:
+        i = next(it)
+        print(i)
+    except StopIteration:
+        break
+```
+
