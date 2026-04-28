@@ -1,0 +1,626 @@
+---
+context:
+title: Object-Oriented Programming
+description: Objects, classes, methods, and properties in Python
+date: "2026-04-28 18:00"
+authors: 
+  - name: Sébastien Boisgrault
+    title: Associate Professor
+    email: Sebastien.Boisgerault@minesparis.psl.eu 
+    url: https://eul.ink
+    image: https://2.gravatar.com/avatar/39ec5d637b0753448b97a8e63855a45cb6708d033b656fe9f1d3314bb4bfb202?size=128
+    affiliation: ITN Mines Paris – PSL
+    twitter: "boisgera"
+    github: "boisgera"
+    linkedin: "Sébastien Boisgrault"
+tags: [Python, OOP, classes, objects, methods]
+license: "CC BY 4.0" 
+layout: ../layouts/MDXLayout.astro
+---
+
+export const debug = true;
+
+import Admonition from "/src/components/Admonition.astro";
+import Header from "/src/components/Header.astro";
+import { Image } from "astro:assets";
+
+
+<Header frontmatter={frontmatter} />
+
+# Object Usage
+
+## Objects everywhere!
+
+Before discovering how to use objects, it is good to be convinced that
+this skill will be very useful in Python, because:
+
+> Everything that can be designated by a variable is an object!
+
+Technically:
+
+> It is an **instance** of the **type** `object`.
+
+<Admonition type="note" title="Instance?" open={true}>
+
+The term "instance" should be interpreted in its Anglo-Saxon sense:
+
+> 🇺🇸 an individual illustrative of a category
+
+(cf. the [Merriam-Webster dictionary entry for "instance"](https://www.merriam-webster.com/dictionary/instance))
+
+We can therefore consider that a type is a category of objects;
+its instances are then the objects that belong to it.
+
+</Admonition>
+
+
+
+Integers, booleans, strings, lists are therefore objects:
+
+```python
+>>> isinstance(42, object)
+True
+>>> isinstance(True, object)
+True
+>>> isinstance("Hello!", object)
+True
+>>> isinstance([1, 2, 3], object)
+True
+```
+
+<Admonition type="note" title="So 42 is an object, not an integer?" open={true}>
+
+But yes, because both can be true simultaneously!
+We have already found that `42` is indeed an object:
+```python
+>>> isinstance(42, object)
+True
+```
+Let's also verify that it is an integer:
+```python
+>>> isinstance(42, int)
+True
+```
+So the two properties are not contradictory.
+More precisely, the type of `42` is integer, not object:
+```python
+>>> type(42) == int
+True
+```
+But since integer is a subtype of object
+```python
+>>> issubclass(int, object)
+True
+```
+all integers are also objects: types can be nested categories.
+
+</Admonition>
+
+Although it may be less intuitive, functions, types, or modules are also objects:
+
+```python
+>>> isinstance(print, object)
+True 
+>>> isinstance(int, object)
+True
+>>> import sys; isinstance(sys, object)
+True
+```
+
+## Not so complex numbers
+
+The type `complex` in Python represents complex numbers.
+It provides a good example of the interactions we can have with objects.
+
+### Construction
+
+To create the complex number $z = 1 / 2 + (3 / 2)i$, we can use the literal
+syntax for complex numbers:
+
+```python
+>>> z = 0.5 + 1.5j
+```
+
+It is good to know this syntax because it is the one Python will use to represent
+complex numbers:
+
+```python
+>>> z
+(0.5+1.5j)
+```
+
+Not all objects have such a **literal** notation. But there is an alternative method for all objects:
+you can call the type of the object you want to instantiate (as if it were a function)
+passing the necessary arguments, here the real and imaginary parts of the number to construct.
+The type of the object therefore serves as a **constructor**.
+
+```python
+>>> z = complex(0.5, 1.5)
+>>> z == 0.5+1.5j
+True
+```
+
+### Attributes
+
+An object is a data structure. The data it contains can be made accessible as
+**attributes**. All complex numbers thus have the attributes `real` and `imag`:
+
+```python
+>>> z.real
+0.5
+>>> z.imag
+1.5
+```
+
+The syntax to change the value of the attribute `real` of the number `z`
+should be `z.real = ...`. However, this assignment fails because complex
+numbers were designed as non-modifiable.
+
+```python
+>>> z.real = -0.5
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+AttributeError: readonly attribute
+```
+
+### Methods
+
+A complex number has an attribute `conjugate` whose nature is a bit special.
+It is a **method**:
+
+```python
+>>> z.conjugate  # doctest: +ELLIPSIS
+<built-in method conjugate of complex object at 0x...>
+```
+
+Methods behave like functions: they are callable.
+
+```python
+>>> callable(z.conjugate)
+True
+```
+
+This method is **bound** to the complex number `z`: it can use `z` and the data it contains
+to produce a result, without needing to explicitly pass `z` as an argument.
+Here, `z.conjugate()` returns the complex conjugate of `z`.
+
+```python
+>>> z.conjugate()
+(0.5-1.5j)
+```
+
+The method `conjugate` is also available as an attribute of the type `complex`.
+
+```python
+>>> complex.conjugate
+<method 'conjugate' of 'complex' objects>
+```
+
+It is then not bound to a particular complex number instance;
+we must therefore explicitly provide the complex number to conjugate as an argument.
+
+```python
+>>> complex.conjugate(z)
+(0.5-1.5j)
+```
+
+### Magic methods
+
+**Magic** methods are methods of an object whose name starts and ends
+with a double underscore `"__"`. These magic methods are rarely
+called directly by the programmer, but most often indirectly by the Python
+interpreter itself.
+
+The magic methods of type `complex` allow, for example, calculations with complex
+numbers using concise syntax: if it is possible to compute
+
+```python
+>>> 1j + 1j * 1j
+(-1+1j)
+```
+
+It's because the type `complex` includes the magic methods `__add__` and `__mul__`,
+called in case of addition and multiplication respectively. The calculation above is therefore
+equivalent to:
+
+```python
+>>> complex.__add__(1j, complex.__mul__(1j, 1j))
+(-1+1j)
+```
+
+Or, using the bound version of these methods:
+
+```python
+>>> 1j.__add__(1j.__mul__(1j))
+(-1+1j)
+```
+
+In any case, the initial notation -- where Python itself calls the magic methods --
+is considerably more readable!
+
+# Designing Types
+
+Our objective in this section will be to create a type `Complex` which will be a
+simplified version of the built-in type `complex`. To do this, we will define a new
+**class** of objects; to create a minimal class, without specific functionality,
+the following code is sufficient:
+
+```python
+class Complex:
+    pass
+```
+
+At this stage, it is certainly possible to instantiate a "complex number"
+
+```python
+>>> z = Complex()
+```
+
+with the correct type
+
+```python
+>>> type(z) is Complex
+True
+>>> isinstance(z, Complex)
+True
+```
+
+But it has no attributes or methods characteristic of complex numbers
+
+```python
+>>> z.real
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+AttributeError: 'Complex' object has no attribute 'real'
+>>> z.conjugate()
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+AttributeError: 'Complex' object has no attribute 'conjugate'
+>>> z + z
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+TypeError: unsupported operand type(s) for +: 'Complex' and 'Complex'
+```
+
+## Constructor and Attributes
+
+To manage the addition of attributes `real` and `imag`, we could define a function
+
+```python
+def Complex_init(z, real, imag):
+    z.real = real
+    z.imag = imag
+```
+
+which would allow us to take an empty complex number and add the desired attributes to it:
+
+```python
+>>> z = Complex()
+>>> Complex_init(z, 0.5, 1.5)
+>>> z.real
+0.5
+>>> z.imag
+1.5
+```
+
+Possible yes, but not practical! By defining the previous function directly in the
+class `Complex`, and naming it `__init__`, we define a magic method that is the
+constructor associated with the class `Complex` and avoid this tedious construction.
+
+So, adopting the following definition of `Complex`
+
+```python
+class Complex:
+    def __init__(z, real, imag):
+        z.real = real
+        z.imag = imag
+```
+
+we can save ourselves the creation of an object without attributes, automatically
+handled when we call the complex number constructor
+
+```python
+>>> z = Complex(0.5, 1.5)
+>>> z.real
+0.5
+>>> z.imag
+1.5
+```
+
+The convention when such a method is defined is to call the first argument of the method
+`self`, which will always designate an instance of the class considered
+
+```python
+class Complex:
+    def __init__(self, real, imag):
+        self.real = real
+        self.imag = imag
+```
+
+It's only a convention, which changes nothing in the behavior of the class
+we had defined.
+
+## Methods
+
+Adding methods to a class follows the same scheme as the constructor.
+Thus, to have a method `conjugate` that returns the conjugate of a complex
+number instance, we can do
+
+```python
+class Complex:
+    def __init__(self, real, imag):
+        self.real = real
+        self.imag = imag
+    def conjugate(self):
+        return Complex(self.real, -self.imag)
+```
+
+With
+
+```python
+>>> z = Complex(0.5, 1.5)
+```
+
+we then have
+
+```python
+>>> w = Complex.conjugate(z)
+>>> w.real
+0.5
+>>> w.imag
+1.5
+```
+
+Or, since Python automatically handles the creation of methods bound to instances
+
+```python
+>>> w = z.conjugate()
+>>> w.real
+0.5
+>>> w.imag
+1.5
+```
+
+## Magic methods
+
+It is a bit frustrating not to see complex numbers display properly in the terminal at this stage:
+
+```python
+>>> Complex(0.5, 1.5)  # doctest: +ELLIPSIS
+<__main__.Complex object at 0x...>
+```
+
+This is a problem we can solve by defining a magic method `__repr__`, responsible for
+building a suitable string representation of instances.
+
+```python
+class Complex:
+    def __init__(self, real, imag):
+        self.real = real
+        self.imag = imag
+    def conjugate(self):
+        return Complex(self.real, -self.imag)
+    def __repr__(self):
+        # ⚠️ weird output when self.imag < 0
+        return f"({self.real}+{self.imag}j)"
+```
+
+We then have a representation compatible with the literal notation of built-in complex numbers
+
+```python
+>>> Complex(0.5, 1.5)
+(0.5+1.5j)
+```
+
+Support for arithmetic operations is similar. To have addition, for example, we can do:
+
+```python
+class Complex:
+    def __init__(self, real, imag):
+        self.real = real
+        self.imag = imag
+    def conjugate(self):
+        return Complex(self.real, -self.imag)
+    def __repr__(self):
+        # ⚠️ weird output when self.imag < 0
+        return f"({self.real}+{self.imag}j)"
+    def __add__(w, z):
+        return Complex(w.real+z.real, w.imag+z.imag)
+```
+
+And then
+
+```python
+>>> z = Complex(0.5, 1.5)
+>>> z + z.conjugate()
+(1+0j)
+```
+
+Note that for this type of methods, which accept two instances of the class as arguments,
+the convention is to use the names `self` and `other`, so prefer the following
+(equivalent) definition:
+
+```python
+class Complex:
+    def __init__(self, real, imag):
+        self.real = real
+        self.imag = imag
+    def conjugate(self):
+        return Complex(self.real, -self.imag)
+    def __repr__(self):
+        # ⚠️ weird output when self.imag < 0
+        return f"({self.real}+{self.imag}j)"
+    def __add__(self, other):
+        return Complex(
+            self.real + other.real, 
+            self.imag + other.imag
+        )
+```
+
+## Private Attributes
+
+Not all attributes of an object are necessarily meant to be **public**; we may want
+**private** data, for internal use, only usable by the methods specific to an object.
+The convention in Python is to prefix the name of such attributes with a single underscore.
+
+It is then possible to control on a case-by-case basis how we allow the outside world to
+interact with this data. For example, we can make our complex number ensure that its
+real and imaginary parts are floating-point numbers. At this stage there is no such type safety;
+it is therefore very easy (including by accident) to create "invalid complex numbers"
+that will no doubt be the source of future bugs...
+
+```python
+>>> Complex("Hello", "world!")
+(Hello+world!j)
+```
+
+But we can fortunately replace the public attributes `real` and `imag` with private
+attributes `_real` and `_imag` and expose these values in a controlled way for reading
+and/or writing through dedicated methods: **accessors** (**getters** and/or **setters**).
+
+For example, we can make it so that when we want to set the value of the real or imaginary
+part, we first make sure we are dealing with a floating-point number, and when that's not
+the case, we immediately generate an appropriate error. We can even adapt the
+constructor to benefit from this additional security. Of course, since we have made the real
+and imaginary parts private, we will need to provide read access functions so that external
+users of complex numbers can use them. Internally, we need to adapt methods to use private
+attributes or accessors, rather than the public attributes that have been removed.
+
+```python
+class Complex:
+    def __init__(self, real, imag):
+        self.set_real(real)
+        self.set_imag(imag)
+    def get_real(self):
+        return self._real
+    def set_real(self, real):
+        if isinstance(real, float):
+            self._real = real
+        else:
+            raise TypeError(f"{real!r} is not a float")
+    def get_imag(self):
+        return self._imag
+    def set_imag(self, imag):
+        if isinstance(imag, float):
+            self._imag = imag
+        else:
+            raise TypeError(f"{imag!r} is not a float")
+    def conjugate(self):
+        return Complex(self._real, -self._imag)
+    def __repr__(self):
+        # ⚠️ weird output when self.imag < 0
+        return f"({self._real}+{self._imag}j)"
+    def __add__(self, other):
+        return Complex(
+            self._real + other._real, 
+            self._imag + other._imag
+        )
+```
+
+Complex numbers then behave as we expect.
+
+```python
+>>> z = Complex(0.5, 1.5)
+>>> z
+(0.5+1.5j)
+>>> z.get_real()
+0.5
+>>> z.set_real(-0.5)
+>>> z
+(-0.5+1.5j)
+>>> z.set_real("Hello")
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "<stdin>", line 11, in set_real
+TypeError: 'Hello' is not a float
+```
+
+<Admonition type="note" title="Private attribute or accessor access?" open={true}>
+
+You will notice that in a method of the class `Complex`, we are perfectly
+allowed to access private attributes
+
+```python
+def conjugate(self):
+    return Complex(self._real, -self._imag)
+```
+
+In this specific case, however, it was not essential; the public interface of
+complex numbers was rich enough and we could have used getters to implement the
+same functionality.
+
+```python
+def conjugate(self):
+    return Complex(self.get_real(), -self.get_imag())
+```
+
+It is probably preferable. Admittedly, the call to `conjugate` is a bit
+less performant in the second case (one more function call is needed), but
+that's probably not critical. But in return, if we use accessors and decide
+later to change the internal implementation of the class -- for example, to replace
+the attributes `_real` and `_imag` with a built-in complex number `_complex` --
+while preserving its public interface, it will not be necessary to change
+the implementation of these methods.
+
+</Admonition>
+
+## Properties
+
+We may regret the syntactic verbosity of accessors compared to access to public
+attributes. Fortunately, there is a mechanism that offers the same syntactic
+interface as attribute access, but the same security as going through accessors:
+**properties**. These are "virtual" attributes defined by their getter and/or setter.
+Thus, if we add the properties `real` and `imag` to our implementation of the class `Complex`
+
+```python
+class Complex:
+    def __init__(self, real, imag):
+        self.set_real(real)
+        self.set_imag(imag)
+    def get_real(self):
+        return self._real
+    def set_real(self, real):
+        if isinstance(real, float):
+            self._real = real
+        else:
+            raise TypeError(f"{real!r} is not a float")
+    real = property(get_real, set_real)
+    def get_imag(self):
+        return self._imag
+    def set_imag(self, imag):
+        if isinstance(imag, float):
+            self._imag = imag
+        else:
+            raise TypeError(f"{imag!r} is not a float")
+    imag = property(get_imag, set_imag)
+    def conjugate(self):
+        return Complex(self._real, -self._imag)
+    def __repr__(self):
+        # ⚠️ weird output when self.imag < 0
+        return f"({self._real}+{self._imag}j)"
+    def __add__(self, other):
+        return Complex(
+            self._real + other._real, 
+            self._imag + other._imag
+        )
+```
+
+We retrieve the simplified usage of access to the real and imaginary parts,
+but without having lost the security of type checking for the attributes `real` and `imag`.
+
+```python
+>>> z = Complex(0.5, 1.5)
+>>> z
+(0.5+1.5j)
+>>> z.real
+0.5
+>>> z.real = -0.5
+>>> z
+(-0.5+1.5j)
+>>> z.real = "Hello"
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "<stdin>", line 11, in set_real
+TypeError: 'Hello' is not a float
+```
+

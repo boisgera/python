@@ -165,8 +165,17 @@ document.querySelectorAll('details').forEach(details => {
   }, true); // 👈 use capture phase
 });
 </script>
+  <script is:inline>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+    }
+    };
+  </script>
+  <script is:inline defer src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js">
+  </script>
   </head>
-</html>
 <body>
   <nav>
     <a href={base}><Icon name="python" style="width:2rem;height:2rem;" /></a>
@@ -178,3 +187,4 @@ document.querySelectorAll('details').forEach(details => {
     </main>
   </nav>
 </body>
+</html>

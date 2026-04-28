@@ -1,0 +1,398 @@
+---
+context:
+title: Text, Bytes and Files
+description: Character strings, bytes, encoding, and file handling
+date: "2026-04-28 18:00"
+authors: 
+  - name: Sébastien Boisgrault
+    title: Associate Professor
+    email: Sebastien.Boisgerault@minesparis.psl.eu 
+    url: https://eul.ink
+    image: https://2.gravatar.com/avatar/39ec5d637b0753448b97a8e63855a45cb6708d033b656fe9f1d3314bb4bfb202?size=128
+    affiliation: ITN Mines Paris – PSL
+    twitter: "boisgera"
+    github: "boisgera"
+    linkedin: "Sébastien Boisgrault"
+tags: [Python, text, binary, files, encoding]
+license: "CC BY 4.0" 
+layout: ../layouts/MDXLayout.astro
+---
+
+export const debug = true;
+
+import Admonition from "/src/components/Admonition.astro";
+import Header from "/src/components/Header.astro";
+import { Image } from "astro:assets";
+
+<Header frontmatter={frontmatter}/>
+
+# Character Strings
+
+Python strings are defined as sequences of [Unicode] characters
+delimited by the characters `'` or `"`.
+
+[Unicode]: https://en.wikipedia.org/wiki/Unicode
+
+```python
+>>> s = "Hello world! 👋"
+>>> s
+'Hello world! 👋'
+```
+
+The choice between the **simple quote** and the **double quote** is mostly
+indifferent. Prefer the double quote when your text contains
+single quotes or apostrophes, and vice versa:
+
+```python
+>>> 'Je n'ai pas compris!'
+  File "<stdin>", line 1
+    'Je n'ai pas compris!'
+          ^
+SyntaxError: invalid syntax
+>>> "J'ai compris!"
+"J'ai compris!"
+
+```
+
+Characters preceded by a backslash (`\`) are interpreted as
+**escape sequences** and not literally.
+Thus `"\n"` is a newline, `"\t"` is a tabulation
+
+```python
+>>> print("a\nb")
+a
+b
+>>> print("a\tb")
+a	b
+```
+
+`\\` is a backslash, `\'` is a single quote and `\"` is a double quote,
+
+```python
+>>> print("\\")
+\
+>>> print('J\'ai compris!')
+J'ai compris!
+```
+
+etc.
+
+A Unicode character is characterized by a [**code point**](https://en.wikipedia.org/wiki/Code_point), an integer most often represented in the form "U+????????"
+where the `?` are hexadecimal characters; in Python this translates to
+`\U????????`. For example:
+
+```python
+>>> ord("a")
+97
+>>> hex(97)
+'0x61'
+>>> "\U00000061"
+'a'
+```
+
+When four or two hexadecimal characters are enough to describe the
+code point, you can use the more compact `\u????` or `\x??` syntaxes.
+
+```python
+>>> "\u0061"
+'a'
+>>> "\x61"
+'a'
+```
+
+Emojis, for example, require the longest syntax:
+
+```
+>>> "smiley: \U0001f600"
+'smiley: 😀'
+>>> 
+>>> "pile of poo: \U0001f4a9"
+'pile of poo: 💩'
+```
+
+
+Strings also behave like (immutable) collections of characters... even
+though there is no "character" type! (A "character" is actually
+represented as a string of length 1.)
+
+```python
+>>> s = "Hello world! 👋"
+>>> len(s)
+14
+>>> s[0]
+'H'
+>>> s[-1]
+'👋'
+>>> s[0:5]
+'Hello'
+>>> s[:5] + s[5:]
+'Hello world! 👋'
+>>> for c in s:
+...     print(c) 
+... 
+H
+e
+l
+l
+o
+  
+w
+o
+r
+l
+d
+!
+  
+👋
+>>> list(s)
+['H', 'e', 'l', 'l', 'o', ' ', 'w', 'o', 'r', 'l', 'd', '!', ' ', '👋']
+```
+
+**f-strings** allow you to insert strings stored in variables
+inside a string
+
+```python
+>>> target = "world"
+>>> emoji = "👋"
+>>> f"Hello {target} {emoji}"
+'Hello world 👋'
+```
+
+Or data that can be represented as strings, or even expressions
+that evaluate to such objects
+
+```python
+>>> f"1+1 = {1+1}"
+'1+1 = 2'
+```
+
+```python
+>>> ok = True
+>>> f"Annie are you ok? {'yep' if ok else 'nope'}."
+'Annie are you ok? yep.'
+>>> ok = False
+>>> f"Annie are you ok? {'yep' if ok else 'nope'}."
+'Annie are you ok? nope.'
+```
+
+# Binary Data
+
+Python **bytes** are sequences of integer values
+between 0 and 255 that represent arbitrary binary data.
+They are most often represented in a form similar to
+strings, but prefixed with a `b`:
+
+```python
+>>> b"Hello world!"
+b'Hello world!'
+```
+
+However, only ASCII characters are allowed
+
+```python
+>>> b"Hello world! 👋"
+  File "<stdin>", line 1
+SyntaxError: bytes can only contain ASCII literal characters.
+```
+
+To describe bytes that do not correspond to ASCII characters,
+you can use the **escape sequence** syntax `\x??` where
+the `?` represent a hexadecimal character.
+
+```python
+>>> b"Hello world! \xf0\x9f\x91\x8b"
+b'Hello world! \xf0\x9f\x91\x8b'
+```
+
+It is also possible to use the escape sequence syntax instead of
+ASCII characters
+
+```python
+>>> b"\x48\x65\x6C\x6c\x6f\x20\x77\x6f\x72\x6c\x64\x21\x20\xf0\x9f\x91\x8b"
+b'Hello world! \xf0\x9f\x91\x8b'
+```
+
+Bytes can also be manipulated like lists (but immutable!)
+of integers between 0 and 255
+
+```python
+>>> data = b"Hello world! \xf0\x9f\x91\x8b"
+>>> data[0]
+72
+>>> data[0] = 100
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+TypeError: 'bytes' object does not support item assignment
+>>> list(data)
+[72, 101, 108, 108, 111, 32, 119, 111, 114, 108, 100, 33, 32, 240, 159, 145, 139]
+```
+
+By the way, they can also be created from such a list
+
+```python
+>>> bytes([72, 101, 108, 108, 111, 32, 119, 111, 114, 108, 100, 33, 32, 240, 159, 145, 139])
+b'Hello world! \xf0\x9f\x91\x8b'
+```
+
+# Text Encoding
+
+To be stored in a file or transmitted over the network, a string
+must be converted to binary data. There are several methods to
+perform this conversion, which are called an **encoding**.
+UTF-8 is a good default choice (notably because it is
+compatible with the venerable ASCII encoding but can handle all
+Unicode characters).
+
+```python
+>>> "Hello world! 👋".encode("utf-8")
+b'Hello world! \xf0\x9f\x91\x8b'
+```
+
+There are other encodings, like UTF-16, that produce different
+binary data.
+
+```python
+>>> "Hello world! 👋".encode("utf-16")
+b'\xff\xfeH\x00e\x00l\x00l\x00o\x00 \x00w\x00o\x00r\x00l\x00d\x00!\x00 \x00=\xd8K\xdc'
+```
+
+The inverse operation is **decoding** binary data into strings
+
+```python
+>>> b'Hello world! \xf0\x9f\x91\x8b'.decode("utf-8")
+'Hello world! 👋'
+```
+
+Note that you need to know which encoding was used to correctly
+decode the binary data. If you get it wrong, the result can be
+unpleasant...
+
+```python
+>>> "Sébastien".encode("utf-8").decode("cp1252")
+'SÃ©bastien'
+```
+
+Not all encodings can describe all Unicode characters (but UTF-8, UTF-16,
+and UTF-32 can).
+
+```python
+>>> "Sébastien".encode("ascii")
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+UnicodeEncodeError: 'ascii' codec can't encode character '\xe9' in position 1: ordinal not in range(128)
+>>> "Sébastien".encode("cp1252")
+b'S\xe9bastien'
+>>> "Hello world! 👋".encode("cp1252")
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "/home/boisgera/miniconda3/envs/python-fr/lib/python3.9/encodings/cp1252.py", line 12, in encode
+    return codecs.charmap_encode(input,errors,encoding_table)
+UnicodeEncodeError: 'charmap' codec can't encode character '\U0001f44b' in position 13: character maps to <undefined>
+```
+
+# Files
+
+To open a file for writing text, you can use the mode `"w"` (for "write")
+
+```python
+>>> file = open("text.txt", mode="w")
+>>> file.write("Hello world! 👋")
+```
+
+but this is not necessarily a good idea, because Python will then
+decide for itself which encoding to use to convert your text to
+binary data. It will use the encoding declared by your environment
+(and if all goes well... on my machine, by sheer luck, it is UTF-8,
+and this choice suits me).
+
+```python
+>>> import locale
+>>> locale.getpreferredencoding(False)
+'UTF-8'
+```
+
+However, there is no guarantee that this will be the same on your
+machine. If we need to share text files with others,
+we need to be able to know how they are encoded, or better yet,
+choose which encoding is used.
+The safest approach is to always explicitly specify which
+encoding you wish to use.
+
+```python
+>>> file = open("text.txt", mode="w", encoding="utf-8")
+>>> file.write("Hello world! 👋")
+```
+
+And to be completely explicit, we can specify with the `mode` argument
+that we want to open the file for writing **and in text mode**, by using
+`mode="wt"` instead of `mode="w"`. This makes no difference to the
+Python interpreter, but it makes it easier for programmers who will
+need to read this code.
+
+```python
+>>> file = open("text.txt", mode="wt", encoding="utf-8")
+>>> file.write("Hello world! 👋")
+```
+
+It is also good practice to close the file after use[^closing]
+
+[^closing]: It is possible that writing to the file is buffered
+and only happens when the file is closed. It is also possible that
+opening the file "blocks" other processes from accessing the same file,
+etc.
+
+```python
+>>> file = open("text.txt", mode="wt", encoding="utf-8")
+>>> file.write("Hello world! 👋")
+>>> file.close()
+```
+
+However, if you insert Python code between opening and closing the file
+and that code can fail (for example, if there is no more space on your
+disk to write `"Hello world! 👋"`), the file closing statement will
+never be executed.
+A more robust version would be to close the file in all cases
+(error or not), which can be done as follows:
+
+```python
+>>> file = open("text.txt", mode="wt", encoding="utf-8")
+>>> try:
+...     file.write("Hello world! 👋")
+... finally:
+...     file.close()
+...
+```
+
+... but that's a bit heavy! Fortunately for us, there is a more compact
+construction that offers the same guarantees:
+
+```python
+>>> with open("text.txt", mode="wt", encoding="utf-8") as file:
+...     file.write("Hello world! 👋")
+...
+```
+
+Writing to a file is analogous by replacing `"w"` with `"r"` (for "read")
+in the mode of opening the file.
+
+```python
+>>> with open("text.txt", mode="rt", encoding="utf-8") as file:
+...     print(file.read())
+...
+Hello world! 👋
+```
+
+But if you want to access data that is not **plain text** like an image or a PDF,
+or text that you want to decode yourself, use the **binary** mode `"b"`
+(in read as in write):
+
+```python
+>>> with open("text.txt", mode="rb") as file:
+...     data = file.read()
+...     print(f"{type(data) = }")
+...     text = data.decode("utf-8")
+...     print(text)
+...
+type(data) = <class 'bytes'>
+Hello world! 👋
+```

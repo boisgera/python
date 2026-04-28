@@ -1,0 +1,368 @@
+---
+context:
+title: Variable Scope
+description: Global, local, built-in, and non-local variables
+date: "2026-04-28 18:00"
+authors: 
+  - name: Sébastien Boisgrault
+    title: Associate Professor
+    email: Sebastien.Boisgerault@minesparis.psl.eu 
+    url: https://eul.ink
+    image: https://2.gravatar.com/avatar/39ec5d637b0753448b97a8e63855a45cb6708d033b656fe9f1d3314bb4bfb202?size=128
+    affiliation: ITN Mines Paris – PSL
+    twitter: "boisgera"
+    github: "boisgera"
+    linkedin: "Sébastien Boisgrault"
+tags: [Python, scope, variables, global, local]
+license: "CC BY 4.0" 
+layout: ../layouts/MDXLayout.astro
+---
+
+export const debug = true;
+
+import Admonition from "/src/components/Admonition.astro";
+import Header from "/src/components/Header.astro";
+import { Image } from "astro:assets";
+
+<Header frontmatter={frontmatter}/>
+
+# Introduction
+
+To know which value a Python identifier refers to at a given point
+in the code, you need to understand the concept of **scope**
+of a variable. There are four distinct scopes in Python.
+
+# Global Variables
+
+The function `dir`, used without arguments, lists the variables defined in
+the global scope of the interpreter or a Python program.
+
+```python
+>>> dir()
+['__annotations__', '__builtins__', '__doc__', '__loader__', '__name__', '__package__', '__spec__']
+```
+
+Here we see that 7 variables are predefined in the interpreter and we
+can display their values:
+
+```python
+>>> __annotations__
+{}
+>>> __builtins__
+<module 'builtins' (built-in)>
+>>> __doc__
+>>> __loader__
+<class '_frozen_importlib.BuiltinImporter'>
+>>> __name__
+'__main__'
+>>> __package__
+>>> __spec__
+```
+
+By defining a new global variable `a`, we change the result of `dir()`.
+
+```python
+>>> a = 1
+>>> dir()
+['__annotations__', '__builtins__', '__doc__', '__loader__', '__name__', '__package__', '__spec__', 'a']
+```
+
+To avoid seeing the predefined values, which are of no interest here, we filter out
+variable names that start and end with a double underscore.
+
+```python
+>>> def is_dunder(name):
+...     return name.startswith("__") and name.endswith("__")
+... 
+>>> [name for name in dir() if not is_dunder(name)]
+['a', 'is_dunder']
+```
+
+Note that the newly defined function `is_dunder` is also listed.
+It is possible to introduce new variables and then make them
+disappear using the keyword `del`.
+
+```
+>>> b = 42
+>>> [name for name in dir() if not is_dunder(name)]
+['a', 'b', 'is_dunder']
+>>> del a
+>>> a
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+NameError: name 'a' is not defined
+>>> [name for name in dir() if not is_dunder(name)]
+['b', 'is_dunder']
+```
+
+#### `globals`
+
+If you are interested not only in the names of global variables
+but also in the values they refer to, the function `globals`
+provides a dictionary containing both pieces of information.
+
+```python
+>>> globals()
+{'__name__': '__main__', '__doc__': None, '__package__': None, '__loader__': <class '_frozen_importlib.BuiltinImporter'>, '__spec__': None, '__annotations__': {}, '__builtins__': <module 'builtins' (built-in)>, 'b': 42, 'is_dunder': <function is_dunder at 0x7f29d337b760>}
+```
+
+Again, we can filter out the predefined variables from this structure.
+
+```
+>>> globs = {name: value for name, value in globals().items() if not is_dunder(name)}
+>>> globs
+{'b': 42, 'is_dunder': <function is_dunder at 0x7f29d337b760>}
+```
+
+Adding or removing variables can be done either directly
+or by modifying the global variables dictionary.
+
+```
+>>> a = 1
+>>> globs["a"]
+1
+>>> del globs["a"]
+>>> a
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+NameError: name 'a' is not defined
+>>> globs["c"] = 22
+>>> c
+22
+```
+
+# Local Variables
+
+Called in a function, `dir()` lists the **local** variables (to the function).
+
+```python
+>>> def f():
+...     print(dir())
+... 
+>>> f()
+[]
+```
+
+```python
+>>> def f():
+...     a = 1
+...     print(dir())
+... 
+>>> f()
+['a']
+```
+
+In the previous example, `a` is not defined as a global variable
+but as a local variable to the function.
+
+```python
+>>> def f():
+...     a = 1
+...     print("a" in globals())
+... 
+>>> f()
+False
+```
+
+```python
+>>> def f():
+...     a = 1
+...     print("a" in locals())
+... 
+>>> f()
+True
+```
+
+```python
+>>> def f():
+...     a = 1
+...     print(locals())
+... 
+>>> f()
+{'a': 1}
+```
+
+Unlike global variables, we cannot modify local variables
+by modifying the dictionary produced by `locals()`.
+
+```python
+>>> def f():
+...     a = 1
+...     locals()["a"] = 2
+...     print(a)
+... 
+>>> f()
+1
+```
+
+<Admonition type="note" title="Undefined behavior of locals()" open={true}>
+
+To be precise, the consequences of updating the `locals()` dictionary
+may depend on the Python interpreter used. For the classic Python interpreter
+(CPython), these updates have no effect.
+The help for the `locals` function is explicit:
+
+```
+locals() returns a dictionary containing the current scope's local variables.
+  
+NOTE: Whether or not updates to this dictionary will affect name lookups in
+the local scope and vice-versa is *implementation dependent* and not
+covered by any backwards compatibility guarantees.
+```
+
+</Admonition>
+
+Function parameters are part of its local variables.
+
+```python
+>>> def f(b):
+...     a = 1
+...     print(locals())
+... 
+>>> f(7)
+{'b': 7, 'a': 1}
+```
+
+Global variables are accessible for reading from the function code...
+
+```python
+>>> c = 2
+>>> def f(b):
+...     a = 1
+...     print(a, b, c)
+... 
+>>> f(7)
+1 7 2
+```
+
+... but not for writing...
+
+```python
+>>> def f():
+...     c = 3
+...     print(c)
+... 
+>>> f()
+3
+>>> c
+2
+```
+
+... unless they are explicitly declared as global, using the keyword `global`.
+
+```python
+>>> def f():
+...     global c
+...     c = 3
+...     print(c)
+... 
+>>> c
+2
+>>> f()
+3
+>>> c
+3
+```
+
+In the presence of "conflict" and without the keyword `global`, in the code of
+the function, variables are considered local.
+
+```python
+>>> c = 3
+>>> def f():
+...     c = 2
+...     print(locals())
+... 
+>>> f()
+{'c': 2}
+```
+
+In this case, we say that the local variable **shadows** the global variable.
+
+# Built-in Variables
+
+Some variables are predefined, but do not belong to the global scope,
+but to an even more fundamental scope: the **built-in** scope.
+
+This is the case, for example, of the function `print`.
+
+```python
+>>> print
+<built-in function print>
+>>> print(42)
+42
+```
+
+You cannot delete a built-in variable as easily as a global variable.
+
+```python
+>>> del print
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+NameError: name 'print' is not defined
+>>> print(42)
+42
+```
+
+It is technically possible to shadow a built-in variable with a global variable
+(even if this is probably not a good idea).
+
+```python
+>>> print = 9
+>>> print(42)
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+TypeError: 'int' object is not callable
+>>> print
+9
+```
+
+The built-in variable will be accessible again if we get rid of the global variable.
+
+```python
+>>> del print
+>>> print(42)
+42
+```
+
+If you really want to permanently remove a built-in variable (still not a good idea),
+this is possible by modifying the `__dict__` of the `builtins` module.
+
+```python
+>>> import builtins
+>>> "print" in builtins.__dict__
+True
+>>> builtins.__dict__["print"]
+<built-in function print>
+>>> del builtins.__dict__["print"]
+>>> print
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+NameError: name 'print' is not defined
+>>> print(42)
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+NameError: name 'print' is not defined
+```
+
+# Non-local Variables
+
+It is possible to define a function inside a function. The inner function
+has access to variables defined in the enclosing function -- variables
+qualified as **non-local** -- for reading only, as well as global variables
+that are not shadowed by these variables (and as built-in variables that are
+not shadowed by any other scope). To write to these non-local variables,
+they must be explicitly declared using the keyword `nonlocal`.
+
+```python
+>>> def f():
+...     a = 1
+...     def g():
+...        nonlocal a
+...        a = 3
+...     g()
+...     print(a)
+... 
+>>> f()
+3
+```

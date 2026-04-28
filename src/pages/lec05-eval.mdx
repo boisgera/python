@@ -1,0 +1,144 @@
+---
+context:
+title: Dynamic Code Evaluation
+description: Using exec and eval to run Python code from strings
+date: "2026-04-28 18:00"
+authors: 
+  - name: Sébastien Boisgrault
+    title: Associate Professor
+    email: Sebastien.Boisgerault@minesparis.psl.eu 
+    url: https://eul.ink
+    image: https://2.gravatar.com/avatar/39ec5d637b0753448b97a8e63855a45cb6708d033b656fe9f1d3314bb4bfb202?size=128
+    affiliation: ITN Mines Paris – PSL
+    twitter: "boisgera"
+    github: "boisgera"
+    linkedin: "Sébastien Boisgrault"
+tags: [Python, exec, eval, dynamic code]
+license: "CC BY 4.0" 
+layout: ../layouts/MDXLayout.astro
+---
+
+export const debug = true;
+
+import Admonition from "/src/components/Admonition.astro";
+import Header from "/src/components/Header.astro";
+import { Image } from "astro:assets";
+
+<Header frontmatter={frontmatter}/>
+
+Python allows dynamic code execution. The function `exec`
+allows executing **statements**:
+
+```python
+>>> exec("print('Hello world!')")
+Hello world!
+```
+
+And the function `eval` allows evaluating **expressions**:
+
+```python
+>>> eval("1+1")
+2
+```
+
+In many cases, evaluating the string representation of a Python object
+produces an object identical to the original. For example:
+
+```python
+>>> one = 1
+>>> repr(one)
+'1'
+>>> eval(repr(one))
+1
+>>> eval(repr(one)) == one
+True
+```
+
+Or
+
+```python
+>>> hello = "Hello world!"
+>>> repr(hello)
+"'Hello world!'"
+>>> eval(repr(hello))
+'Hello world!'
+>>> eval(repr(hello)) == hello
+True
+```
+
+And
+
+```python
+>>> numbers = [1, 2, 3]
+>>> repr(numbers)
+'[1, 2, 3]'
+>>> eval(repr(numbers))
+[1, 2, 3]
+>>> eval(repr(numbers)) == numbers
+True
+```
+
+However, this is not a universal rule.
+
+<Admonition type="note" title="Counterexamples" open={true}>
+
+The representation of a function object does not allow its reconstruction:
+
+```python
+>>> def f():
+...     pass
+... 
+>>> repr(f)
+'<function f at 0x7f9bd685f640>'
+>>> eval(repr(f))
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "<string>", line 1
+    <function f at 0x7f9bd685f640>
+    ^
+SyntaxError: invalid syntax
+```
+
+It is possible to find a counterexample using only lists:
+
+```python
+>>> loop = []
+>>> loop.append(loop)  # Ooooooh! 🤯
+>>> repr(loop)
+'[[...]]'
+>>> ...
+Ellipsis
+>>> eval(repr(loop))
+[[Ellipsis]]
+>>> loop2 = eval(repr(loop))
+>>> loop2[0] 
+[Ellipsis]
+>>> loop2[0] == loop2
+False
+```
+
+</Admonition>
+
+<Admonition type="warning" title="Dangers of eval and exec" open={true}>
+
+The use of `eval` and `exec` is often discouraged in practice.
+In particular, executing unknown code (and thus potentially malicious)
+can cause major damage; for example, if your Python program,
+running on your server, executes a string provided by a remote user,
+and that user provides
+
+```python
+code = 'import os\nwhile True:\n\tprint(os.popen(input("$ ")).read())'
+```
+
+Then they have complete access to your server terminal...
+They can easily add files, read local files and transfer their
+content over the network, shut down the computer, etc.
+
+</Admonition>
+
+The advanced options of `exec` and `eval` are detailed in the Python documentation:
+
+  - 📖 [exec](https://docs.python.org/3/library/functions.html#exec)
+
+  - 📖 [eval](https://docs.python.org/3/library/functions.html#eval)

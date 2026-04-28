@@ -1,0 +1,846 @@
+---
+context:
+title: Object-Oriented Programming 2
+description: Duck typing, inheritance, protocols, and standard library modules
+date: "2026-04-28 18:00"
+authors: 
+  - name: Sébastien Boisgrault
+    title: Associate Professor
+    email: Sebastien.Boisgerault@minesparis.psl.eu 
+    url: https://eul.ink
+    image: https://2.gravatar.com/avatar/39ec5d637b0753448b97a8e63855a45cb6708d033b656fe9f1d3314bb4bfb202?size=128
+    affiliation: ITN Mines Paris – PSL
+    twitter: "boisgera"
+    github: "boisgera"
+    linkedin: "Sébastien Boisgrault"
+tags: [Python, OOP, duck typing, inheritance, protocols]
+license: "CC BY 4.0" 
+layout: ../layouts/MDXLayout.astro
+---
+
+export const debug = true;
+
+import Admonition from "/src/components/Admonition.astro";
+import Header from "/src/components/Header.astro";
+import { Image } from "astro:assets";
+
+<Header frontmatter={frontmatter}/>
+
+# Duck Typing
+
+## Case Study
+
+The function `copy_file` below reads the content of a file object and writes it to another:
+
+```python
+def copy_file(input, output):
+    data = input.read()
+    output.write(data)
+```
+
+Let's create a (very small) binary file `image.png` on our hard drive
+
+```python
+with open("image.png", mode="bw") as image_file:
+...     image_file.write(b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x01\x00\x00\x00\x01\x00\x01\x03\x00\x00\x00f\xbc:%\x00\x00\x00\x03PLTE\xb5\xd0\xd0c\x04\x16\xea\x00\x00\x00\x1fIDATh\x81\xed\xc1\x01\r\x00\x00\x00\xc2\xa0\xf7Om\x0e7\xa0\x00\x00\x00\x00\x00\x00\x00\x00\xbe\r!\x00\x00\x01\x9a`\xe1\xd5\x00\x00\x00\x00IEND\xaeB`\x82')
+...
+```
+
+Then let's use `copy_file` to create a copy named `image-copy.png`.
+
+```python
+>>> input = open("image.png", mode="br")
+>>> output = open("image-copy.png", mode="bw")
+>>> copy_file(input, output)
+```
+
+Everything goes as planned! However, we could have saved ourselves the creation of the
+initial file and create an object similar to a file, but which stores its content in
+memory rather than on our hard drive.
+
+```python
+>>> import io
+>>> buffer = io.BytesIO(b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x01\x00\x00\x00\x01\x00\x01\x03\x00\x00\x00f\xbc:%\x00\x00\x00\x03PLTE\xb5\xd0\xd0c\x04\x16\xea\x00\x00\x00\x1fIDATh\x81\xed\xc1\x01\r\x00\x00\x00\xc2\xa0\xf7Om\x0e7\xa0\x00\x00\x00\x00\x00\x00\x00\x00\xbe\r!\x00\x00\x01\x9a`\xe1\xd5\x00\x00\x00\x00IEND\xaeB`\x82')
+>>> buffer.seek(0)
+```
+
+(The call `buffer.seek(0)` reposition the read/write cursor at the beginning of the file.)
+
+We can then copy its content the same way as before
+
+```python
+>>> input = buffer
+>>> output = open("image-copy.png", mode="bw")
+>>> copy_file(input, output)
+```
+
+In fact the original image is a blue-gray tile used by the OpenStreetMap mapping project
+(cf. ["The smallest 256x256 single-color PNG file, and where you've seen it"](https://www.mjt.me.uk/posts/smallest-png/)).
+
+It is available [online](https://www.mjt.me.uk/assets/images/smallest-png/openstreetmap.png). 
+So we could have created an object similar to a file but that knows how to open web resources rather than manually copying its content.
+
+```python
+>>> from urllib.request import urlopen
+>>> url = "https://www.mjt.me.uk/assets/images/smallest-png/openstreetmap.png"
+>>> input = urlopen(url)
+```
+
+Again, the copy between this remote file and its local copy takes place as before.
+
+```python
+>>> output = open("image-copy.png", mode="bw")
+>>> copy_file(input, output)
+```
+
+## Protocols
+
+What matters in the three previous use cases is not that the object
+`input` is a real file, but that it behaves like one. Here, precisely,
+the function `copy_file` needs an object `input` that:
+
+  - has a method `read`,
+  - that is invoked without arguments,
+  - and returns an object of type `bytes`.
+
+That's all the function `copy_file` asks of its argument `input` for
+it to work: that it be sufficiently similar to a "real" file.
+We don't ask that it be of a particular type, for example that it passes
+the isinstance test `isinstance(input, File)`.
+
+This less demanding type of typing is what in Python is called **duck typing**
+after the quote attributed to James Whitcomb Riley
+
+> When I see a bird that walks like a duck and swims like a duck and 
+> quacks like a duck, I call that bird a duck. 🦆
+
+Note that for the moment, the constraints that argument `input` of the function
+`copy_file` must satisfy is only a contract (moral) between the designer of
+the function and its user: as long as the user respects the contract,
+everything will go as planned. We sometimes speak of **protocol**
+to refer to this contract (or of **concept** or **interface**).
+
+At this stage, the Python interpreter is **not** informed of this contract and
+does nothing particular to ensure that the mutual commitment is respected.
+It will therefore be up to the developer of the function to document this protocol
+and to the user to read and respect it.
+
+## Static Verification
+
+There are tools that allow (partially) formalizing the contracts on which your programs
+depend, for example [mypy](http://mypy-lang.org/).
+
+In return for the work that will consist of describing the protocols,
+you will have a tool that informs you of certain violations of the contracts
+when writing the code, and not much later, during execution.
+
+For example, we can formalize the two protocols associated with the arguments
+of our function `copy_file`
+
+```python
+from typing import Protocol
+
+class Readable(Protocol):
+    def read(self) -> bytes:
+        pass
+
+class Writable(Protocol):
+    def write(self, data: bytes):
+        pass
+```
+
+Then annotate the type of the function arguments to indicate which protocol
+must be respected.
+
+```python
+def copy_file(input: Readable, output: Writable):
+    data = input.read()
+    output.write(data)
+```
+
+If we use the client code
+
+```python
+from urllib.request import urlopen
+url = "https://www.mjt.me.uk/assets/images/smallest-png/openstreetmap.png"
+input = urlopen(url)
+output = open("image-copy.png", mode="bw")
+copy_file(input, output)
+```
+
+Mypy will affirm that from its point of view, everything is fine
+
+```bash
+$ mypy main.py 
+Success: no issues found in 1 source file
+```
+
+However, if we make a mistake by providing, for example as second argument to the
+function `copy_file` a file name rather than a file object
+
+```python
+from urllib.request import urlopen
+url = "https://www.mjt.me.uk/assets/images/smallest-png/openstreetmap.png"
+input = urlopen(url)
+output = open("image-copy.png", mode="bw")
+copy_file(input, "image-copy.png")
+```
+
+Then mypy will inform us.
+
+```bash
+$ mypy main.py 
+main.py: error: Argument 2 to "copy_file" has incompatible type "str"; expected "Writable"
+Found 1 error in 1 file (checked 1 source file)
+```
+
+# Inheritance
+
+Let's consider our "homemade" complex number class again.
+
+```python
+class Complex:
+    def __init__(self, real, imag):
+        self.set_real(real)
+        self.set_imag(imag)
+    def get_real(self):
+        return self._real
+    def set_real(self, real):
+        if isinstance(real, float):
+            self._real = real
+        else:
+            raise TypeError(f"{real!r} is not a float")
+    real = property(get_real, set_real)
+    def get_imag(self):
+        return self._imag
+    def set_imag(self, imag):
+        if isinstance(imag, float):
+            self._imag = imag
+        else:
+            raise TypeError(f"{imag!r} is not a float")
+    imag = property(get_imag, set_imag)
+    def conjugate(self):
+        return Complex(self._real, -self._imag)
+    def __repr__(self):
+        # ⚠️ weird output when self.imag < 0
+        return f"({self._real}+{self._imag}j)"
+    def __add__(self, other):
+        return Complex(
+            self._real + other._real, 
+            self._imag + other._imag
+        )
+```
+
+We will try to equip ourselves with a new complex number class,
+`Complex2` whose instances will have a behavior that suits us better,
+without modifying the source code of `Complex`, but by exploiting its
+functionality to the maximum.
+
+To do this, we will **derive** the class `Complex2` from the class `Complex`;
+the new class will **inherit** the behavior of the previous class.
+At minimum, this means a declaration of the form
+
+```python
+class Complex2(Complex):
+    pass
+```
+
+At this stage, essentially no change in the behavior of complex numbers
+that are instances of it, because all methods of `Complex2` are inherited
+from those of `Complex`:
+
+```python
+>>> z = Complex2(0.5, 1.5)
+>>> z
+(0.5+1.5j)
+>>> z.real
+0.5
+>>> z.real = -0.5
+>>> z
+(-0.5+1.5j)
+>>> z.real = "Hello"
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "<stdin>", line 11, in set_real
+TypeError: 'Hello' is not a float
+>>> w = Complex2.conjugate(z)
+>>> w.real
+0.5
+>>> w.imag
+-1.5
+>>> z + z.conjugate()
+(1+0j)
+```
+
+We even have
+
+```python
+>>> isinstance(z, Complex)
+True
+```
+
+As a consequence, we can **substitute** an instance of class `Complex2` to a function that
+expects an instance of class `Complex`. The function is said to be **polymorphic**: it works
+with a given type of object, but also with derived types designed by the programmer.
+
+The only visible changes between `Complex` and `Complex2` are the
+tests that explicitly ask for the type of the complex object `z` and the test
+`isinstance(z, Complex2)`.
+
+```python
+>>> type(z) is Complex
+False
+>>> type(z) is Complex2
+True
+>>> isinstance(z, Complex2)
+```
+
+What motivates the introduction of a new complex number class initially is that
+we forgot to implement multiplication:
+
+```python
+>>> Complex(1.0, 0.0) * Complex(0.0, 1.0)
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+TypeError: unsupported operand type(s) for *: 'Complex' and 'Complex'
+```
+
+Let's fix this oversight by adding a method `__mul__` to the class `Complex2`
+
+```python
+class Complex2(Complex):
+    def __mul__(self, other):
+        r1, i1 = self.real, self.imag
+        r2, i2 = other.real, other.imag
+        real = r1*r2 - i1*i2
+        imag = r1*i2 + r2*i1
+        return Complex2(real, imag)
+```
+
+```python
+>>> Complex2(1.0, 0.0) * Complex2(0.0, 1.0)
+(0.0+1.0j)
+```
+
+It's better! There is actually a subtle bug (do you see which one?) but we will
+wait a bit to fix it, we will soon be better placed to correct the problem.
+
+In the meantime, we want to make our constructor a bit more versatile;
+we would like to be able to construct a complex number from any object that has numeric
+attributes `real` and `imag`, for example, a built-in complex number, instance of
+the class `complex`. With the `Complex` class, this doesn't work:
+
+```python
+>>> Complex(0.5+1.5j)
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+TypeError: __init__() missing 1 required positional argument: 'imag'
+```
+
+And not more with the `Complex2` class:
+
+```python
+>>> Complex2(0.5+1.5j)
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+TypeError: __init__() missing 1 required positional argument: 'imag'
+```
+
+Indeed, in the absence of a constructor `__init__` that is its own,
+new complexes are instantiated using the inherited method `__init__`.
+
+But we can define a new constructor `__init__` that will have priority. To do this, we test
+if the first argument named `real_or_complex` has fields `real` and `imag`. If not,
+we interpret it as a complex number; otherwise, we use this argument as the real
+part and the second as the imaginary part.
+
+```python
+class Complex2(Complex):
+    def __init__(self, real_or_complex, imag=None):
+        try:
+            real = real_or_complex.real
+            imag = real_or_complex.imag
+        except AttributeError:
+            real = real_or_complex
+            imag = imag
+        self.real = real
+        self.imag = imag
+    def __mul__(self, other):
+        r1, i1 = self.real, self.imag
+        r2, i2 = other.real, other.imag
+        real = r1*r2 - i1*i2
+        imag = r1*i2 + r2*i1
+        return Complex2(real, imag)
+```
+
+Note that the last two lines of the constructor are a copy-paste from the parent constructor.
+We might as well directly call that one! We can either use the explicit syntax
+`Complex.__init__(self, real, imag)` or the `super()` construction as
+below:
+
+```python
+class Complex2(Complex):
+    def __init__(self, real_or_complex, imag=None):
+        try:
+            real = real_or_complex.real
+            imag = real_or_complex.imag
+        except AttributeError:
+            real = real_or_complex
+            imag = imag
+        super().__init__(real, imag)
+    def __mul__(self, other):
+        r1, i1 = self.real, self.imag
+        r2, i2 = other.real, other.imag
+        real = r1*r2 - i1*i2
+        imag = r1*i2 + r2*i1
+        return Complex2(real, imag)
+```
+
+Now, the constructor of `Complex2` accepts complex arguments:
+
+```python
+>>> Complex2(0.5+1.5j)
+(0.5+1.5j)
+>>> Complex2(Complex(0.5, 1.5))
+(0.5+1.5j)
+```
+
+It's time to come back to the subtle bug we mentioned.
+By inheriting the method `__add__` from the parent class `Complex`,
+we will unfortunately always get an instance of `Complex` when adding
+instances of `Complex2`.
+
+```python
+>>> z = Complex2(0.5, 1.5)
+>>> w = z + z
+>>> type(w)
+<class '__main__.Complex'>
+```
+
+It is possible to fix this directly by reimplementing `__add__` in the derived class
+
+```python
+class Complex2(Complex):
+    def __init__(self, real_or_complex, imag=None):
+        try:
+            real = real_or_complex.real
+            imag = real_or_complex.imag
+        except AttributeError:
+            real = real_or_complex
+            imag = imag
+        super().__init__(real, imag)
+    def __add__(self, other):
+        return Complex2(
+            self.real + other.real, 
+            self.imag + other.imag
+        )
+    def __mul__(self, other):
+        r1, i1 = self.real, self.imag
+        r2, i2 = other.real, other.imag
+        real = r1*r2 - i1*i2
+        imag = r1*i2 + r2*i1
+        return Complex2(real, imag)
+```
+
+It works, but it means losing the benefit of what has already been implemented.
+We can be more subtle, call the parent class method for addition and correct the
+result type afterward, with our brand-new constructor:
+
+```python
+class Complex2(Complex):
+    def __init__(self, real_or_complex, imag=None):
+        try:
+            real = real_or_complex.real
+            imag = real_or_complex.imag
+        except AttributeError:
+            real = real_or_complex
+            imag = imag
+        super().__init__(real, imag)
+    def __add__(self, other):
+        # sum = Complex.__add__(self, other) would also work.
+        sum = super().__add__(other) 
+        return Complex2(sum)
+    def __mul__(self, other):
+        r1, i1 = self.real, self.imag
+        r2, i2 = other.real, other.imag
+        real = r1*r2 - i1*i2
+        imag = r1*i2 + r2*i1
+        return Complex2(real, imag)
+```
+
+And now the sum behaves as expected
+
+```python
+>>> z = Complex2(0.5, 1.5)
+>>> w = z + z
+>>> type(w)
+<class '__main__.Complex2'>
+```
+
+Incidentally, let's note that if a future generation of developers needs to
+take over our work and introduce a class `Complex3` that derives from `Complex2`,
+they will face the same problem. To make their lives easier, we can use code that
+will adapt the type of the returned value to the type of `self` and which can therefore
+be inherited as-is in `Complex3`.
+
+```python
+class Complex2(Complex):
+    def __init__(self, real_or_complex, imag=None):
+        try:
+            real = real_or_complex.real
+            imag = real_or_complex.imag
+        except AttributeError:
+            real = real_or_complex
+            imag = imag
+        super().__init__(real, imag)
+    def __add__(self, other):
+        ComplexType = type(self)
+        sum = super().__add__(other)
+        return ComplexType(sum)
+    def __mul__(self, other):
+        ComplexType = type(self)
+        r1, i1 = self.real, self.imag
+        r2, i2 = other.real, other.imag
+        real = r1*r2 - i1*i2
+        imag = r1*i2 + r2*i1
+        return ComplexType(real, imag)
+```
+
+# The Standard Library
+
+## `pathlib`
+
+The [pathlib](https://docs.python.org/3/library/pathlib.html) module of the Python standard library
+provides path classes representing files and directories in a file system.
+More precisely
+
+> Path classes are divided into pure paths, which provide only file system manipulation operations without I/O, and concrete paths, which inherit from pure paths and also provide I/O operations.
+
+In other words, pure paths -- instances of `PurePath` -- allow us to designate files
+but without accessing the file system properly. Instances of `Path` -- which derives from `PurePath` -- allow it.
+
+Path classes are also distinguished depending on whether the file system is Windows or POSIX
+(Linux and MacOS), but we won't worry about that here.
+
+For example, on my machine (Linux), I can designate the root of the file system
+with a pure path and use it to construct the (pure) path to the home directory
+of hypothetical users `linus` and `boisgera`:
+
+```python
+>>> ROOT = PurePath("/")
+>>> LINUS_HOMEDIR = ROOT / "home" / "linus"
+>>> BOISGERA_HOMEDIR = ROOT / "home" / "boisgera"
+```
+
+But I can't test if these directories actually exist:
+
+```python
+>>> LINUS_HOMEDIR.exists()
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+AttributeError: 'PurePosixPath' object has no attribute 'exists'
+>>> BOISGERA_HOMEDIR.exists()
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+AttributeError: 'PurePosixPath' object has no attribute 'exists'
+```
+
+However, I can do it after converting these to instances of `Path`:
+
+```python
+>>> LINUS_HOMEDIR = Path(LINUS_HOMEDIR)
+>>> BOISGERA_HOMEDIR = Path(BOISGERA_HOMEDIR)
+>>> LINUS_HOMEDIR.exists()
+False
+>>> BOISGERA_HOMEDIR.exists()
+True
+```
+
+Alternatively, and that's probably the simplest, we could have started with a `Path` to designate
+the root
+
+```python
+>>> ROOT = Path("/")
+>>> LINUS_HOMEDIR = ROOT / "home" / "linus"
+>>> BOISGERA_HOMEDIR = ROOT / "home" / "boisgera"
+>>> LINUS_HOMEDIR.exists()
+False
+>>> BOISGERA_HOMEDIR.exists()
+True
+```
+
+Since `Path` inherits from `PurePath`, `Path` instances can be used everywhere
+`PurePath` instances would work.
+
+## `random`
+
+### Introduction
+
+The [random](https://docs.python.org/3/library/random.html) module of the Python standard library
+allows generating pseudo-random numbers.
+
+```python
+>>> import random
+```
+
+The `random` function of the module will generate floating-point numbers uniformly
+distributed between 0 and 1.
+
+```python
+>>> random.random()
+0.17288416418484898
+>>> random.random()
+0.7270494197615684
+>>> random.random()
+0.22967289202282093
+```
+
+Multiple functions are provided for generating pseudo-random numbers following various
+probability distributions. For example, to generate numbers distributed according to the
+Gaussian with mean $\mu = 0.0$ and standard deviation $\sigma = 1.0$, we can invoke
+
+```python
+>>> random.gauss(mu=0.0, sigma=1.0)
+0.7010040262172509
+>>> random.gauss(mu=0.0, sigma=1.0)
+0.11430668630347102
+>>> random.gauss(mu=0.0, sigma=1.0)
+-0.49389733826503307
+```
+
+### Object-Oriented Interface
+
+Studying the source file [random.py](https://github.com/python/cpython/blob/3.10/Lib/random.py)
+informs us that the classic module interface is only a thin veneer over an object
+architecture. The module defines a class `Random`, then creates a private instance
+`_inst` in this module. The "functions" of the module `random` like `gauss` are simply
+shortcuts to the methods of this instance
+
+```python
+>>> random.random
+<built-in method random of Random object at 0x55a5a09ad260>
+>>> random.gauss
+<bound method Random.gauss of <random.Random object at 0x55a5a09ad260>>
+>>> r = random._inst
+>>> type(r)
+<class 'random.Random'>
+>>> r.random
+<built-in method random of Random object at 0x55a5a09ad260>
+>>> r.gauss
+<bound method Random.gauss of <random.Random object at 0x55a5a09ad260>>
+```
+
+The default method `random` generates random integers between $0$ and $2^{53} - 1$
+(the probability of each integer being identical), then divides the result by
+$2^{53}$. The downside of this approach: `random()` returns a value that is always a
+multiple of $2^{-53}$. The floating-point number $2^{-1074}$, for example, which is the
+smallest strictly positive floating-point number, has no chance of being produced.
+
+```python
+>>> r.random() * 2**53
+4346481833061509.0
+>>> r.random() * 2**53
+6826402970501312.0
+>>> r.random() * 2**53
+5570978756682725.0
+```
+
+If that's a problem for you, it is possible to correct this behavior as suggested
+by [the documentation of the module `random`](https://docs.python.org/3/library/random.html#recipes) by defining a class
+derived from `Random` that overrides the method `random`
+
+```python
+from math import ldexp
+
+class AltRandom(random.Random):
+    def random(self):
+        mantissa = 0x10_0000_0000_0000 | self.getrandbits(52)
+        exponent = -53
+        x = 0
+        while not x:
+            x = self.getrandbits(32)
+            exponent += x.bit_length() - 32
+        return ldexp(mantissa, exponent)
+```
+
+Usage is immediate
+
+```python
+>>> r = AltRandom()
+>>> r.random()
+0.2768487552410033
+>>> r.random()
+0.08881389087065399
+>>> r.random()
+0.28173863914986846
+```
+
+The values produced by the method `random` are no longer necessarily
+multiples of $2^{-53}$ (there is nevertheless more than a one in two chance
+that it is the case).
+
+```python
+>>> r.random() * 2**53
+6118147054761291.0
+>>> r.random() * 2**53
+1809975186779188.8
+>>> r.random() * 2**53
+6828617072759119.0
+```
+
+The other probability distributions using the method `random` as source of
+random values, we don't need to reimplement anything else to benefit hugely
+from this improved source of randomness.
+
+```python
+>>> r.gauss(mu=0.0, sigma=1.0)
+-0.28865100238160024
+>>> r.gauss(mu=0.0, sigma=1.0)
+-0.5190938357947126
+>>> r.gauss(mu=0.0, sigma=1.0)
+1.0356452612439027
+
+```
+
+## `doctest`
+
+[Doctest](https://docs.python.org/3/library/doctest.html) is a unit testing module in the standard library.
+It verifies that the examples in your documentation conform to the actual behavior of your code.
+
+For example, with the code
+
+```python
+# file: add.py
+
+def add(x, y):
+    """
+    Numerical sum of two objects
+
+    Usage:
+
+    >>> add(1, 1)
+    2
+    >>> add(0.5, 0.25)
+    0.75
+    >>> add([1], [2])
+    [3]
+    """
+    return x+y
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
+```
+
+Executing the file tells you that among the three usage examples of your function `add`,
+the result for one of them is different from what was expected:
+
+```python
+$ python add.py 
+**********************************************************************
+File "add.py", line 13, in __main__.add
+Failed example:
+    add([1], [2])
+Expected:
+    [3]
+Got:
+    [1, 2]
+**********************************************************************
+1 items had failures:
+   1 of   3 in __main__.add
+***Test Failed*** 1 failures.
+```
+
+Indeed, if we want an addition of lists "NumPy style", then the current code is not
+the right one! Because `+` used on lists concatenates them instead of doing element-wise
+addition.
+
+We diagnosed the problem, but we don't have time to fix it right away.
+So we are going to temporarily suppress such erroneous results by marking known
+as erroneous with the symbol 🐛 (🇺🇸 **bug** or 🇫🇷 **bogue**).
+This will serve as a reminder!
+
+To do this, we will derive from the class [`OutputChecker`] of `doctest` and
+override its method `check_output` to signal that any test whose result contains a bug
+symbol should be considered as passed. Then we will insert the resulting class
+in place of the `OutputChecker` class of `doctest`, to change the behavior of the
+module.
+
+[`OutputChecker`]: https://docs.python.org/3/library/doctest.html#doctest.OutputChecker
+
+```python
+# file: doctest_patch.py
+
+import doctest
+_doctest_OutputChecker = doctest.OutputChecker
+
+class OutputChecker(_doctest_OutputChecker):
+    def check_output(self, want, got, optionflags):
+        if "🐛" in want:
+            return True
+        else:
+            return super().check_output(want, got, optionflags)
+
+# 🐒 Monkey-patching
+doctest.OutputChecker = OutputChecker
+```
+
+If we slightly modify the file `add.py` to mark our problematic test and import `doctest_patch`
+
+```python
+# file: add.py
+
+def add(x, y):
+    """
+    Numerical sum of two objects
+
+    Usage:
+
+    >>> add(1, 1)
+    2
+    >>> add(0.5, 0.25)
+    0.75
+    >>> add([1], [2])
+    [3] 🐛
+    """
+    return x+y
+
+if __name__ == "__main__":
+    import doctest
+    import doctest_patch
+    doctest.testmod()
+```
+
+Then the tests run without error (no output means everything is fine).
+
+```bash
+$ python add.py
+```
+
+We can verify this by running the tests in "verbose" mode:
+
+```bash
+$ python add.py -v
+Trying:
+    add(1, 1)
+Expecting:
+    2
+ok
+Trying:
+    add(0.5, 0.25)
+Expecting:
+    0.75
+ok
+Trying:
+    add([1], [2])
+Expecting:
+    [3] 🐛
+ok
+1 items had no tests:
+    __main__
+1 items passed all tests:
+   3 tests in __main__.add
+3 tests in 2 items.
+3 passed and 0 failed.
+Test passed.
+```

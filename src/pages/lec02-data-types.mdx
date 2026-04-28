@@ -1,0 +1,517 @@
+---
+context:
+title: Data Types
+description: None, booleans, integers, and floating-point numbers
+date: "2026-04-25 18:00"
+authors: 
+  - name: Sébastien Boisgérault
+    title: Associate Professor
+    email: Sebastien.Boisgerault@minesparis.psl.eu 
+    url: https://eul.ink
+    image: https://2.gravatar.com/avatar/39ec5d637b0753448b97a8e63855a45cb6708d033b656fe9f1d3314bb4bfb202?size=128
+    affiliation: ITN Mines Paris – PSL
+    twitter: "boisgera"
+    github: "boisgera"
+    linkedin: "Sébastien Boisgérault"
+tags: [Python, types, None, boolean, int, float]
+license: "CC BY 4.0" 
+layout: ../layouts/MDXLayout.astro
+---
+
+export const debug = true;
+
+import Admonition from "/src/components/Admonition.astro";
+import Header from "/src/components/Header.astro";
+import { Image } from "astro:assets";
+
+<Header frontmatter={frontmatter}/>
+
+# Absence of Value
+
+Python provides a value `None` that signals ... the absence of value!
+By the way, the Python interpreter doesn't want to display it when
+you provide this value at the command prompt:
+
+```python
+>>> None
+```
+
+Using a variable doesn't change anything.
+
+```python
+>>> a = None
+>>> a
+```
+
+However, you can explicitly display `None`, for example with the `print` function:
+
+```python
+>>> print(a)
+None
+```
+
+The value `None` isn't very complex in itself; but its classic use cases
+are worth studying: it's not how `None` works that is subtle, but rather how
+it can be used appropriately.
+
+## Mechanisms
+
+`None` is a unique value in Python (there is no way to generate two
+different `None` values). So you can test if a variable `x` is 
+`None` by evaluating the expression `x is None`:
+
+```python
+>>> x = 1
+>>> x is None
+False
+>>> x = None
+>>> x is None
+True
+```
+
+Be careful, a variable assigned to `None`; an undefined variable (that is
+not bound to any value) is (subtly) different. If the variable `y` has
+not been introduced yet (or has been deleted with `del y`),
+evaluating the expression `y is None` raises an error
+
+```python
+>>> y is None
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+NameError: name 'y' is not defined
+```
+
+like any expression that uses `y`:
+
+```python
+>>> y
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+NameError: name 'y' is not defined
+```
+
+In a boolean context, `None` evaluates to `False`, but the test
+`x is None` is more precise, so generally preferable:
+
+```python
+>>> x = None
+>>> if x is None:
+...    print("x is None")
+...
+x is None
+>>> if not x:
+...    print("x is false-ish")
+...
+x is false-ish
+>>> x = 0
+>>> if not x:
+...    print("x is false-ish")
+...
+x is false-ish
+```
+
+## Use Cases
+
+### Functions Without Return Value
+
+Like mathematical functions, Python functions have arguments and return values
+
+```python
+>>> abs(-1)
+1
+```
+
+But invoking a Python function can also have **side effects**, for example:
+
+  - displaying text in the terminal,
+  
+  - modifying a global variable,
+  
+  - writing to a file,
+  
+  - sending an email,
+
+  - etc.
+
+If this side effect is the sole reason for the function's existence, then
+it is unnecessary to return a value.
+
+For example, invoking the `sleep` function from the Python `time` module will
+pause the program that invokes it (here the Python interpreter) for a
+determined time, then let it continue on its course. The expected side effect
+here is the pause in the program. Let's use this function in our own
+`think` function
+
+```python
+import time
+def think():
+    print("I'm thinking ...", end=" ")
+    time.sleep(3.0)
+    print("I'm done!")
+```
+
+which will be invoked as follows
+
+```python
+>>> think()
+I'm thinking ... I'm done!
+```
+
+But every Python function implicitly or explicitly returns a value.
+So it is legitimate to assign the result of `think()` to a variable.
+The difficulty is that the Python interpreter doesn't display it:
+
+```python
+>>> result = think()
+I'm thinking ... I'm done!
+>>> result
+>>>
+```
+
+Our function actually returned the special value `None` which can be
+interpreted as "absence of value" (yes, it's a bit paradoxical!).
+Insisting, we can still make the Python interpreter confess what the reality is:
+
+```python
+>>> print(result)
+None
+```
+
+It's as if the Python interpreter, noting that our `think` function definition
+didn't *explicitly* return any value (the `return` keyword is not used) had added
+the instruction `return None`:
+
+```python
+def think():
+    print("I'm thinking ...", end=" ")
+    time.sleep(3.0)
+    print("I'm done!")
+    return None
+```
+
+### Function With Optional Return Value
+
+Python dictionaries raise an error when trying to access
+the value of a key that doesn't exist.
+
+```python
+>>> d = {"a": 1, "b": 2}
+>>> d["a"]
+1
+>>> d["c"]
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+KeyError: 'c'
+```
+
+This isn't always very convenient. Fortunately there is an auxiliary method
+that allows returning a particular value on failure.
+By default, this value is `None`.
+
+```python
+>>> help(dict.get)
+Help on method_descriptor:
+
+get(self, key, default=None, /)
+    Return the value for key if key is in the dictionary, else default.
+```
+
+Thus, if we want to display the values associated with keys `"a"`, `"b"`
+and `"c"` (assumed to be different from `None`) if they exist and nothing otherwise,
+we can do:
+
+```python
+>>> for key in ["a", "b", "c"]:
+...     value = d.get(key)
+...     if value is not None:
+...         print(value)
+1
+2
+```
+
+### Function and Absence of Argument
+
+The value `None` is often used as a default value
+associated with a function argument. Not assigning (explicitly) a
+value to this argument is equivalent to assigning it the value `None`, which
+the function can detect and handle appropriately.
+
+We will illustrate this with the `seterr` function from NumPy, whose
+documentation begins as follows:
+
+```python
+>>> help(np.seterr) # doctest: +ELLIPSIS
+Help on function seterr in module numpy:
+
+seterr(all=None, divide=None, over=None, under=None, invalid=None)
+    Set how floating-point errors are handled.
+...
+```
+
+For reference, in case of division by zero, standard Python floating-point numbers (`float`)
+raise an error:
+
+```python
+>>> 1.0 / 0.0
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+ZeroDivisionError: float division by zero
+```
+
+But what happens if we use the floating-point numbers
+provided by NumPy (`float64`) is a bit different:
+
+```python
+>>> import numpy as np
+>>> one = np.float64(1.0)
+>>> zero = np.float64(0.0)
+>>> one / zero
+<stdin>:1: RuntimeWarning: divide by zero encountered in double_scalars
+inf
+```
+
+Python emits a **warning** but returns a value: `inf` (i.e., $+\infty$).
+
+[^warnings]: It is likely that this warning will only display the first
+time you perform the division by zero, but not thereafter. The functions
+in the `warnings` module allow controlling this behavior.
+
+This behavior is however configurable: by calling NumPy's `seterr` function without arguments,
+you can read the current configuration:
+
+```python
+>>> np.seterr()
+{'divide': 'over', 'under': 'ignore', 'invalid': 'warn'}
+```
+
+If this default behavior doesn't please you, you can use NumPy's `seterr` function to raise an error
+in case of division by zero.
+
+```python
+>>> _ = np.seterr(divide="raise")
+>>> one / zero
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+FloatingPointError: divide by zero encountered in double_scalars
+```
+
+If on the contrary you think $1.0 / 0.0$ is a "normal" operation that
+should return a "non-number" ($\bot$ i.e., `nan`), make sure that NumPy's
+warning and error handling mechanism ignores them.
+
+```python
+>>> _ = np.seterr(divide="ignore")
+>>> one / zero
+inf
+```
+
+If this result suits you, but you want an error in case of
+**overflow** (i.e., of the largest finite floating-point number),
+you can invoke `seterr` accordingly:
+
+```python
+>>> _ = np.seterr(overflow="raise")
+>>> np.float64(2.0) ** 10000
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+FloatingPointError: overflow encountered in double_scalars
+```
+
+The `seterr` documentation tells us that the function has 5 arguments,
+all of which have the default value `None`.
+The successive calls we made to `seterr`
+
+```python
+np.seterr()
+np.seterr(divide="raise")
+np.seterr(divide="error")
+np.seterr(over="raise")
+```
+
+are therefore equivalent to
+
+```python
+np.seterr(all=None, divide=None, over=None, under=None, invalid=None)
+np.seterr(all=None, divide="error", over=None, under=None, invalid=None)
+np.seterr(all=None, divide="raise", over=None, under=None, invalid=None)
+np.seterr(all="raise", divide=None, over=None, under=None, invalid=None)
+```
+
+The value `None` is interpreted by `seterr` as an argument that
+was not explicitly specified and therefore whose configuration we don't wish
+to modify. This strategy allows reading the configuration without changing it,
+changing the reaction in the presence of division by zero without changing that
+in case of overflow, etc.
+
+# Numeric Types
+
+## Booleans
+
+You can consider that the booleans `True` and `False` are numeric values.
+They combine using logical operators and are mainly used
+in tests that control the flow of execution of programs.
+
+```python
+>>> not False
+True
+>>> not True
+False
+```
+
+```python
+>>> False or False
+False
+>>> False or True
+True
+>>> True or False
+True
+>>> True or True
+True
+```
+
+```python
+>>> False and False
+False
+>>> False and True
+False
+>>> True and False
+False
+>>> True and True
+True
+```
+
+## Integers
+
+Python integers are numbers with a sign and without any size limit
+(other than that fixed by your computer's memory!).
+They support the classic arithmetic operations: addition `+`,
+multiplication `*`, power `**`, etc.
+
+``` python
+>>> -1
+-1
+>>> 1 + 3 * 2
+7
+>>> 2**8
+256
+>>> 2**1000
+10715086071862673209484250490600018105614048117055336074437503883703510511249361224931983788156958581275946729175531468251871452856923140435984577574698574803934567774824230985421074605062371141877954182153046474983581941267398767559165543946077062914571196477686542167660429831652624386837205668069376
+```
+
+It is possible to compute the remainder and quotient of a Euclidean
+division of two integers.
+
+```python
+>>> 17 % 12
+5
+>>> 17 // 2
+8
+>>> 17 / 12
+1.4166666666666667
+```
+
+Even if their preferred representation is decimal, Python integers
+can also be represented or defined in binary or hexadecimal form:
+
+```python
+>>> bin(42)
+'0b101010'
+>>> hex(42)
+'0x2a'
+>>> 0b101010
+42
+>>> 0x2a
+42
+>>> 0b101010 == 0x2a == 42
+True
+```
+
+## Floating-Point Numbers
+
+Floating-point numbers allow representing
+non-integer numeric values, like $e$ or $\pi$:
+
+```python
+>>> from math import e, pi
+>>> e
+2.718281828459045
+>>> pi
+3.141592653589793
+```
+
+You can convert a floating-point number to an integer approximation with `int`,
+but this doesn't guarantee getting the closest integer.
+For that, you will need to use the `round` function.
+```python
+>>> int(pi)
+3
+>>> int(e)
+2
+>>> round(pi)
+3
+>>> round(e)
+3
+```
+
+It is also possible to get "directed" approximations to the integer
+directly below or above the floating-point number.
+```python 
+>>> import math
+>>> math.floor(pi)
+3
+>>> math.ceil(pi)
+4
+```
+
+A major characteristic of floating-point numbers is that they are a
+finite precision representation of real numbers and that computations
+performed with them therefore induce (a priori) errors:
+```python
+>>> 0.1 + 0.2
+0.30000000000000004
+>>> 0.1 + 0.2 == 0.3
+False
+>>> math.sin(pi)
+1.2246467991473532e-16
+>>> math.sin(pi) == 0.0
+False
+```
+
+If necessary, you can get the real representation of a floating-point number,
+which is not what is displayed by default:
+
+```python
+>>> print(0.1)
+0.1
+>>> print(f"{0.1:.1000}")
+0.1000000000000000055511151231257827021181583404541015625
+>>> print(0.2)
+0.2
+>>> print(f"{0.2:.1000}")
+0.200000000000000011102230246251565404236316680908203125
+>>> print(0.3)
+0.3
+>>> print(f"{0.3:.1000}")
+'0.299999999999999988897769753748434595763683319091796875'
+>>> print(0.1+0.2)
+0.30000000000000004
+>>> print(f"{0.1+0.2:.1000}")
+0.3000000000000000444089209850062616169452667236328125
+```
+
+Floating-point numbers also include special values: $\infty$ (infinity)
+and $\bot$ (not-a-number):
+
+```python
+>>> from math import inf, nan
+>>> inf
+inf
+>>> -inf
+-inf
+>>> inf + 1.0
+inf
+>>> inf - inf
+nan
+>>> nan + inf
+nan
+```

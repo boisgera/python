@@ -1,0 +1,360 @@
+---
+context:
+title: Equality and Identity
+description: Understanding ==, is, and the differences between equality and identity
+date: "2026-04-28 18:00"
+authors: 
+  - name: Sébastien Boisgrault
+    title: Associate Professor
+    email: Sebastien.Boisgerault@minesparis.psl.eu 
+    url: https://eul.ink
+    image: https://2.gravatar.com/avatar/39ec5d637b0753448b97a8e63855a45cb6708d033b656fe9f1d3314bb4bfb202?size=128
+    affiliation: ITN Mines Paris – PSL
+    twitter: "boisgera"
+    github: "boisgera"
+    linkedin: "Sébastien Boisgrault"
+tags: [Python, equality, identity, comparison]
+license: "CC BY 4.0" 
+layout: ../layouts/MDXLayout.astro
+---
+
+export const debug = true;
+
+import Admonition from "/src/components/Admonition.astro";
+import Header from "/src/components/Header.astro";
+import { Image } from "astro:assets";
+
+<Header frontmatter={frontmatter}/>
+
+# Equality
+
+The expression `x == y` determines if the objects `x` and `y` are equal:
+
+```python
+>>> 0 == 0
+True
+>>> 0 == 1
+False
+```
+
+
+```python
+>>> "Hello!" == "Hello!"
+True
+>>> "Hello" == "World"
+False
+```
+
+```python
+>>> [1, 2, 3] == [1, 2, 3]
+True
+>>> [1, 2, 3] == [4, 5, 6]
+False
+```
+
+Equality tests in Python depend on the type of the compared objects:
+there is no totally universal interpretation of `==`; you must
+refer to the documentation of the types involved.
+You can also decide what meaning to give to the equality of the
+types you will define.
+
+<Admonition type="note" title="How to interpret x == y if the types of x and y are different?" open={true}>
+
+If the type of `y` is a subtype of the type of `x`, it determines first
+which meaning to give to `==`; otherwise the type of `x` is given priority.
+
+Source: [📖 Rich comparison methods](https://docs.python.org/3/reference/datamodel.html#object.__eq__)
+
+</Admonition>
+
+## Numbers
+
+The equality test of numbers proceeds without great surprise
+if we set aside some properties of special [floating-point numbers](#IEEE754).
+
+Note that the equality tests between numbers are permissive enough
+to allow comparing numbers of different types:
+
+```python
+>>> 1 == True
+True
+>>> 1 == 1.0
+True
+>>> 1 == 1 + 0j
+True
+```
+
+<Admonition type="note" title="Floating-point number equality" open={true}>
+
+Python floating-point numbers (`float`) have finite precision.
+Consequently, rounding errors in calculations can cause equality tests to fail.
+For example:
+
+```python
+>>> 0.1 + 0.2 == 0.3
+False
+```
+
+Because the addition introduced a (small) error in the calculation:
+
+```python
+>>> 0.1 + 0.2
+0.30000000000000004
+```
+
+The IEEE 754 standard governs the representation and calculation of
+floating-point numbers. It introduces special numbers; there are
+thus two distinct zeros ($0^+$ and $0^-$) but considered equal:
+
+```python
+>>> +0.0
+0.0
+>>> -0.0
+-0.0
+>>> +0.0 == -0.0
+True
+```
+
+More surprisingly, the "not-a-number" `nan` is a special value...
+that is not equal to itself! (All "not-a-numbers" are considered different.)
+
+```python
+>>> from math import nan
+>>> nan == nan
+False
+```
+
+You need to use the `isnan` function to know if a value is a non-number.
+
+```python
+>>> from math import isnan
+>>> isnan(nan)
+True
+```
+
+Source: [📖 IEEE 754 Standard](https://en.wikipedia.org/wiki/IEEE_754)
+
+</Admonition>
+
+## Collections
+
+Two collections -- lists, tuples, dictionaries, sets, etc. --
+delegate the equality test to the elements that compose them --
+recursively if they are also collections.
+Thus:
+
+```python
+>>> [] == [0]
+False
+>>> [0] == [0]
+True
+>>> [0] == [1]
+False
+>>> [0] == [0, 0]
+False
+>>> [0] == [0.0]
+True
+>>> [[0]] == [[0.0]]
+True
+```
+
+For dictionaries:
+
+```python
+>>> {"a": 1, "b": 2} == {"a": 1, "b": 2}
+True
+```
+
+And:
+
+```python
+>>> {"a": 1, "b": 2} == {"a": 1.0, "b": 2.0}
+True
+```
+
+The order of key-value pairs does not matter:
+
+```python
+>>> {"a": 1, "b": 2} == {"b": 2, "a": 1}
+True
+```
+
+But it is enough that a key or value differs in the two collections
+to invalidate equality:
+
+```python
+>>> {"a": 1, "b": 2} == {"a": 1, "b": 2, "c": 3}
+False
+>>> {"a": 1, "b": 2} == {"a": 2, "b": 1}
+False
+```
+
+
+## Strings
+
+String comparison proceeds most of the time as expected:
+
+```python
+>>> "Hello" == "Hello"
+True
+>>> "Hello" == "Halo"
+False
+```
+
+Except that in the Unicode standard there are sometimes multiple ways
+to visually obtain the same character. There is a "Latin small letter e with acute"
+character:
+
+```python
+>>> "\xe9"
+'é'
+```
+
+But also a "combining acute accent" symbol that can be combined with "e":
+
+```python
+>>> "e\u0301"
+'é'
+```
+
+The two code point sequences are different, so the two strings are
+considered different:
+
+```python
+>>> "\xe9" == "e\u0301"
+False
+```
+
+However, this is much more surprising when the test is done as follows:
+
+```python
+>>> "é" == "é"
+False
+```
+
+# Identity
+
+The expression `x is y` determines if the object `x` **is** the object `y`,
+with the same **identity**:
+
+```python
+x is y
+```
+
+The negation of `==` is `!=`, that of `is` is `is not`:
+
+```python
+x != y
+```
+
+```python
+x is not y
+```
+
+<Admonition type="note" title="Terminology" open={true}>
+
+- You can use the term **is equal to** to affirm equality between objects
+and simply **is** to affirm that they have the same identity
+(using the term "identical" would be misleading).
+
+- Equality between objects is sometimes called **structural equality**
+and identity between objects **referential equality**.
+
+</Admonition>
+
+The identity `x is y` means that the variables `x` and `y` refer to the same
+Python object: the data is at the same address in memory. A perfect copy of an object
+will therefore have a different identity from the original, whereas it will be
+considered equal to the original. However, if two objects are identical
+(in the sense of: have the same identity, are a single unique object),
+then they are necessarily equal.
+
+### Equality and Identity
+
+As an example, let's consider the three lists `a`, `b` and `c`:
+
+```python
+>>> a = [1, 2, 3]
+>>> b = [1, 2, 3]
+>>> c = b
+```
+
+The lists `a` and `b` are equal, as are `b` and `c`, but they are not
+identical—they do not designate the same object (in memory);
+the variables `b` and `c`, on the other hand, designate the same object:
+
+```python
+>>> a == b
+True
+>>> b == c
+True
+>>> a is b
+False
+>>> b is c
+True
+```
+
+We can verify that `b` and `c` designate the same object by evaluating
+the **identifier** of these objects (an integer) with the function `id`:
+
+```
+>>> id(a)
+140636096399680
+>>> id(b)
+140636098130688
+>>> id(c)
+140636098130688
+>>> id(a) == id(b)
+False
+>>> id(b) == id(c)
+True
+```
+
+One important consequence of this distinction: modifications to the list
+(designated by) `b` will affect the list `c` (which is the same object), but
+not the list `a` (which is a distinct object):
+
+```python
+>>> b.append(4)
+>>> b
+[1, 2, 3, 4]
+>>> c
+[1, 2, 3, 4]
+>>> a
+[1, 2, 3]
+```
+
+<Admonition type="warning" title="x is not y is not the same as x is (not y)" open={true}>
+
+Although composed of two keywords separated by a space, `is not` is
+an operator in its own right. The expression `x is not y` is equivalent
+to `not (x is y)` ... but more readable! If you need to use
+`is` and `not` as distinct operators, to mean `x is (not y)`,
+you should keep the parentheses. Thus, with
+
+```python
+>>> x = 1
+>>> y = True
+```
+
+we have
+
+```
+>>> x is not y
+True
+>>> x is y
+False
+>>> not (x is y)
+True
+```
+
+but
+
+```python
+>>> not y
+False
+>>> x is (not y)
+False
+```
+
+</Admonition>

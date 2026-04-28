@@ -1,0 +1,281 @@
+---
+context:
+title: Iteration and Comprehension
+description: Iterables, iterators, lists comprehensions, and generator expressions
+date: "2026-04-28 18:00"
+authors: 
+  - name: Sébastien Boisgrault
+    title: Associate Professor
+    email: Sebastien.Boisgerault@minesparis.psl.eu 
+    url: https://eul.ink
+    image: https://2.gravatar.com/avatar/39ec5d637b0753448b97a8e63855a45cb6708d033b656fe9f1d3314bb4bfb202?size=128
+    affiliation: ITN Mines Paris – PSL
+    twitter: "boisgera"
+    github: "boisgera"
+    linkedin: "Sébastien Boisgrault"
+tags: [Python, iteration, comprehension, generators]
+license: "CC BY 4.0" 
+layout: ../layouts/MDXLayout.astro
+---
+
+export const debug = true;
+
+import Admonition from "/src/components/Admonition.astro";
+import Header from "/src/components/Header.astro";
+import { Image } from "astro:assets";
+
+<Header frontmatter={frontmatter}/>
+
+# Iteration
+
+**Iteration** is the process of obtaining the elements of a collection one after another.
+This is what happens in a for loop:
+
+```python
+for i in [1, 2, 3]:
+    print(i)
+```
+
+Or in expressions like
+
+```python
+>>> s = set([1, 2, 3])
+```
+
+And
+
+```python
+>>> m = max([0, 1, -1, 2, -2])
+```
+
+The starting point is always an **iterable**, that is, capable of producing
+**iterators** on demand, which generate the desired elements.
+
+The protocol that allows exploiting iterables and iterators uses the
+`iter` and `next` functions according to the following scheme:
+
+```python
+>>> iterable = [1, 2, 3]
+>>> iterator = iter(iterable)
+>>> next(iterator)
+1
+>>> next(iterator)
+2
+>>> next(iterator)
+3
+>>> next(iterator)
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+StopIteration
+```
+
+Note that the iterator above progressively "exhausts" the iterable from which it
+is derived, until it generates an error; it is then no longer usable to
+traverse the list. But of course you can produce a new one with the `iter`
+function and the starting iterable.
+
+The for loop described above exploits this protocol.
+It is in fact equivalent to:
+
+```python
+iterator = iter([1, 2, 3])
+while True:
+    try:
+        i = next(iterator)
+        print(i)
+    except StopIteration:
+        break
+```
+
+<Admonition type="warning" title="Do not modify a collection during iteration!" open={true}>
+
+The result would be undefined.
+
+Instead of iterating over the list `l` from which you progressively remove
+elements:
+
+```python
+l = [1, 2, 3]
+for i in l:
+    print(i)
+    l.remove(i)
+```
+
+Iterate over a copy instead:
+
+```python
+l = [1, 2, 3]
+for i in l.copy():
+    print(i)
+    l.remove(i)
+```
+
+</Admonition>
+
+# Classic Iterables
+
+The following are iterable in particular:
+
+  - lists
+  - sets
+  - dictionaries
+  - strings
+  - files
+  - etc.
+
+There are also functions that produce iterables, in particular:
+
+  - `range`
+  - `enumerate`
+  - `zip`
+
+Demonstration!
+
+```python
+>>> range(10)
+range(0, 10)
+>>> for i in range(10):
+...     print(i)
+... 
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+```
+
+```python
+>>> enumerate([6, 7, 8])  # doctest: +ELLIPSIS
+<enumerate object at 0x...>
+>>> for i, number in enumerate([6, 7, 8]):
+...     print(i, number)
+... 
+0 6
+1 7
+2 8
+```
+
+```python
+>>> l1 = [1, 2, 3]
+>>> l2 = [4, 8, 16]
+>>> for item in zip(l1, l2):
+...     print(item)
+... 
+(1, 4)
+(2, 8)
+(3, 16)
+```
+
+# Comprehensions
+
+**List comprehensions** (or simply **comprehensions**) are a more compact
+alternative to for loops for constructing lists.
+
+For example, to construct the list of squares of the integers from the list:
+
+```python
+integers = [1, 2, 3]
+```
+
+We can either use a for loop:
+
+```python
+>>> squares = []
+>>> for i in integers:
+...     square = i * i
+...     squares.append(square)
+...
+>>> squares
+[1, 4, 9]
+```
+
+Or use comprehension:
+
+```python
+>>> [i*i for i in integers]
+[1, 4, 9]
+```
+
+It is also possible to filter the elements you keep:
+
+```python
+>>> def is_even(i):
+...     return i % 2 == 0
+...
+>>> integers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+>>> [i for i in integers if is_even(i)]
+[0, 2, 4, 6, 8]
+```
+
+Sets and dictionaries also have comprehensions:
+
+```python
+>>> {i*i for i in [0, 1, 2, 3] if i != 0}
+{1, 4, 9}
+>>> {i: i*i for i in [0, 1, 2, 3] if i != 0}
+{1: 1, 2: 4, 3: 9}
+```
+
+# Generator Expressions
+
+The calculation
+
+```python
+>>> max([i*i for i in range(10)])
+81
+```
+
+Required allocating the list `[x*x for x in range(10)]` when in fact
+`range(10)` is a lazy iterable, which produces values on demand,
+without requiring such memory allocation.
+
+We could compute the maximum ourselves while being more economical:
+
+```python
+>>> square_max = -1
+>>> for i in range(10):
+...     square = i*i
+...     if square > square_max:
+...         square_max = square
+>>> square_max
+81
+```
+
+But the following construction, which uses a **generator expression**,
+is very similar to our initial code but does not have its drawback:
+
+```python
+>>> max((x*x for x in range(10)))
+81
+```
+
+The expression `(x*x for x in range(10))` is an iterable that produces its values
+on demand. In the context of use above, we can even omit the parentheses
+describing the expression and simply write:
+
+```python
+>>> max(x*x for x in range(10))
+81
+```
+
+However, this is not true in all contexts; thus:
+
+```python
+>>> x*x for x in range(10)
+  File "<stdin>", line 1
+    x*x for x in range(10)
+        ^
+SyntaxError: invalid syntax
+```
+
+But:
+
+```python
+>>> (x*x for x in range(10))  # doctest: +ELLIPSIS
+<generator object <genexpr> at 0x...>
+```

@@ -1,0 +1,689 @@
+---
+context:
+title: Collections
+description: Lists, tuples, sets, and dictionaries
+date: "2026-04-28 18:00"
+authors: 
+  - name: Sébastien Boisgrault
+    title: Associate Professor
+    email: Sebastien.Boisgerault@minesparis.psl.eu 
+    url: https://eul.ink
+    image: https://2.gravatar.com/avatar/39ec5d637b0753448b97a8e63855a45cb6708d033b656fe9f1d3314bb4bfb202?size=128
+    affiliation: ITN Mines Paris – PSL
+    twitter: "boisgera"
+    github: "boisgera"
+    linkedin: "Sébastien Boisgrault"
+tags: [Python, collections, list, tuple, set, dict]
+license: "CC BY 4.0" 
+layout: ../layouts/MDXLayout.astro
+---
+
+export const debug = true;
+
+import Admonition from "/src/components/Admonition.astro";
+import Header from "/src/components/Header.astro";
+import { Image } from "astro:assets";
+
+<Header frontmatter={frontmatter}/>
+
+# Lists
+
+Python lists are ordered collections of objects of arbitrary type.
+They are (potentially) heterogeneous: it is not necessary that the type
+of all elements in a list be the same
+
+```python
+>>> l = [1.0, True, 2, 3]
+```
+
+Lists are mutable; their elements can be read and written with the `l[index]` operation;
+the index of the first element is `0`.
+```python
+>>> l[1]
+True
+>>> l
+[1.0, True, 2, 3]
+>>> l[1] = 42
+[1.0, 42, 2, 3]
+```
+
+The length of a list is variable; you can remove elements from it and
+add them at an arbitrary position in the list.
+```python
+>>> len(l)
+3
+>>> del l[1]
+>>> len(l)
+2
+>>> l
+[1.0, 2, 3]
+>>> l.append(12)
+>>> l
+[1.0, 2, 3, 12]
+>>>
+>>> l.extend([9, 10, 11, 12])
+>>> l
+[1.0, 2, 3, 12, 9, 10, 11, 12]
+>>> l.insert(True, 0)
+>>> l
+[True, 1.0, 2, 3, 12, 9, 10, 11, 12]
+```
+A negative index `i` will be interpreted as the index `len(l) + i`.
+In particular, the last element of a list can be addressed with index `-1`.
+
+```python
+>>> l[-1]
+12
+```
+
+It is possible to **pop** an element from a list, that is,
+to remove it from the list and retrieve its value. By default, the last
+element of the list is popped, but this is configurable.
+
+```python
+>>> l.pop()
+12
+>>> l
+[1.0, 2, 3, 12, 9, 10, 11]
+>>> l.pop(0)
+1.0
+>>> l
+[2, 3, 12, 9, 10, 11]
+```
+
+It is possible to locate, count and remove elements from a list
+having a given value.
+
+```python
+>>> l
+[2, 3, 12, 9, 10, 11]
+>>> l.remove(9)
+>>> l
+[2, 3, 12, 10, 11]
+>>> l.index(10)
+3
+>>> l.count(63)
+0
+```
+
+It is possible to create a list resulting from the concatenation of two lists.
+
+```python
+>>> l
+[1, 2, 3, 4]
+>>> l1 = [1, 2]
+>>> l2 = [3, 4]
+>>> l3 = l1 + l2
+>>> l1
+[1, 2]
+>>> l2
+[3, 4]
+>>> l3
+[1, 2, 3, 4]
+```
+
+The `extend` operation performs the same operation, except it modifies
+the list being extended rather than creating a new list.
+
+```python
+>>> l3 = l1.extend(l2)
+>>> l1
+[1, 2, 3, 4]
+>>> l2
+[3, 4]
+>>> l3 is None
+True
+```
+
+Multiplying a list by an integer `n` is also defined: it produces
+`n` copies of the initial list that are concatenated.
+
+```python
+>>> 3 * [7, 1]
+[7, 1, 7, 1, 7, 1]
+```
+
+The `for` loop allows iterating over all elements of a list.
+
+```python
+>>> l = [1, 2, 3, 4]
+>>> len(l)
+4
+>>> for i in l:
+...     print(i)
+...
+1
+2
+3
+4
+```
+
+A sequence of integers between `0` and `n-1` is produced by `range(n)`.
+However, this is not a classic list, but a lazy list, whose values
+are produced on demand, which allows saving memory.
+Nevertheless, it can be converted to a classic list without difficulty if needed.
+
+```python
+>>> for i in range(5):
+...     print(i)
+...
+0
+1
+2
+3
+4
+>>> range(5)
+range(0, 5)
+>>>
+>>> list(range(5))
+[0, 1, 2, 3, 4]
+```
+
+<Admonition type="warning" title="Be careful with lists sharing mutable objects" open={true}>
+
+It is the references to objects that are stored in lists, not
+the objects themselves; by modifying an element in a list, you also modify
+any list of which it is an element.
+
+</Admonition>
+
+```python
+>>> l = [[1, 2], [3, 4]]
+>>> elt = l[0]
+>>> elt
+[1, 2]
+>>> elt.append(42)
+>>> elt
+[1, 2, 42]
+>>> l
+[[1, 3, 42], [3, 4]]
+```
+
+# Dictionaries
+
+Python **dictionaries** are data structures that associate **keys** to **values**.
+In other languages, they are called associative arrays or, referencing their
+implementation, **hash tables**.
+
+The Python dictionary representing the following associations
+
+| Key   | Value |
+|:-----|:------|
+| "a"  | `1`   |
+| "b"  | `2`   |
+| "c"  | `3`   |
+
+can be defined with the statement
+
+```python
+>>> d = {"a": 1, "b": 2, "c": 3}
+```
+
+Dictionary data can be read, written and deleted:
+
+```python
+>>> d["a"]
+1
+>>> d
+{'a': 1, 'b': 2, 'c': 3}
+>>> d["d"] = 4
+>>> d
+{'a': 1, 'b': 2, 'c': 3, 'd': 4}
+>>> del d["a"]
+>>> d
+{'b': 2, 'c': 3, 'd': 4}
+```
+
+Accessing a missing key with the `[]` notation raises an error
+
+```python
+>>> d["a"]
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+KeyError: 'a'
+```
+
+but the `get` method of dictionaries allows returning the value associated with the
+requested key if the key is present and `None` otherwise.
+
+```python
+>>> d.get("b")
+2
+>>> d.get("a")
+```
+
+It is also possible to specify another fallback value than `None` if needed:
+
+```python
+>>> d.get("b", 0)
+2
+>>> d.get("a", 0)
+0
+```
+
+For dictionaries, membership tests and iteration concern only the keys, not the values:
+
+```python
+>>> "a" in d
+False
+>>> "b" in d
+True
+>>> for k in d:
+...     print(k)
+... 
+b
+c
+d
+>>> list(d)
+['b', 'c', 'd']
+```
+
+However, this is only the default behavior: the `keys`, `values` and `items`
+methods allow choosing more precisely which objects in the dictionary
+to iterate over.
+
+```python
+>>> for k in d.keys():
+...     print(k)
+... 
+b
+c
+d
+>>> list(d.keys())
+['b', 'c', 'd']
+```
+
+```python
+>>> for v in d.values():
+...     print(v)
+... 
+2
+3
+4
+>>> list(d.values())
+[2, 3, 4]
+```
+
+```python
+>>> for k, v in d.items():
+...     print(k, v)
+... 
+b 2
+c 3
+d 4
+>>> list(d.items())
+[('b', 2), ('c', 3), ('d', 4)]
+```
+
+There are secondary methods that are sometimes useful.
+For example `update` allows adding/modifying several key-value associations to a dictionary
+or `pop` which allows reading the value associated with a key before removing it.
+
+```python
+>>> d
+{'b': 2, 'c': 3, 'd': 4}
+>>> d.update({"e": 5, "f": 6})
+>>> d
+{'b': 2, 'c': 3, 'd': 4, 'e': 5, 'f': 6}
+>>> d.pop("b")
+2
+>>> d
+{'c': 3, 'd': 4, 'e': 5, 'f': 6}
+```
+
+The palm for complexity goes to the infamous `setdefault` method
+whose description is:
+
+> `setdefault(d, key, default=None)`
+>
+> Insert `key` in the dictionary `d` with a value of `default` if key is not in `d`.
+>
+> Return the value for key if key is in the dictionary, else default.
+
+
+More importantly, keys are not necessarily strings or values numbers:
+
+```python
+>>> import math
+>>> {math.pi: 90.0}
+{3.141592653589793: 90.0}
+>>> {1: 4.0, 2.0: 8, False: "yep"}
+{1: 4.0, 2.0: 8, False: 'yep'}
+>>> {(1, 2): 7, (7, 8, 9): 9}
+{(1, 2): 7, (7, 8, 9): 9}
+>>> {(1, ("aa", "bb")): 90}
+{(1, ('aa', 'bb')): 90}
+```
+
+There is actually no restriction on the type of values you can store
+in a dictionary. However, keys must be **hashable**, which is for example
+not the case of lists:
+
+```python
+>>> {[2]: 90.0}
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+TypeError: unhashable type: 'list'
+>>> hash([2])
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+TypeError: unhashable type: 'list'
+```
+
+This is the case for most immutable atomic Python types
+
+```python
+>>> hash(None)
+5891579141320
+>>> hash(False)
+0
+>>> hash(42)
+42
+>>> hash(math.pi)
+326490430436040707
+>>> hash("Hello!")
+3339764772054024462
+```
+
+as well as for tuples themselves composed of hashable objects
+
+```python
+>>> hash((None, False, 42, math.pi, "Hello!"))
+>>> hash((0, (1, (2, (3, ())))))
+>>> hash((1, 2, [3]))
+>>> hash((1, 2, [3]))
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+TypeError: unhashable type: 'list'
+```
+
+<Admonition type="note" title="Why this restriction? 🤔" open={true}>
+
+For performance reasons! Indeed, hash tables allow (under certain assumptions)
+accessing values in time that does not depend on the number of elements in the
+structure, cf. for example
+[the Wikipedia article on hash tables](https://en.wikipedia.org/wiki/Hash_table).
+Conversely, implementing associative arrays in a simpler structure,
+like a list of lists `[["a", 1], ["b": 2], ["c": 3]]` would lead to an
+access time that increases linearly with the number of elements in the structure.
+
+</Admonition>
+
+# Tuples
+
+Tuples are often used implicitly, to design a function returning
+multiple values or to assign in a single instruction multiple variables.
+
+```python
+>>> def compute_pi():
+...     value = 3.14
+...     error = 0.005
+...     return value, error
+... 
+>>> value, error = compute_pi()
+>>> print(f"{value} ± {error}")
+3.14 ± 0.005
+```
+
+```python
+>>> a = 1
+>>> b = 2
+>>> c = 3
+>>> a, b = b, c
+>>> a
+2
+>>> b
+3
+``` 
+
+The statement `value, error = compute_pi()` actually produces a pair
+(a tuple of length 2) that is instantly **unpacked** to
+provide values to the variables `value` and `error`.
+This becomes much more evident if we decompose these steps:
+
+```python
+>>> value_and_error = compute_pi()
+>>> value_and_error
+(3.14, 0.005)
+>>> type(value_and_error)
+<class 'tuple'>
+>>> len(value_and_error)
+2
+>>> value, error = value_and_error
+>>> value
+3.14
+>>> error
+0.005
+```
+
+As for the assignment `a, b = b, c`, it also implicitly goes through
+the creation of a pair: it is equivalent to
+
+``` python
+>>> b_and_c = b, c
+>>> b_and_c
+(2, 3)
+>>> type(b_and_c)
+<class 'tuple'>
+>>> len(b_and_c)
+2
+>>> a, b = b_and_c
+>>> a
+2
+>>> b
+3
+```
+
+If we were able to forget that a tuple was created, it is because a tuple can
+most often be defined by a very light notation, with a sequence of objects
+separated by commas. But the universally valid notation for tuples
+encloses this sequence in parentheses. Instead of the initial code, we could very
+well have written
+
+```python
+>>> def compute_pi():
+...     value = 3.14
+...     error = 0.005
+...     return (value, error)
+... 
+>>> (value, error) = compute_pi()
+>>> print(f"{value} ± {error}")
+3.14 ± 0.005
+```
+
+```python
+>>> a = 1
+>>> b = 2
+>>> c = 3
+>>> (a, b) = (b, c)
+>>> a
+2
+>>> b
+3
+``` 
+which is equivalent, but more explicit. The empty tuple is denoted by `()`;
+for a tuple of length 0 containing for example the single argument 1,
+one might be tempted to use the notation `(1)` but there would then be
+ambiguity in the notations since parentheses are also used to indicate
+priorities between operations in calculations. One must therefore resign
+oneself to adopt a **trailing comma** and use the notation `(1,)`.
+One can keep the trailing comma for tuples of length 2 or more, but it is
+no longer necessary.
+
+```python
+>>> ()
+()
+>>> (1) # ⚠️ not a tuple!
+1
+>>> (1,)
+(1,)
+>>> 1,
+>>> (1, 2)
+(1, 2)
+>>> (1, 2,)
+(1, 2)
+>>> 1, 2
+(1, 2)
+>>> 1, 2,
+(1, 2)
+```
+
+Tuples are immutable: of fixed length whose elements cannot be replaced.
+
+```python
+>>> t = (1, 2)
+>>> t[0]
+1
+>>> t[1]
+2
+>>> t[0] = 3
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+TypeError: 'tuple' object does not support item assignment
+```
+
+However, this immutability is superficial: if a tuple contains a mutable value
+(such as a list), it is always possible to modify the list and therefore to
+modify **indirectly** the tuple.
+
+```python
+>>> l = [1, 2, 3]
+>>> t = (l, 2, 3, 3)
+>>> t
+([1, 2, 3], 2, 3, 3)
+>>> l.append(42)
+>>> t
+([1, 2, 3, 42], 2, 3, 3)
+```
+
+
+# Sets
+
+A set can be defined by a sequence of objects separated by commas
+and surrounded by braces
+
+```python
+>>> {1, 2, 3, 4}
+{1, 2, 3, 4}
+```
+
+It is also possible to pass through the `set` constructor with a
+list as argument
+
+```python
+>>> set([1, 2, 3, 4])
+{1, 2, 3, 4}
+```
+
+Conversely, it is easy to convert a set to a list
+
+```python
+>>> list({1, 2, 3, 4})
+[1, 2, 3, 4]
+```
+
+<Admonition type="warning" title="Empty set vs empty dict" open={true}>
+
+The notation `{}` does not define an empty set, but an empty dictionary[^dict].
+
+The empty set can be defined by `set()`.
+
+```python
+>>> type({})
+<class 'dict'>
+>>> set()
+set()
+```
+
+</Admonition>
+
+
+
+[^dict]: Dictionaries existed in Python well before sets were introduced.
+They therefore occupied the `{}` notation first, and sets had to accommodate it afterward.
+
+The implementation of a set is similar to that of a dictionary
+which would have the elements of the set as keys and (for example) `True`
+as a common value to all keys.
+
+```python
+>>> s = {1, 2, 3, 4}
+>>> d = {1: True, 2: True, 3: True, 4: True}
+```
+
+This allows understanding why repeated elements in a set are ignored and why,
+although the insertion order of elements is preserved, this order does not
+factor into comparisons
+
+``` python
+>>> {1, 2, 2, 3, 3, 3, 4, 4, 4, 4}
+{1, 2, 3, 4}
+>>> {4, 3, 2, 1}
+{4, 3, 2, 1}
+>>> {1, 2, 3, 4} == {4, 3, 2, 1}
+True
+```
+
+Not surprisingly, it can also be deduced that only hashable objects
+can be used as elements of a set.
+
+```python
+>>> s = {1, 2, "djksjds", (2, 3), (2, ("jsdksjk", 90))}
+>>> s = {[]}
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+TypeError: unhashable type: 'list'
+```
+Sets are mutable: it is possible to add elements to a set
+and remove them.
+It is also possible to test if an object belongs to the set and
+iterate over the elements of the set.
+
+```python
+>>> s = {1, 2, "djksjds", (2, 3), (2, ("jsdksjk", 90))}
+>>> s.add(42)
+>>> s
+{(2, ('jsdksjk', 90)), 1, 2, (2, 3), 'djksjds', 42}
+>>> s.remove(42)
+>>> s
+{(2, ('jsdksjk', 90)), 1, 2, (2, 3), 'djksjds'}
+>>> 1 in s
+True
+>>> for x in s:
+...     print(x)
+... 
+(2, ('jsdksjk', 90))
+1
+2
+(2, 3)
+djksjds
+```
+
+Classic set operations are supported by operators:
+
+| Set Operation      | Symbol | Operator |
+|:-----------------|:------:|:----------|
+| Union            | ∪      | `|`       |
+| Intersection    | ∩      | `&`      |
+| Difference      | \     | `-`      |
+| Symmetric difference | Δ | `^`      |
+
+Thus, with
+
+```python
+>>> s1 = {1, 2, 3, 4, 5}
+>>> s2 = {4, 5, 6, 7, 8}
+```
+
+we obtain
+
+```python
+>>> s1 | s2
+{1, 2, 3, 4, 5, 6, 7, 8}
+>>> s1 & s2
+{4, 5}
+>>> s1 - s2
+{1, 2, 3}
+>>> s1 ^ s2
+{1, 2, 3, 6, 7, 8}
+```
