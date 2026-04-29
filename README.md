@@ -11,7 +11,7 @@
 
 <img 
 src="https://raw.githubusercontent.com/boisgera/python/refs/heads/master/src/icons/cc.svg"
-style="vertical-align: -4px;"> <https://boisgera.github.io/python/>
+style="vertical-align: -10px;"> <https://boisgera.github.io/python/>
 
 [![CC](src/icons/cc.svg)](LICENSE) <https://boisgera.github.io/python/>
 
