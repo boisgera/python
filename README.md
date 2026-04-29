@@ -1,15 +1,17 @@
 
 [![Snake and computer](src/assets/friendly-snake-and-computer.png)](https://boisgera.github.io/python/)
 
-# Python open course 
+# Python course 
 
 [![MDX](src/icons/mdx.svg)](https://mdxjs.com)
 [![Astro](https://img.shields.io/badge/--white?logo=astro&logoColor=black)](https://astro.build)
 [![CI](https://github.com/boisgera/python/actions/workflows/build.yml/badge.svg)](https://github.com/boisgera/python/actions/workflows/build.yml)
 
-## Online book
+## Online open book
 
 <https://boisgera.github.io/python/>
+
+![CC](src/icons/ccheart_black.svg) ksdldksldks
 
 ## Quickstart for editors
 
