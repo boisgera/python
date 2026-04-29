@@ -11,7 +11,7 @@
 
 
 
-# Quickstart for editors
+## Quickstart for editors
 
 First [install Bun], then install the project dependencies:
 
