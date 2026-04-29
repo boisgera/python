@@ -1,0 +1,784 @@
+---
+context:
+title: The SIR Epidemiological Model
+description: Simulation and analysis of the SIR epidemiological model with Python
+date: "2026-04-29 14:00"
+authors:
+  - name: Sébastien Boisgérault
+    title: Associate Professor
+    email: Sebastien.Boisgerault@minesparis.psl.eu
+    url: https://eul.ink
+    image: https://2.gravatar.com/avatar/39ec5d637b0753448b97a8e63855a45cb6708d033b656fe9f1d3314bb4bfb202?size=128
+    affiliation: ITN Mines Paris – PSL
+    twitter: "boisgera"
+    github: "boisgera"
+    linkedin: "Sébastien Boisgérault"
+tags: [Python, NumPy, SciPy, Matplotlib, SIR model]
+license: "CC BY 4.0"
+layout: ../layouts/MDXLayout.astro
+---
+
+import Admonition from "/src/components/Admonition.astro";
+
+
+# Introduction
+
+
+The SIR compartmental epidemiological model describes the time evolution, 
+within a constant population of $N$ individuals, 
+of the number of susceptible individuals $S$, 
+infected individuals $I$, and recovered individuals $R$ 
+(no longer showing clinical symptoms) 
+(cf. ["The SEIRS model for infectious disease dynamics"][SEIRS] 
+for a presentation of a more complete model).
+
+[SEIRS]: https://www.nature.com/articles/s41592-020-0856-2
+
+
+
+
+The parameter $\beta>0$ represents the contagion rate, 
+$\gamma>0$ the recovery rate, and $\omega>0$ the immunity loss rate 
+(these quantities have units of inverse time). 
+
+
+
+The basic reproduction number $R_0$ is defined as:
+
+$$
+R_0 := \frac\{\beta\}\{\gamma\}
+$$
+
+In the absence of births and deaths, these quantities evolve according
+to the following equations:
+
+$$
+\dot{S}(t) = \omega R(t) - \beta \frac{"{"}\beta"{"}"{"}\gamma"{"}" I(t)S(t)}{N}
+$$
+
+$$
+\dot{I}(t) = \beta \frac{"{"}\beta"{"}"{"}\gamma"{"}" I(t)S(t)}{N} - \gamma  I(t)
+$$
+
+$$
+\dot{R}(t) = \gamma I(t) - \omega R(t)
+$$
+
+## Dependencies
+
+Python 3, NumPy, SciPy, Matplotlib.
+
+```python
+from numpy import *
+from scipy.integrate import solve_ivp
+import matplotlib.pyplot as plt
+```
+
+## Simulation
+
+
+Define the constants
+
+```python
+WEEK = 7
+YEAR = 365
+```
+
+and
+
+```python
+N = 100
+beta = 1 / (WEEK)
+gamma = 1 / (2 * WEEK)
+omega = 1 / YEAR
+```
+
+#### 🚀 Simulation with `solve_ivp`
+
+Develop a `dSIR` function such that the following code provides the results of a 5-year SIR model simulation with an initial population of 1% infected individuals.
+
+```python
+S0, I0 = 99.0, 1.0
+R0 = N - S0 - I0
+t_span = [0.0, 5*YEAR]
+results = solve_ivp(dSIR, t_span=t_span, y0=(S0, I0, R0))
+```
+
+(Reference: 📖 [`solve_ivp`](https://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.solve_ivp.html))
+
+<Admonition type="solution" open={false}>
+
+```python
+def dSIR(t, SIR):
+    S, I, R = SIR
+    dS = omega * R - beta * I * S / N
+    dI = beta * I * S / N - gamma * I
+    dR = gamma * I - omega * R  
+    return (dS, dI, dR)
+```
+
+If you are familiar with closures, and the presence of a "useless" `t` argument bothers you, you can also define the higher-order function:
+
+```python
+def autonomous(fx):
+    def f_tx(t, x):
+        return fx(x)
+    return f_tx
+```
+
+and use it as a decorator to define `dSIR` without the `t` parameter:
+
+```python
+@autonomous
+def dSIR(SIR):
+    S, I, R = SIR
+    dS = omega * R - beta * I * S / N
+    dI = beta * I * S / N - gamma * I
+    dR = gamma * I - omega * R  
+    return (dS, dI, dR)
+```
+
+</Admonition>
+
+## Visualization
+
+#### 🚀 Visualization of results
+
+Develop a `plot` function that can be called with:
+
+```python
+plot(**results)
+```
+
+to produce the following graph:
+
+![](images/SIR-discrete.svg)
+
+<Admonition type="solution" open={false}>
+
+The data we need from the `results` dictionary is associated with the keys `"t"` and `"y"`. If these were the only keys present, we could define a `plot` function with signature:
+
+```python
+def plot(t, y):
+    pass
+```
+
+and the call `plot(**results)` would assign the corresponding `result` data to the `t` and `y` parameters. But in practice, `results` contains additional data:
+
+```python
+>>> list(results.keys())
+['t', 'y', 'sol', 't_events', 'y_events', 'nfev', ...]
+```
+
+Our function does not accept the `sol`, `t_events`, etc. named parameters at this stage, so the `plot` call fails logically:
+
+```python
+>>> plot(**result)
+Traceback (most recent call last):
+...
+TypeError: plot() got an unexpected keyword argument 'sol'
+```
+
+One way to fix this is to introduce a "catch-all" parameter, in the form of a dictionary that collects `result` data not associated with `"t"` or `"y"`. The `**` notation is used for this; the associated dictionary is named `_` here to indicate we will not use its contents (this is not mandatory, just a convention).
+
+```python
+def plot(t, y, **_):
+    print(list(_.keys()))
+```
+
+```python
+>>> plot(**results)
+['sol', 't_events', 'y_events', ...]
+```
+
+With this technique, the following function works:
+
+```python
+def plot(t, y, **_):
+    plt.plot(t, y.T, "-+", label=["S", "I", "R"])
+    plt.xlabel("Time (years)")
+    xlabels = [str(i) for i in range(5+1)]
+    plt.xticks(arange(0, 5*YEAR+1, YEAR), xlabels)
+    plt.ylabel("Populations (%)")
+    plt.yticks(arange(0, 101, 10))
+    plt.axis([0, 5*YEAR, 0, 100])
+    plt.legend()
+    plt.grid(True)
+```
+
+</Admonition>
+
+## Configuration
+
+After reviewing your preliminary results, dynamics specialists have provided adjustments to the simulation method. Their recommendations take the form of an `options.py` file to use with `solve_ivp`:
+
+```python
+{
+    "method": "Radau",
+    "rtol": 1e-3,
+    "atol": 1e-6
+}
+```
+
+#### 🚀 Settings
+
+Incorporate the provided options file.
+
+<Admonition type="solution" open={false}>
+
+```python
+options = eval(open("options.py").read())
+results = solve_ivp(
+    dSIR, 
+    t_span=t_span, 
+    y0=(S0, I0, R0), 
+    **options
+)
+```
+
+![](images/SIR-options.svg)
+
+</Admonition>
+
+
+## Continuous Time
+
+When `solve_ivp` is called with `dense_output=True`:
+
+```python
+results = solve_ivp(
+    dSIR, 
+    t_span=t_span, 
+    y0=(S0, I0, R0), 
+    dense_output=True
+)
+```
+
+its results include, in addition to the discrete `t` and `y` data, an approximation of the solution as a function of time.
+
+```python
+>>> sol = results["sol"]
+```
+
+This functionality allows us to create a new version of the `plot` function, such that:
+
+```python
+>>> t = arange(0, 5*YEAR) # a value every day for 5 years.
+>>> plot(t, **results)
+```
+
+produces the following graph:
+
+![](images/SIR-dense.svg)
+
+
+#### 🚀 Using "dense outputs"
+
+Verify that `sol` is callable, then develop a new version of the `plot` function that uses `solve_ivp` dense outputs to produce the desired graph.
+
+<Admonition type="solution" open={false}>
+
+```python
+>>> sol = results["sol"]
+>>> sol
+<scipy.integrate._ivp.common.OdeSolution at ...>
+>>> callable(sol)
+True
+```
+
+```python
+def plot(t_, sol, **_):
+    plt.plot(t_, sol(t_).T, "-", label=["S", "I", "R"])
+    plt.xlabel("Time (years)")
+    xlabels = [str(i) for i in range(5+1)]
+    plt.xticks(arange(0, 5*YEAR+1, YEAR), xlabels)
+    plt.ylabel("Populations (%)")
+    plt.yticks(arange(0, 101, 10))
+    plt.axis([0, 5*YEAR, 0, 100])
+    plt.legend()
+    plt.grid(True)
+```
+
+</Admonition>
+
+## Events
+
+#### 🚀 Infection Thresholds
+
+Use the `events` parameter of `solve_ivp` to detect when the number of infected individuals falls below or rises above 10%. Adapt the `plot` function again to represent these events as black dots on the curve for variable $I$.
+
+![](images/SIR-events.svg)
+
+How would you restructure your program to easily handle an arbitrary infection threshold instead of a fixed 10%?
+
+<Admonition type="solution" open={false}>
+
+
+```python
+def event(t, SIR):
+    S, I, R = SIR
+    return I - 10.0
+```
+
+```python
+results = solve_ivp(
+    dSIR, 
+    y0=(S0, I0, R0), 
+    t_span=t_span, 
+    dense_output=True, 
+    events=[event]
+)
+```
+
+```python
+def plot(t_, sol, t_events, **_):
+    plt.plot(t_, sol(t_).T, "-", label=["S", "I", "R"])
+    t_event = t_events[0]
+    plt.plot(t_event, sol(t_event)[1], "k.")
+    plt.xlabel("Time (years)")
+    xlabels = [str(i) for i in range(5+1)]
+    plt.xticks(arange(0, 5*YEAR+1, YEAR), xlabels)
+    plt.ylabel("Populations (%)")
+    plt.yticks(arange(0, 101, 10))
+    plt.axis([0, 5*YEAR, 0, 100])
+    plt.legend()
+    plt.grid(True)
+```
+
+The "obvious" solution to handle a variable threshold is to use a global variable:
+
+```python
+I_max = 2.0
+
+def event(t, SIR):
+    S, I, R = SIR
+    return I - I_max
+```
+
+The advantage is that the simulation calling code remains unchanged:
+
+```python
+results = solve_ivp(
+    dSIR, 
+    y0=(S0, I0, R0), 
+    t_span=t_span, 
+    dense_output=True, 
+    events=[event]
+)
+```
+
+```python
+>>> plot(t, **results)
+```
+
+![](images/SIR-events-2.svg)
+
+If you prefer to avoid global variables, you can use a higher-order function that returns an `event` function:
+
+```python
+def I_crosses(I_threshold):
+    def event(t, SIR):
+        S, I, R = SIR
+        return I - I_threshold
+    return event
+```
+
+You can then use it as follows:
+
+```python
+results = solve_ivp(
+    dSIR, 
+    y0=(S0, I0, R0), 
+    t_span=t_span, 
+    dense_output=True, 
+    events=[I_crosses(2.0)]
+)
+```
+
+with the same results as before.
+
+</Admonition>
+
+
+## Generalization
+
+You have probably noticed that the SIR model dynamics are entirely determined by the flows between the population "compartments" $S$, $I$, and $R$, which can be described by the structure:
+
+```python
+SIR_dynamics = {
+ ("S", "I"): "beta * I * S / N",
+ ("I", "R"): "gamma * I",
+ ("R", "S"): "omega * R"
+}
+```
+
+Instead of manually writing the `dSIR` function as before, we can define a `make_dstate` function that takes the above dictionary as an argument and automatically produces the `dSIR_auto` function[^why]:
+
+[^why]: This avoids errors when translating flow models into differential equations, allows faster definition of new compartmental models, etc.
+
+```python
+dSIR_manu = dSIR
+dSIR_auto = make_dstate(SIR_dynamics)
+```
+
+#### 🚀 Creating the dynamics vector field
+
+Implement the `make_dstate` function. Verify that the manual and automatic versions behave identically. For example:
+
+```python
+>>> dSIR_manu(0.0, (1/3, 1/3, 1/3))
+(0.0007545118504022613, -0.023650793650793648, 0.02289628180039139)
+>>> dSIR_auto(0.0, (1/3, 1/3, 1/3))
+(0.0007545118504022613, -0.023650793650793648, 0.02289628180039139)
+```
+
+<Admonition type="solution" open={false}>
+
+```python
+def get_vars(dynamics):
+    vars = []
+    for pair in dynamics.keys():
+        vars.extend(pair)
+    # remove duplicated vars
+    return list(set(vars))
+```
+
+```python
+>>> get_vars(SIR_dynamics)
+['S', 'I', 'R']
+```
+
+```python
+def make_dstate(dynamics):
+    vars = get_vars(dynamics)
+    
+    def fun(t, state):
+        ns = globals().copy()
+        for var, value in zip(vars, state):
+            ns[var] = value
+        dstate = []
+        for var in vars:
+            d = 0
+            for (edge, expr) in dynamics.items():
+                source, target = edge
+                if source == var:
+                    d -= eval(expr, ns)
+                if target == var:
+                    d += eval(expr, ns)
+            dstate.append(d)
+        
+        return dstate
+        
+    return fun 
+```
+
+</Admonition>
+
+
+# DataFrames
+
+We reproduce here the full code to generate the daily values of $S$, $I$, and $R$ over the first 5 years of the epidemic:
+
+```python
+from numpy import *
+from scipy.integrate import solve_ivp
+
+WEEK = 7
+YEAR = 365
+beta = 1 / (WEEK)
+gamma = 1 / (2 * WEEK)
+omega = 1 / YEAR
+
+N = 100
+S0, I0 = 99.0, 1.0
+R0 = N - S0 - I0
+
+def dSIR(t, SIR):
+    S, I, R = SIR
+    dS = omega * R - beta * I * S / N
+    dI = beta * I * S / N - gamma * I
+    dR = gamma * I - omega * R  
+    return (dS, dI, dR)
+
+t_span = [0.0, 5*YEAR]
+
+results = solve_ivp(
+    dSIR, 
+    y0=(S0, I0, R0), 
+    t_span=t_span, 
+    dense_output=True, 
+)
+
+t = arange(0, 5*YEAR)
+S, I, R = results["sol"](t)
+```
+
+#### 👶 Creation
+
+Create a **dataframe** [pandas] storing the daily values of $S$, $I$, and $R$ in columns of the same names. Then add columns for the (constant in our model) values of $\beta$, $\gamma$, and $\omega$; name these columns `beta`, `gamma`, and `omega`. Display a summary of the dataframe before and after this addition.
+
+[pandas]: https://pandas.pydata.org/
+
+📖 : [`DataFrame`](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html) (pandas)
+<Admonition type="solution" open={false}>
+
+```python
+>>> import pandas as pd
+>>> df = pd.DataFrame({"S":S, "I": I, "R": R})
+>>> df # doctest: +ELLIPSIS
+               S         I          R
+0     99.000000  1.000000   0.000000
+1     98.853717  1.072397   0.073885
+2     98.697303  1.149788   0.152909
+3     98.530103  1.232472   0.237425
+4     98.351424  1.320767   0.327809
+                       ...
+1820  50.279454  1.851949  47.868597
+1821  50.277556  1.852686  47.869759
+1822  50.275613  1.853418  47.870969
+1823  50.273626  1.854145  47.872229
+1824  50.271597  1.854867  47.873536
+
+[1825 rows x 3 columns]
+```
+
+```python
+df["beta"] = beta
+df["gamma"] = gamma
+df["omega"] = omega
+```
+
+```python
+>>> df
+               S         I          R      beta     gamma    omega
+0     99.000000  1.000000   0.000000  0.142857  0.071429  0.00274
+1     98.853717  1.072397   0.073885  0.142857  0.071429  0.00274
+2     98.697303  1.149788   0.152909  0.142857  0.071429  0.00274
+3     98.530103  1.232472   0.237425  0.142857  0.071429  0.00274
+4     98.351424  1.320767   0.327809  0.142857  0.071429  0.00274
+                                  ...
+1820  50.279454  1.851949  47.868597  0.142857  0.071429  0.00274
+1821  50.277556  1.852686  47.869759  0.142857  0.071429  0.00274
+1822  50.275613  1.853418  47.870969  0.142857  0.071429  0.00274
+1823  50.273626  1.854145  47.872229  0.142857  0.071429  0.00274
+1824  50.271597  1.854867  47.873536  0.142857  0.071429  0.00274
+
+[1825 rows x 6 columns]
+```
+
+</Admonition>
+
+#### 🧮 Calculations
+
+The previous step stored all the data we will need in the dataframe. Quantities added later can be derived from existing data.
+
+  - Add a column `N` with values equal to the sum of `S`, `I`, and `R`, then add a column `R0` calculating the ratio of `beta` to `gamma`.
+
+  - The epidemic started on January 1, 2020. Create a `date` column giving the day associated with each data row, then set this column as the index (instead of the integer we used previously).
+
+    📖 : [`datetime64`](https://numpy.org/doc/stable/reference/arrays.datetime.html) (NumPy),
+    [`daterange`](https://pandas.pydata.org/docs/reference/api/pandas.date_range.html),
+    [`DataFrame.set_index`](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.set_index.html) (pandas)
+
+  - Calculate the number of new infections $\beta I S/N$ per day and define a new column `T` counting the total number of infections since the start of the epidemic.
+
+    📖 : [`DataFrame.eval`](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.eval.html), [`Dataframe.cumsum`](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.cumsum.html) (pandas)
+
+<Admonition type="solution" open={false}>
+</summary>
+```python
+df["N"] = df["S"] + df["I"] + df["R"]
+df["R0"] = df["beta"] / df["gamma"]
+```
+
+```python
+>>> df # doctest: +ELLIPSIS
+               S         I          R  ...    omega      N   R0
+0     99.000000  1.000000   0.000000  ...  0.00274  100.0  2.0
+1     98.853717  1.072397   0.073885  ...  0.00274  100.0  2.0
+2     98.697303  1.149788   0.152909  ...  0.00274  100.0  2.0
+3     98.530103  1.232472   0.237425  ...  0.00274  100.0  2.0
+4     98.351424  1.320767   0.327809  ...  0.00274  100.0  2.0
+       ...
+1820  50.279454  1.851949  47.868597  ...  0.00274  100.0  2.0
+1821  50.277556  1.852686  47.869759  ...  0.00274  100.0  2.0
+1822  50.275613  1.853418  47.870969  ...  0.00274  100.0  2.0
+1823  50.273626  1.854145  47.872229  ...  0.00274  100.0  2.0
+1824  50.271597  1.854867  47.873536  ...  0.00274  100.0  2.0
+
+[1825 rows x 8 columns]
+```
+
+```python
+>>> datetime64("2020-01-01")
+numpy.datetime64('2020-01-01')
+>>> start = datetime64("2020-01-01")
+>>> end = start + len(df["S"]) - 1
+>>> start
+numpy.datetime64('2020-01-01')
+>>> end
+numpy.datetime64('2024-12-29')
+>>> dates = pd.date_range(start, end)
+>>> dates # doctest: +ELLIPSIS
+DatetimeIndex(['2020-01-01', '2020-01-02', '2020-01-03', '2020-01-04',
+               '2020-01-05', '2020-01-06', '2020-01-07', '2020-01-08',
+               '2020-01-09', '2020-01-10',
+               ...
+               '2024-12-20', '2024-12-21', '2024-12-22', '2024-12-23',
+               '2024-12-24', '2024-12-25', '2024-12-26', '2024-12-27',
+               '2024-12-28', '2024-12-29'],
+              dtype='datetime64[ns]', length=1825, freq='D')
+>>> df["date"] = dates
+>>> df # doctest: +ELLIPSIS
+               S         I          R  ...      N   R0       date
+0     99.000000  1.000000   0.000000  ...  100.0  2.0 2020-01-01
+1     98.853717  1.072397   0.073885  ...  100.0  2.0 2020-01-02
+2     98.697303  1.149788   0.152909  ...  100.0  2.0 2020-01-03
+3     98.530103  1.232472   0.237425  ...  100.0  2.0 2020-01-04
+4     98.351424  1.320767   0.327809  ...  100.0  2.0 2020-01-05
+       ...
+1820  50.279454  1.851949  47.868597  ...  100.0  2.0 2024-12-25
+1821  50.277556  1.852686  47.869759  ...  100.0  2.0 2024-12-26
+1822  50.275613  1.853418  47.870969  ...  100.0  2.0 2024-12-27
+1823  50.273626  1.854145  47.872229  ...  100.0  2.0 2024-12-28
+1824  50.271597  1.854867  47.873536  ...  100.0  2.0 2024-12-29
+
+[1825 rows x 9 columns]
+>>> df = df.set_index("date")
+>>> df
+                     S         I          R  ...    omega      N   R0
+date                                        ...                     
+2020-01-01  99.000000  1.000000   0.000000  ...  0.00274  100.0  2.0
+2020-01-02  98.853717  1.072397   0.073885  ...  0.00274  100.0  2.0
+2020-01-03  98.697303  1.149788   0.152909  ...  0.00274  100.0  2.0
+2020-01-04  98.530103  1.232472   0.237425  ...  0.00274  100.0  2.0
+2020-01-05  98.351424  1.320767   0.327809  ...  0.00274  100.0  2.0
+                                             ...
+2024-12-25  50.279454  1.851949  47.868597  ...  0.00274  100.0  2.0
+2024-12-26  50.277556  1.852686  47.869759  ...  0.00274  100.0  2.0
+2024-12-27  50.275613  1.853418  47.870969  ...  0.00274  100.0  2.0
+2024-12-28  50.273626  1.854145  47.872229  ...  0.00274  100.0  2.0
+2024-12-29  50.271597  1.854867  47.873536  ...  0.00274  100.0  2.0
+
+[1825 rows x 8 columns]
+```
+
+```python
+>>> df = df.eval("new_I = beta * I * S / N")
+>>> df # doctest: +ELLIPSIS
+                     S         I          R  ...      N   R0     new_I
+date                                        ...                      
+2020-01-01  99.000000  1.000000   0.000000  ...  100.0  2.0  0.141429
+2020-01-02  98.853717  1.072397   0.073885  ...  100.0  2.0  0.151444
+2020-01-03  98.697303  1.149788   0.152909  ...  100.0  2.0  0.162116
+2020-01-04  98.530103  1.232472   0.237425  ...  100.0  2.0  0.173479
+2020-01-05  98.351424  1.320767   0.327809  ...  100.0  2.0  0.185570
+                                             ...
+2024-12-25  50.279454  1.851949  47.868597  ...  100.0  2.0  0.133021
+2024-12-26  50.277556  1.852686  47.869759  ...  100.0  2.0  0.133069
+2024-12-27  50.275613  1.853418  47.870969  ...  100.0  2.0  0.133117
+2024-12-28  50.273626  1.854145  47.872229  ...  100.0  2.0  0.133164
+2024-12-29  50.271597  1.854867  47.873536  ...  100.0  2.0  0.133210
+
+[1825 rows x 9 columns]
+```
+
+```python
+>>> df["T"] = df["new_I"].cumsum()
+>>> df # doctest: + ELLIPSIS
+                     S         I          R  ...   R0     new_I     T
+date                                        ...                           
+2020-01-01  99.000000  1.000000   0.000000  ...  2.0  0.141429    0.141429
+2020-01-02  98.853717  1.072397   0.073885  ...  2.0  0.151444    0.292872
+2020-01-03  98.697303  1.149788   0.152909  ...  2.0  0.162116    0.454988
+2020-01-04  98.530103  1.232472   0.237425  ...  2.0  0.173479    0.628467
+2020-01-05  98.351424  1.320767   0.327809  ...  2.0  0.185570    0.814038
+                                             ...
+2024-12-25  50.279454  1.851949  47.868597  ...  2.0  0.133021  286.095531
+2024-12-26  50.277556  1.852686  47.869759  ...  2.0  0.133069  286.228601
+2024-12-27  50.275613  1.853418  47.870969  ...  2.0  0.133117  286.361717
+2024-12-28  50.273626  1.854145  47.872229  ...  2.0  0.133164  286.494881
+2024-12-29  50.271597  1.854867  47.873536  ...  2.0  0.133210  286.628091
+
+[1825 rows x 10 columns]
+```
+</details>
+
+#### 📈 Plots
+
+ 1. Use the pandas `plot` method to graphically represent the contents of the dataframe.
+
+ 2. Repeat the operation, representing only the values of `S`, `I`, and `R`.
+
+ 3. Repeat the operation, representing only the values of `S`, `I`, and `R` and using the `plot.area` method with the `stacked=True` option.
+
+ 4. Go back to step 2, adding `T` to the selected variables.
+
+ 5. Represent the same variables with the same method, but only for the first year of the epidemic.
+
+![](images/SIR-pandas-5.svg)
+
+<Admonition type="solution" open={false}>
+```python
+>>> import matplotlib.pyplot as plt
+```
+
+```python
+>>> df.plot()
+>>> plt.show()
+```
+
+![](images/SIR-pandas-1.svg)
+
+```python
+>>> df_SIR = df[["S", "I", "R"]]
+>>> df_SIR.plot()
+>>> plt.show()
+```
+
+![](images/SIR-pandas-2.svg)
+
+
+```python
+>>> df_SIR.plot.area(stacked=True)
+<AxesSubplot:xlabel='date'>
+>>> plt.ylim((0.0, 100.0))
+(0.0, 100.0)
+>>> plt.show()
+```
+
+![](images/SIR-pandas-3.svg)
+
+
+```python
+>>> df_SIRT = df[["S", "I", "R", "T"]]
+>>> df_SIRT.plot()
+>>> plt.show()
+```
+
+![](images/SIR-pandas-4.svg)
+
+```python
+>>> df_SIRT_1st_year = df_SIRT["2020-01-01":"2021-01-01"] 
+>>> df_SIRT_1st_year.plot()
+<AxesSubplot:xlabel='date'>
+>>> plt.show()
+```
+
+![](images/SIR-pandas-5.svg)
+
+</Admonition>
+
+#### 🚚 Export
+
+Export your pandas dataframe to CSV format, then open it with LibreOffice, Google Sheets, or Excel (or an equivalent application of your choice).
+
+![](images/SIR-CSV.png)
+
+<Admonition type="solution" open={false}>
+```python
+>>> df.to_csv("SIR.csv")
+```
+</Admonition>
+
+

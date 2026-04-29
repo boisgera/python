@@ -1,10 +1,10 @@
 ---
 context:
-title: Object-Oriented Programming
-description: Objects, classes, methods, and properties in Python
+title: Object-Oriented Programming 1
+description: Objects and classes
 date: "2026-04-28 18:00"
 authors: 
-  - name: Sébastien Boisgrault
+  - name: Sébastien Boisgérault
     title: Associate Professor
     email: Sebastien.Boisgerault@minesparis.psl.eu 
     url: https://eul.ink
@@ -24,35 +24,36 @@ import Admonition from "/src/components/Admonition.astro";
 import Header from "/src/components/Header.astro";
 import { Image } from "astro:assets";
 
+import lego from "/src/assets/lego.jpg";
+
 
 <Header frontmatter={frontmatter} />
+
+<Image 
+  src={lego} 
+  class="img-full" 
+  style="object-fit:cover;width:100%; height:300px;" 
+  alt="objects"
+/>
 
 # Object Usage
 
 ## Objects everywhere!
 
-Before discovering how to use objects, it is good to be convinced that
-this skill will be very useful in Python, because:
-
-> Everything that can be designated by a variable is an object!
-
-Technically:
-
-> It is an **instance** of the **type** `object`.
+Objects are very important in Python since everything is an object!
+Technically, everything that can be referred to by a variable is an
+**instance** of the **type** `object`.
 
 <Admonition type="note" title="Instance?" open={true}>
 
-The term "instance" should be interpreted in its Anglo-Saxon sense:
+The term **instance** means:
+*an individual illustrative of a category*[^mw] .
 
-> 🇺🇸 an individual illustrative of a category
-
-(cf. the [Merriam-Webster dictionary entry for "instance"](https://www.merriam-webster.com/dictionary/instance))
-
-We can therefore consider that a type is a category of objects;
-its instances are then the objects that belong to it.
+In this context, a **type** is a category of objects.
 
 </Admonition>
 
+[^mw]: according to the [Merriam-Webster dictionary](https://www.merriam-webster.com/dictionary/instance).
 
 
 Integers, booleans, strings, lists are therefore objects:
@@ -70,19 +71,19 @@ True
 
 <Admonition type="note" title="So 42 is an object, not an integer?" open={true}>
 
-But yes, because both can be true simultaneously!
-We have already found that `42` is indeed an object:
+Both things can be true simultaneously!
+The integer `42` is indeed an object:
 ```python
 >>> isinstance(42, object)
 True
 ```
-Let's also verify that it is an integer:
+It is also an integer:
 ```python
 >>> isinstance(42, int)
 True
 ```
 So the two properties are not contradictory.
-More precisely, the type of `42` is integer, not object:
+The type of `42` is integer, not object:
 ```python
 >>> type(42) == int
 True
@@ -96,7 +97,8 @@ all integers are also objects: types can be nested categories.
 
 </Admonition>
 
-Although it may be less intuitive, functions, types, or modules are also objects:
+Although it is less intuitive, functions, types, and even modules are also 
+objects:
 
 ```python
 >>> isinstance(print, object)
@@ -109,10 +111,11 @@ True
 
 ## Not so complex numbers
 
-The type `complex` in Python represents complex numbers.
-It provides a good example of the interactions we can have with objects.
+The type `complex` in Python represents the category of complex numbers.
+It provides a good example of the kind of interactions 
+that we can have with objects.
 
-### Construction
+### Creation
 
 To create the complex number $z = 1 / 2 + (3 / 2)i$, we can use the literal
 syntax for complex numbers:
@@ -121,7 +124,7 @@ syntax for complex numbers:
 >>> z = 0.5 + 1.5j
 ```
 
-It is good to know this syntax because it is the one Python will use to represent
+It is good to know this syntax because it is the one Python will use to display
 complex numbers:
 
 ```python
@@ -129,7 +132,8 @@ complex numbers:
 (0.5+1.5j)
 ```
 
-Not all objects have such a **literal** notation. But there is an alternative method for all objects:
+However, not all objects have such a **literal notation**. 
+But there is an alternative method for all objects:
 you can call the type of the object you want to instantiate (as if it were a function)
 passing the necessary arguments, here the real and imaginary parts of the number to construct.
 The type of the object therefore serves as a **constructor**.
@@ -143,7 +147,7 @@ True
 ### Attributes
 
 An object is a data structure. The data it contains can be made accessible as
-**attributes**. All complex numbers thus have the attributes `real` and `imag`:
+**attributes**. All complex numbers have the attributes `real` and `imag`:
 
 ```python
 >>> z.real
@@ -153,8 +157,8 @@ An object is a data structure. The data it contains can be made accessible as
 ```
 
 The syntax to change the value of the attribute `real` of the number `z`
-should be `z.real = ...`. However, this assignment fails because complex
-numbers were designed as non-modifiable.
+should be `z.real = ...`. However, this assignment fails here because complex
+numbers were designed as immutable.
 
 ```python
 >>> z.real = -0.5
@@ -165,15 +169,15 @@ AttributeError: readonly attribute
 
 ### Methods
 
-A complex number has an attribute `conjugate` whose nature is a bit special.
-It is a **method**:
+A complex number has an attribute `conjugate` 
 
 ```python
 >>> z.conjugate  # doctest: +ELLIPSIS
 <built-in method conjugate of complex object at 0x...>
 ```
 
-Methods behave like functions: they are callable.
+This attribute is a **method**: it behaves like a function. Technically,
+it is **callable**:
 
 ```python
 >>> callable(z.conjugate)
@@ -235,14 +239,15 @@ Or, using the bound version of these methods:
 (-1+1j)
 ```
 
-In any case, the initial notation -- where Python itself calls the magic methods --
-is considerably more readable!
+In any case, the initial notation -- where Python itself calls the magic methods 
+-- is considerably more readable!
 
 # Designing Types
 
-Our objective in this section will be to create a type `Complex` which will be a
-simplified version of the built-in type `complex`. To do this, we will define a new
-**class** of objects; to create a minimal class, without specific functionality,
+Our aim in this section is to create a type `Complex` which is a
+simplified version of the built-in type `complex`. 
+To do this, we define a new **class** of objects; 
+to create a minimal class, without specific functionality,
 the following code is sufficient:
 
 ```python
@@ -292,7 +297,7 @@ def Complex_init(z, real, imag):
     z.imag = imag
 ```
 
-which would allow us to take an empty complex number and add the desired attributes to it:
+which would us to add the `real` and `imag` attributes to an empty complex object
 
 ```python
 >>> z = Complex()
@@ -327,8 +332,9 @@ handled when we call the complex number constructor
 1.5
 ```
 
-The convention when such a method is defined is to call the first argument of the method
-`self`, which will always designate an instance of the class considered
+The convention when such a method is defined is to call the first argument 
+of the method `self`. The variable `self` shall always refer to 
+an instance of the class at hand
 
 ```python
 class Complex:
@@ -391,7 +397,7 @@ It is a bit frustrating not to see complex numbers display properly in the termi
 ```
 
 This is a problem we can solve by defining a magic method `__repr__`, responsible for
-building a suitable string representation of instances.
+building a suitable representation of instances as strings.
 
 ```python
 class Complex:
@@ -405,7 +411,7 @@ class Complex:
         return f"({self.real}+{self.imag}j)"
 ```
 
-We then have a representation compatible with the literal notation of built-in complex numbers
+Our representation is now compatible with the literal notation of built-in complex numbers
 
 ```python
 >>> Complex(0.5, 1.5)
@@ -459,9 +465,11 @@ class Complex:
 
 ## Private Attributes
 
-Not all attributes of an object are necessarily meant to be **public**; we may want
-**private** data, for internal use, only usable by the methods specific to an object.
-The convention in Python is to prefix the name of such attributes with a single underscore.
+Not all attributes of an object are necessarily meant to be **public**; 
+we may want **private** data, for internal use, only usable internally, 
+by the methods of the object.
+The convention in Python is to prefix the name of such attributes 
+with a single underscore.
 
 It is then possible to control on a case-by-case basis how we allow the outside world to
 interact with this data. For example, we can make our complex number ensure that its
@@ -478,12 +486,14 @@ But we can fortunately replace the public attributes `real` and `imag` with priv
 attributes `_real` and `_imag` and expose these values in a controlled way for reading
 and/or writing through dedicated methods: **accessors** (**getters** and/or **setters**).
 
-For example, we can make it so that when we want to set the value of the real or imaginary
+For example, we can ensure that when we want to set the value of the real or imaginary
 part, we first make sure we are dealing with a floating-point number, and when that's not
 the case, we immediately generate an appropriate error. We can even adapt the
-constructor to benefit from this additional security. Of course, since we have made the real
-and imaginary parts private, we will need to provide read access functions so that external
-users of complex numbers can use them. Internally, we need to adapt methods to use private
+constructor to benefit from this additional safety. 
+Of course, since we have made the real and imaginary parts private, 
+we will need to provide read access functions so that external
+users of complex numbers can use them. 
+Internally, we need to adapt methods to use private
 attributes or accessors, rather than the public attributes that have been removed.
 
 ```python

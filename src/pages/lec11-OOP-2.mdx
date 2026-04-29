@@ -1,7 +1,7 @@
 ---
 context:
 title: Object-Oriented Programming 2
-description: Duck typing, inheritance, protocols, and standard library modules
+description: Duck typing, inheritance, and protocols
 date: "2026-04-28 18:00"
 authors: 
   - name: Sébastien Boisgrault
@@ -24,13 +24,35 @@ import Admonition from "/src/components/Admonition.astro";
 import Header from "/src/components/Header.astro";
 import { Image } from "astro:assets";
 
-<Header frontmatter={frontmatter}/>
+import lego from "/src/assets/lego.jpg";
+import duck from "/src/assets/duck.jpg";
+
+<Header frontmatter={frontmatter} />
+
+<Image 
+  src={lego} 
+  class="img-full" 
+  style="object-fit:cover;width:100%; height:300px;" 
+  alt="objects"
+/>
 
 # Duck Typing
 
+<figure>
+  <Image 
+    src={duck} 
+    class="img-full" 
+    style="object-fit:cover;width:100%; height:300px;" 
+    alt="duck"
+  />
+  <figcaption>If it looks like a duck, swims like a duck, and quacks like a duck, then it probably is a duck.</figcaption>
+</figure>
+
+
+
 ## Case Study
 
-The function `copy_file` below reads the content of a file object and writes it to another:
+The function below reads the content of a file object and writes it to another one:
 
 ```python
 def copy_file(input, output):
@@ -41,7 +63,7 @@ def copy_file(input, output):
 Let's create a (very small) binary file `image.png` on our hard drive
 
 ```python
-with open("image.png", mode="bw") as image_file:
+>>> with open("image.png", mode="bw") as image_file:
 ...     image_file.write(b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x01\x00\x00\x00\x01\x00\x01\x03\x00\x00\x00f\xbc:%\x00\x00\x00\x03PLTE\xb5\xd0\xd0c\x04\x16\xea\x00\x00\x00\x1fIDATh\x81\xed\xc1\x01\r\x00\x00\x00\xc2\xa0\xf7Om\x0e7\xa0\x00\x00\x00\x00\x00\x00\x00\x00\xbe\r!\x00\x00\x01\x9a`\xe1\xd5\x00\x00\x00\x00IEND\xaeB`\x82')
 ...
 ```
@@ -77,7 +99,10 @@ We can then copy its content the same way as before
 In fact the original image is a blue-gray tile used by the OpenStreetMap mapping project
 (cf. ["The smallest 256x256 single-color PNG file, and where you've seen it"](https://www.mjt.me.uk/posts/smallest-png/)).
 
-It is available [online](https://www.mjt.me.uk/assets/images/smallest-png/openstreetmap.png). 
+![The smallest 256x256 single-color PNG file](https://www.mjt.me.uk/assets/images/smallest-png/openstreetmap.png)
+
+It is available [online](https://www.mjt.me.uk/assets/images/smallest-png/openstreetmap.png)
+at the address `https://www.mjt.me.uk/assets/images/smallest-png/openstreetmap.png`. 
 So we could have created an object similar to a file but that knows how to open web resources rather than manually copying its content.
 
 ```python
@@ -100,7 +125,7 @@ What matters in the three previous use cases is not that the object
 the function `copy_file` needs an object `input` that:
 
   - has a method `read`,
-  - that is invoked without arguments,
+  - which is invoked without arguments,
   - and returns an object of type `bytes`.
 
 That's all the function `copy_file` asks of its argument `input` for
@@ -108,27 +133,34 @@ it to work: that it be sufficiently similar to a "real" file.
 We don't ask that it be of a particular type, for example that it passes
 the isinstance test `isinstance(input, File)`.
 
-This less demanding type of typing is what in Python is called **duck typing**
-after the quote attributed to James Whitcomb Riley
+This less demanding type of typing is what in Python is called **duck typing**.
+
+<Admonition type="note" title="Origin of the terminology">
+
+The following quote is attributed to [James Whitcomb Riley]
 
 > When I see a bird that walks like a duck and swims like a duck and 
 > quacks like a duck, I call that bird a duck. 🦆
 
+[James Whitcomb Riley]: https://en.wikipedia.org/wiki/James_Whitcomb_Riley
+
+</Admonition>
+
 Note that for the moment, the constraints that argument `input` of the function
-`copy_file` must satisfy is only a contract (moral) between the designer of
+`copy_file` must satisfy is only a (moral) contract between the designer of
 the function and its user: as long as the user respects the contract,
 everything will go as planned. We sometimes speak of **protocol**
-to refer to this contract (or of **concept** or **interface**).
+to refer to this kind of contract.
 
-At this stage, the Python interpreter is **not** informed of this contract and
-does nothing particular to ensure that the mutual commitment is respected.
-It will therefore be up to the developer of the function to document this protocol
-and to the user to read and respect it.
+At this stage, the Python interpreter is **not** informed of this contract 
+and does nothing to ensure that the mutual commitment is respected.
+It is up to the developer of the function to document this protocol
+and to the user to read this documentation and respect it.
 
 ## Static Verification
 
-There are tools that allow (partially) formalizing the contracts on which your programs
-depend, for example [mypy](http://mypy-lang.org/).
+There are tools that allow (partially) formalizing the contracts on which 
+your programs depend, for example [mypy](http://mypy-lang.org/).
 
 In return for the work that will consist of describing the protocols,
 you will have a tool that informs you of certain violations of the contracts
@@ -516,13 +548,14 @@ More precisely
 
 > Path classes are divided into pure paths, which provide only file system manipulation operations without I/O, and concrete paths, which inherit from pure paths and also provide I/O operations.
 
-In other words, pure paths -- instances of `PurePath` -- allow us to designate files
-but without accessing the file system properly. Instances of `Path` -- which derives from `PurePath` -- allow it.
+In other words, pure paths (instances of `PurePath`) 
+allow us to designate files but without accessing the file system properly. 
+Instances of `Path` -- which derive from `PurePath` -- allow it.
 
 Path classes are also distinguished depending on whether the file system is Windows or POSIX
 (Linux and MacOS), but we won't worry about that here.
 
-For example, on my machine (Linux), I can designate the root of the file system
+For example, on my Linux computer, I can designate the root of the file system
 with a pure path and use it to construct the (pure) path to the home directory
 of hypothetical users `linus` and `boisgera`:
 
@@ -577,14 +610,14 @@ Since `Path` inherits from `PurePath`, `Path` instances can be used everywhere
 ### Introduction
 
 The [random](https://docs.python.org/3/library/random.html) module of the Python standard library
-allows generating pseudo-random numbers.
+generates pseudo-random numbers.
 
 ```python
 >>> import random
 ```
 
-The `random` function of the module will generate floating-point numbers uniformly
-distributed between 0 and 1.
+The `random` function of this module generates floating-point numbers uniformly
+distributed between $0.0$ and $1.0$.
 
 ```python
 >>> random.random()
@@ -595,7 +628,7 @@ distributed between 0 and 1.
 0.22967289202282093
 ```
 
-Multiple functions are provided for generating pseudo-random numbers following various
+Multiple functions are provided to generate pseudo-random numbers following various
 probability distributions. For example, to generate numbers distributed according to the
 Gaussian with mean $\mu = 0.0$ and standard deviation $\sigma = 1.0$, we can invoke
 
@@ -610,7 +643,7 @@ Gaussian with mean $\mu = 0.0$ and standard deviation $\sigma = 1.0$, we can inv
 
 ### Object-Oriented Interface
 
-Studying the source file [random.py](https://github.com/python/cpython/blob/3.10/Lib/random.py)
+Studying the source file [random.py](https://github.com/python/cpython/blob/main/Lib/random.py)
 informs us that the classic module interface is only a thin veneer over an object
 architecture. The module defines a class `Random`, then creates a private instance
 `_inst` in this module. The "functions" of the module `random` like `gauss` are simply
@@ -630,11 +663,14 @@ shortcuts to the methods of this instance
 <bound method Random.gauss of <random.Random object at 0x55a5a09ad260>>
 ```
 
-The default method `random` generates random integers between $0$ and $2^{53} - 1$
-(the probability of each integer being identical), then divides the result by
-$2^{53}$. The downside of this approach: `random()` returns a value that is always a
-multiple of $2^{-53}$. The floating-point number $2^{-1074}$, for example, which is the
-smallest strictly positive floating-point number, has no chance of being produced.
+The default method `random` generates random integers between $0$ and 
+$2^\{53\} - 1$ (the probability of each integer being identical), 
+then divides the result by $2^\{53\}$. 
+The downside of this approach: `random()` returns a value that is always a 
+multiple of $2^\{-53\}$. 
+The floating-point number $2^\{-1074\}$, for example, 
+which is the smallest strictly positive floating-point number, 
+has no chance of ever being produced.
 
 ```python
 >>> r.random() * 2**53
@@ -646,8 +682,8 @@ smallest strictly positive floating-point number, has no chance of being produce
 ```
 
 If that's a problem for you, it is possible to correct this behavior as suggested
-by [the documentation of the module `random`](https://docs.python.org/3/library/random.html#recipes) by defining a class
-derived from `Random` that overrides the method `random`
+by [the documentation of the module `random`](https://docs.python.org/3/library/random.html#recipes) 
+by defining a class derived from `Random` that overrides the method `random`
 
 ```python
 from math import ldexp
@@ -676,8 +712,7 @@ Usage is immediate
 ```
 
 The values produced by the method `random` are no longer necessarily
-multiples of $2^{-53}$ (there is nevertheless more than a one in two chance
-that it is the case).
+multiples of $2^\{-53\}$.
 
 ```python
 >>> r.random() * 2**53
@@ -688,8 +723,8 @@ that it is the case).
 6828617072759119.0
 ```
 
-The other probability distributions using the method `random` as source of
-random values, we don't need to reimplement anything else to benefit hugely
+Since the other probability distributions use the method `random` as source of
+random values, we don't need to reimplement anything else to benefit
 from this improved source of randomness.
 
 ```python
@@ -705,13 +740,12 @@ from this improved source of randomness.
 ## `doctest`
 
 [Doctest](https://docs.python.org/3/library/doctest.html) is a unit testing module in the standard library.
-It verifies that the examples in your documentation conform to the actual behavior of your code.
+It checks that the examples in your documentation conform to the actual behavior of your code.
 
 For example, with the code
 
 ```python
 # file: add.py
-
 def add(x, y):
     """
     Numerical sum of two objects
@@ -725,7 +759,7 @@ def add(x, y):
     >>> add([1], [2])
     [3]
     """
-    return x+y
+    return x + y
 
 if __name__ == "__main__":
     import doctest
@@ -757,20 +791,19 @@ addition.
 
 We diagnosed the problem, but we don't have time to fix it right away.
 So we are going to temporarily suppress such erroneous results by marking known
-as erroneous with the symbol 🐛 (🇺🇸 **bug** or 🇫🇷 **bogue**).
+as erroneous with the symbol 🐛 (a **bug**).
 This will serve as a reminder!
 
 To do this, we will derive from the class [`OutputChecker`] of `doctest` and
-override its method `check_output` to signal that any test whose result contains a bug
-symbol should be considered as passed. Then we will insert the resulting class
-in place of the `OutputChecker` class of `doctest`, to change the behavior of the
-module.
+override its method `check_output` to signal that any test whose result 
+contains a bug symbol should be considered as passed. 
+Then we will insert the resulting class in place of the `OutputChecker` 
+class of `doctest`, to change the behavior of the module.
 
 [`OutputChecker`]: https://docs.python.org/3/library/doctest.html#doctest.OutputChecker
 
 ```python
 # file: doctest_patch.py
-
 import doctest
 _doctest_OutputChecker = doctest.OutputChecker
 
