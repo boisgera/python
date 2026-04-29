@@ -7,7 +7,9 @@
 [![Astro](https://img.shields.io/badge/--white?logo=astro&logoColor=black)](https://astro.build)
 [![CI](https://github.com/boisgera/python/actions/workflows/build.yml/badge.svg)](https://github.com/boisgera/python/actions/workflows/build.yml)
 
-Contents: 📖 <https://boisgera.github.io/python/>
+## Online book
+
+<https://boisgera.github.io/python/>
 
 ## Quickstart for editors
 
