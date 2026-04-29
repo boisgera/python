@@ -4,7 +4,7 @@
 # Python course 
 
 [![MDX](src/icons/mdx.svg)](https://mdxjs.com)
-[![Astro](https://img.shields.io/badge/--white?logo=astro&logoColor=black)](https://astro.build)
+[![Astro](https://img.shields.io/badge/--black?logo=astro&logoColor=white)](https://astro.build)
 [![CI](https://github.com/boisgera/python/actions/workflows/build.yml/badge.svg)](https://github.com/boisgera/python/actions/workflows/build.yml)
 
 Contents: <https://boisgera.github.io/python/>
