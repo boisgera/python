@@ -18,8 +18,6 @@ To preview the site locally while editing:
 bun run dev
 ```
 
-Edit the contents of the `src` folder to your liking.
-
 To build a static version of the site:
 
 ```bash
