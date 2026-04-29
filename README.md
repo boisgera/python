@@ -5,17 +5,12 @@
 
 [![MDX](src/icons/mdx.svg)](https://mdxjs.com)
 [![Astro](https://img.shields.io/badge/--white?logo=astro&logoColor=black)](https://astro.build)
+[![CC](src/icons/cc.svg)](LICENSE)
 [![CI](https://github.com/boisgera/python/actions/workflows/build.yml/badge.svg)](https://github.com/boisgera/python/actions/workflows/build.yml)
 
-## Open book
+## Online book
 
-<img 
-src="https://raw.githubusercontent.com/boisgera/python/refs/heads/master/src/icons/cc.svg"
-style="vertical-align: -10px;"> <https://boisgera.github.io/python/>
-
-[![CC](src/icons/cc.svg)](LICENSE) <https://boisgera.github.io/python/>
-
-
+<https://boisgera.github.io/python/>
 
 ## Quickstart for editors
 
