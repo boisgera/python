@@ -1,7 +1,7 @@
 
 [![Snake and computer](src/assets/friendly-snake-and-computer.png)](https://boisgera.github.io/python/)
 
-# Python course 
+# Python open course 
 
 [![MDX](src/icons/mdx.svg)](https://mdxjs.com)
 [![Astro](https://img.shields.io/badge/--white?logo=astro&logoColor=black)](https://astro.build)
