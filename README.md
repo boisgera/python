@@ -14,11 +14,7 @@
 
 ## Quickstart for editors
 
-First [install Bun], then the project dependencies:
-
-```bash
-bun install
-``` 
+First [install Bun], then the project dependencies with `bun install`.
 
 To preview the book locally while editing:
 
