@@ -20,13 +20,13 @@ First [install Bun], then the project dependencies:
 bun install
 ``` 
 
-To preview the site locally while editing:
+To preview the book locally while editing:
 
 ```bash
 bun run dev
 ```
 
-To build a static version of the site:
+To build a static version of the book site:
 
 ```bash
 bun run build
