@@ -9,9 +9,9 @@
 
 ## Open book
 
-<https://boisgera.github.io/python/>
+[![CC](src/icons/ccheart_black.svg)][LICENSE] <https://boisgera.github.io/python/>
 
-![CC](src/icons/ccheart_black.svg) ksdldksldks
+
 
 ## Quickstart for editors
 
