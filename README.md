@@ -30,7 +30,7 @@ bun run build
 
 The output files will be in the `dist` directory. You can preview them with `bunx serve dist`.
 
-> **Note:** [Node.js] users can substitute `npm` for `bun` and `npx` for `bunx`.
+**Note:** [Node.js] users can substitute `npm` for `bun` and `npx` for `bunx`.
 
 [install Bun]: https://bun.com/docs/installation
 [Node.js]: https://nodejs.org/en
