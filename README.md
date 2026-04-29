@@ -5,7 +5,7 @@
 
 [![MDX](https://img.shields.io/badge/MDX-1B1F24?logo=mdx)](https://mdxjs.com)
 [![Astro](https://img.shields.io/badge/Astro-BC52EE?logo=astro&logoColor=white)](https://astro.build)
-
+![CI](https://github.com/boisgera/python/actions/workflows/build.yml/badge.svg)
 
 <https://boisgera.github.io/python/>
 
