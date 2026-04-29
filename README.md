@@ -9,7 +9,9 @@
 
 ## Open book
 
-<img src="https://raw.githubusercontent.com/boisgera/python/refs/heads/master/src/icons/cc.svg"> <https://boisgera.github.io/python/>
+<img 
+src="https://raw.githubusercontent.com/boisgera/python/refs/heads/master/src/icons/cc.svg"
+style="vertical-align: -4px;"> <https://boisgera.github.io/python/>
 
 [![CC](src/icons/cc.svg)](LICENSE) <https://boisgera.github.io/python/>
 
