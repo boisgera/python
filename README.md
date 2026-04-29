@@ -19,5 +19,5 @@ Use `bunx serve dist` to visualize the result.
 
 If you are into [Node.js], you can also use `npm` instead of `bun` and `npx` instead of `bunx`.
 
-[bun]: https://bun.com/docs/installation
+[install bun]: https://bun.com/docs/installation
 [Node.js]: https://nodejs.org/en
