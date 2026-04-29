@@ -1,3 +1,6 @@
+[![MDX](https://img.shields.io/badge/MDX-1B1F24?logo=mdx)](https://mdxjs.com)
+[![Astro](https://img.shields.io/badge/Astro-BC52EE?logo=astro&logoColor=white)](https://astro.build)
+
 [![Snake and computer](src/assets/friendly-snake-and-computer.png)](https://boisgera.github.io/python/)
 
 The Python course : <https://boisgera.github.io/python/>
