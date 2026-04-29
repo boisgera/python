@@ -1,5 +1,9 @@
 [![Snake and computer](src/assets/friendly-snake-and-computer.png)](https://boisgera.github.io/python/)
 
+# The Web Site
+
+<https://boisgera.github.io/python/>
+
 # Quickstart
 
 First [install bun] and then this project dependencies with `bun install`.
