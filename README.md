@@ -3,7 +3,7 @@
 
 # Python course 
 
-[![MDX](https://img.shields.io/badge/MDX-1B1F24?logo=mdx&logoSize=auto)](https://mdxjs.com)
+[![MDX](https://img.shields.io/badge/MDX-1B1F24?logo=mdx&logoSize=auto&logoColor=white)](https://mdxjs.com)
 [![Astro](https://img.shields.io/badge/Astro-BC52EE?logo=astro&logoColor=white)](https://astro.build)
 [![CI](https://github.com/boisgera/python/actions/workflows/build.yml/badge.svg)](https://github.com/boisgera/python/actions/workflows/build.yml)
 
