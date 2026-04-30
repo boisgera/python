@@ -155,7 +155,7 @@ x == y
 ```
 
 
-Their **identity** is tested with the keyword `is`:
+The property that they have the same **identity** is tested with the keyword `is`:
 
 ```python
 x is y
@@ -171,115 +171,7 @@ x != y
 x is not y
 ```
 
-
-<Admonition type="note" title="Terminology" open={true}>
-
-- You can use the term **is equal to** to affirm equality between objects
-and simply **is** to affirm that they have the same identity 
-(using the term "identical" here would be a misnomer).
-
-- Equality between objects is sometimes called **structural equality**
-and identity between objects **referential equality**.
-
-</Admonition>
-
-
-The identity `x is y` means that the variables `x` and `y` refer to the
-same Python object: the data is at the same address in memory. A perfect
-copy of an object will therefore have a different identity from the
-original, while it will be considered equal to the original. However, if two
-objects have the same identity, then they are necessarily equal.
-
-####
-
-As an example, let's consider the three lists `a`, `b` and `c`:
-
-```python
->>> a = [1, 2, 3]
->>> b = [1, 2, 3]
->>> c = b
-```
-
-The lists `a` and `b` are equal, as are `b` and `c`, but they are not
-identical—they do not designate the same object (in memory);
-the variables `b` and `c`, on the other hand, refer to the same object:
-
-```python
->>> a == b
-True
->>> b == c
-True
->>> a is b
-False
->>> b is c
-True
-```
-
-You can check that `b` and `c` refer to the same object by evaluating
-the **identifier** of these objects (an integer) with the function `id`:
-
-```python
->>> id(a)
-140636096399680
->>> id(b)
-140636098130688
->>> id(c)
-140636098130688
->>> id(a) == id(b)
-False
->>> id(b) == id(c)
-True
-```
-
-One important consequence of this distinction: modifications to the list
-(designated by) `b` will affect the list `c` (which is the same object), but
-not the list `a` (which is a distinct object):
-
-```python
->>> b.append(4)
->>> b
-[1, 2, 3, 4]
->>> c
-[1, 2, 3, 4]
->>> a
-[1, 2, 3]
-```
-
-<Admonition type="warning" title="To be or not to be" open={true}>
-
-Although composed of two keywords separated by a space, `is not` is
-an operator in its own right. The expression `x is not y` is equivalent
-to `not (x is y)`. 
-If you need to use `is` and `not` as distinct operators, 
-use parentheses to avoid ambiguity, as in `x is (not y)`. 
-For example, if we have
-
-```python
->>> x = 1
->>> y = True
-```
-
-then
-
-``` python
->>> x is y
-False
->>> x is not y
-True
->>> not (x is y)
-True
-```
-
-but
-
-```python
->>> not y
-False
->>> x is (not y)
-False
-```
-</Admonition>
-
+Refer to the section on [Equality and Identity](./lec07-equality-and-identity) for more details.
 
 ### Priorities
 

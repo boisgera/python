@@ -102,9 +102,10 @@ Because the addition introduced a (small) error in the calculation:
 0.30000000000000004
 ```
 
-The IEEE 754 standard governs the representation and calculation of
-floating-point numbers. It introduces special numbers; there are
-thus two distinct zeros ($0^+$ and $0^-$) but considered equal:
+The [IEEE 754 standard](https://en.wikipedia.org/wiki/IEEE_754) governs the 
+representation and calculation of floating-point numbers. 
+It introduces special numbers; there are thus two distinct zeros 
+($0^+$ and $0^-$) but considered equal:
 
 ```python
 >>> +0.0
@@ -132,7 +133,7 @@ You need to use the `isnan` function to know if a value is a non-number.
 True
 ```
 
-Source: [📖 IEEE 754 Standard](https://en.wikipedia.org/wiki/IEEE_754)
+[IEEE 754 standard]: https://en.wikipedia.org/wiki/IEEE_754
 
 </Admonition>
 
@@ -234,8 +235,7 @@ False
 
 # Identity
 
-The expression `x is y` determines if the object `x` **is** the object `y`,
-with the same **identity**:
+The expression `x is y` determines if `x` and `y` have the same **identity**:
 
 ```python
 x is y
@@ -324,7 +324,7 @@ not the list `a` (which is a distinct object):
 [1, 2, 3]
 ```
 
-<Admonition type="warning" title="x is not y is not the same as x is (not y)" open={true}>
+<Admonition type="warning" title="To be or not to be" open={true}>
 
 Although composed of two keywords separated by a space, `is not` is
 an operator in its own right. The expression `x is not y` is equivalent
@@ -340,10 +340,10 @@ you should keep the parentheses. Thus, with
 we have
 
 ```
->>> x is not y
-True
 >>> x is y
 False
+>>> x is not y
+True
 >>> not (x is y)
 True
 ```
