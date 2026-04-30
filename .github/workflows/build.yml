@@ -12,19 +12,19 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Install Node
-        uses: actions/setup-node@v2
+      - name: Install Bun
+        uses: oven-sh/setup-bun@v2
         with:
-          node-version: "20"
+          bun-version: latest
 
       - name: Install project Dependencies
-        run: npm install
+        run: bun install
 
       - name: Patch astro config
-        run: node patch-astro-config.js
+        run: bun patch-astro-config.js
 
       - name: Build
-        run: npm run build
+        run: bun run build
 
       - name: Deployment Setup
         run: |
