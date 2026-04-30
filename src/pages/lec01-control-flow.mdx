@@ -188,8 +188,7 @@ The identity `x is y` means that the variables `x` and `y` refer to the
 same Python object: the data is at the same address in memory. A perfect
 copy of an object will therefore have a different identity from the
 original, while it will be considered equal to the original. However, if two
-objects are identical (in the sense of: have the same identity, are a single
-unique object), then they are necessarily equal.
+objects have the same identity, then they are necessarily equal.
 
 ####
 
@@ -203,7 +202,7 @@ As an example, let's consider the three lists `a`, `b` and `c`:
 
 The lists `a` and `b` are equal, as are `b` and `c`, but they are not
 identical—they do not designate the same object (in memory);
-the variables `b` and `c`, on the other hand, designate the same object:
+the variables `b` and `c`, on the other hand, refer to the same object:
 
 ```python
 >>> a == b
@@ -216,7 +215,7 @@ False
 True
 ```
 
-You can verify that `b` and `c` designate the same object by evaluating
+You can check that `b` and `c` refer to the same object by evaluating
 the **identifier** of these objects (an integer) with the function `id`:
 
 ```python
@@ -250,22 +249,23 @@ not the list `a` (which is a distinct object):
 
 Although composed of two keywords separated by a space, `is not` is
 an operator in its own right. The expression `x is not y` is equivalent
-to `not (x is y)` ... but more readable! If you need to use
-`is` and `not` as distinct operators, to mean `x is (not y)`,
-you should keep the parentheses. Thus, with
+to `not (x is y)`. 
+If you need to use `is` and `not` as distinct operators, 
+use parentheses to avoid ambiguity, as in `x is (not y)`. 
+For example, if we have
 
 ```python
 >>> x = 1
 >>> y = True
 ```
 
-we have
+then
 
 ``` python
->>> x is not y
-True
 >>> x is y
 False
+>>> x is not y
+True
 >>> not (x is y)
 True
 ```
@@ -304,7 +304,8 @@ expressions; from highest to lowest precedence, we have:
 
 ### Explicit Conversions
 
-#### 🏷️ Boolean Value
+#### Boolean Value
+
 We say that a value `x` is:
 
  - **false-ish** if `bool(x)` is `False`,
@@ -362,12 +363,23 @@ The value in question is the one obtained by calling the type's constructor
 without arguments:
 
 ```python
->>> types = [type(None), bool, int, float, complex, str, bytes, tuple, list, set, dict]
+>>> types = [
+...     type(None), 
+...     bool, 
+...     int, 
+...     float, 
+...     complex, 
+...     str, 
+...     bytes, 
+...     tuple, 
+...     list, 
+...     set, 
+...     dict
+... ]
 >>> for T in types:
 ...     val = T()
 ...     print(repr(val))
 ... 
-
 False
 0
 0.0
@@ -378,7 +390,8 @@ b''
 []
 {}
 set()
->>> assert all(bool(T()) is False for T in types)
+>>> print(all(bool(T()) is False for T in types))
+True
 ```
 </Admonition>
 
@@ -386,6 +399,8 @@ set()
 ## `If`
 
 The keyword `if` and the associated keywords `elif` and `else` allow
+**branching** the execution flow, that is, to execute a block of code
+only if a certain condition is met. This is the most basic form of
 conditional execution of code.
 
 ```python
@@ -423,7 +438,7 @@ determine what the execution flow will be.
 
 ## `While`
 
-The `while` loop executes as long as its condition is (false-ish:
+The `while` loop executes as long as its condition is false-ish:
 
 ```python
 >>> numbers = [1, 2, 3]
@@ -450,7 +465,7 @@ The `for` loop allows you to iterate over all elements of a collection:
 3
 ```
 
-Refer to the section [Iteration and Comprehension](../iteration-and-comprehension/index.html) for more details.
+Refer to the section [Iteration and Comprehension](../lec08-iteration-and-comprehension) for more details.
 
 ## Exiting Loops
 
@@ -528,7 +543,7 @@ which can themselves call functions, etc.)
 
 ### Errors
 
-In case of an invalid operation, Python raises an error; for example if you 
+In case of an invalid operation, Python generates an error; for example if you 
 divide $1$ by $0$, compute $\sqrt{-1}$ or evaluate the absolute value
 of an empty list, you will observe the following messages:
 
@@ -554,7 +569,7 @@ Traceback (most recent call last):
 TypeError: bad operand type for abs(): 'list'
 ```
 
-Technically, Python raises an error by **raising an exception**.
+Technically, Python generates an error by **raising an exception**.
 In interactive mode, the exception manifests as follows:
 
  - a **traceback** pointing to the origin of the error:
@@ -612,8 +627,8 @@ ZeroDivisionError: division by zero
 
 <Admonition type="note" title="Terminal & Errors" open={true}>
 
-To be more precise: the string `"Hello"` is printed to standard output,
-the error message is directed to standard error (file descriptor 2),
+The string `"Hello"` is printed to standard output, but
+the error message is actually directed to standard error (file descriptor 2),
 and an exit code (different from 0, which corresponds to error-free
 execution) is emitted:
 
@@ -730,7 +745,7 @@ You can quickly define a factorial function:
 import math
 
 def factorial(n):
-    integers = range(1, n+1) # 1, 2, 3, ..., n (iterable)
+    integers = range(1, n + 1) # 1, 2, 3, ..., n (iterable)
     return math.prod(integers)
 ```
 
