@@ -32,12 +32,15 @@ By default, a computer program executes the instructions in the order
 in which they are provided, line by line, and stops once the last 
 instruction has been executed.
 
+For example, the python program `main.py` containing the following code
+
 ```python
-# file: main.py
 print("Hey!")
 print("Ho!")
 print("Let's go!")
 ```
+
+when executed, will produce the following output:
 
 ```console
 $ python main.py
@@ -46,8 +49,8 @@ Ho!
 Let's go!
 ```
 
-However, **branching** allows you to control this execution flow when needed. 
-In Python, branching constructs include:
+However, some control flow constructs allow you to alter this execution flow 
+when needed. They include:
 
  1. [**Conditional execution**](#conditional-execution)
  2. [**Loops**](#loops)
@@ -56,7 +59,10 @@ In Python, branching constructs include:
 
 # Conditional execution
 
-## Booleans
+If statements allow you to execute a block of code only if a certain condition is met. 
+The condition is a boolean expression, so let's dive into this first.
+
+## Boolean expressions
 
 The boolean type `bool` can take two values: `False` and `True`.
 
