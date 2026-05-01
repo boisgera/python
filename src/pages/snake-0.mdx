@@ -1,7 +1,7 @@
 ---
 context:
 title: Getting Started with Pyxel
-description: Let's get out tools ready to develop Pyxel games and more!
+description: Let's sharpen our tools for developing Pyxel games, and more!
 date: "2023-09-06 11:00"
 authors: 
   - name: Sébastien Boisgérault
@@ -70,23 +70,13 @@ Useful if you want:
 [VS-Code]: https://code.visualstudio.com
 [Python-VS-Code]: https://marketplace.visualstudio.com/items?itemName=ms-python.python
 
-{/*
-  - (Optional) Enable [Github Copilot on Github]. 
-    (This is free for students registered into their [Global Campus] program ; 
-    alternatively, you may opt for a 30 free trial.)     
-    Then install the [GitHub Copilot](https://marketplace.visualstudio.com/items?itemName=GitHub.copilot)
-    extension for Visual Studio Code.
-
-[Github Copilot on Github]: https://docs.github.com/en/copilot/quickstart
-[Global Campus]: https://education.github.com/
-*/}
-
 ## Pixi
 
-The [Pixi] package manager can help you to handle Python environments and 
-dependencies, especially if you need some of the Python packages of [PyPi]
-but also some of the packages of [conda-forge] (which include both Python and 
-non-Python software).
+The [Pixi] package manager can handle all your project software dependencies. 
+It is a good choice for Python projects in general, and especially for hybrid
+projects that require both Python packages and non-Python software, since 
+it can install both Python packages from [PyPi] and Python *and* non-Python 
+software from [conda-forge].
 
 [Pixi]: https://prefix.dev/docs/pixi/overview
 [conda-forge]: https://conda-forge.org
@@ -130,55 +120,3 @@ pixi run python my_app.py
 An good alternative to Pixi for pure Python projects is [uv].
 
 [uv]: https://docs.astral.sh/uv/
-
-{/*
-
-## Troubleshooting
-
-Common issues that you may have with "the hard way":
-
-<Admonition type="warning" title="Pyxel is not found" open={debug}>
-You have installed Pyxel with pip but Visual Studio Code cannot find it?
-It is likely not using the same Python environment as the one
-you used to install Pyxel.
-
-  - In your terminal, type:
-  
-    ```bash
-    python -c "import sys; print(sys.executable)"
-    ```
- 
-    to know to which Python interpreter `python` refers to. 
-   
-  - In Visual Studio Code, open the command palette with `Ctrl+Shift+P` 
-    and type `Python: Select Interpreter` to select this Python interpreter.
-
-  - Install explicitly pyxel for this interpreter with:
-
-    ```bash
-    python -m pip install pyxel
-    ```
-
-    (your `pip` executable may refer to another Python interpreter.)
-
-</Admonition>
-
-<Admonition type="warning" title="undefined symbol: SDL_Metal_DestroyView" open={debug}>
-
-[@mgmalheiros] has analyzed this issue on [GitHub][issue-SDL_Metal_DestroyView]. 
-A workaround is to use an older version of Pyxel:
-
-```bash
-pip install pyxel==1.9.7
-```
-
-
-</Admonition>
-
-[@mgmalheiros]: https://github.com/mgmalheiros
-[issue-SDL_Metal_DestroyView]: https://github.com/kitao/pyxel/issues/484#issuecomment-1678251568
-
-*/}
-
-
-
