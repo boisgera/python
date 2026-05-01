@@ -140,6 +140,12 @@ pyxel.run(update, draw)
 
 ## No More Magic
 
+Replace [magic numbers] and hardcoded values with named constants.
+This makes the code more readable and easier to modify: screen dimensions,
+frame rate, colors, and direction vectors all get descriptive names.
+
+[magic numbers]: https://en.wikipedia.org/wiki/Magic_number_(programming)
+
 <Admonition type="solution" open={debug}>
 ```python
 import pyxel
@@ -249,6 +255,10 @@ pyxel.run(update, draw)
 </Admonition>
 
 ## Modules
+
+Separate the constants into a dedicated `constants.py` module and import them
+into the main `snake.py` file. This reduces clutter in the main file and
+makes the constants reusable across multiple files.
 
 <Admonition type="solution" open={debug}>
 
@@ -725,24 +735,33 @@ Here is the final result of our refactoring:
 
 `constants.py`:
 ```python
-# Screen Size
-WIDTH = HEIGHT = 30
+import pyxel
 
-# Frame Rate
+# Geometry
+WIDTH = 30
+HEIGHT = 30
+
+# Frame rate
 FPS = 10
 
 # Colors
 BLACK = 0
 WHITE = 7
-RED =  8
+PINK = 8
 DARK_GREEN = 3
 LIGHT_GREEN = 11
 
-# Geometry
+# Directions
 UP = [0, -1]
 RIGHT = [1, 0]
 DOWN = [0, 1]
 LEFT = [-1, 0]
+ARROW_KEYS = [
+    pyxel.KEY_UP, 
+    pyxel.KEY_DOWN, 
+    pyxel.KEY_LEFT, 
+    pyxel.KEY_RIGHT
+]
 ```
 
 `events.py`:
@@ -887,7 +906,7 @@ def draw():
     display(DARK_GREEN, snake_body)
     display(LIGHT_GREEN, snake_head)
     display(BLACK, rocks)
-    display(PINK, fruit)
+    display(RED, fruit)
 
 pyxel.init(WIDTH, HEIGHT, fps=FPS)
 spawn_everything()
