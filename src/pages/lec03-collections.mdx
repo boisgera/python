@@ -4,7 +4,7 @@ title: Collections
 description: Lists, tuples, sets, and dictionaries
 date: "2026-04-28 18:00"
 authors: 
-  - name: Sébastien Boisgrault
+  - name: Sébastien Boisgérault
     title: Associate Professor
     email: Sebastien.Boisgerault@minesparis.psl.eu 
     url: https://eul.ink
@@ -12,7 +12,7 @@ authors:
     affiliation: ITN Mines Paris – PSL
     twitter: "boisgera"
     github: "boisgera"
-    linkedin: "Sébastien Boisgrault"
+    linkedin: "Sébastien Boisgérault"
 tags: [Python, collections, list, tuple, set, dict]
 license: "CC BY 4.0" 
 layout: ../layouts/MDXLayout.astro
@@ -29,8 +29,8 @@ import { Image } from "astro:assets";
 # Lists
 
 Python lists are ordered collections of objects of arbitrary type.
-They are (potentially) heterogeneous: it is not necessary that the type
-of all elements in a list be the same
+They can be heterogeneous: the type of the elements of a list does not have to 
+be the same for all elements of the list.
 
 ```python
 >>> l = [1.0, True, 2, 3]
@@ -181,8 +181,8 @@ range(0, 5)
 
 <Admonition type="warning" title="Be careful with lists sharing mutable objects" open={true}>
 
-It is the references to objects that are stored in lists, not
-the objects themselves; by modifying an element in a list, you also modify
+Lists store references to objects, not the objects themselves ; 
+by modifying an element in a list, you also modify
 any list of which it is an element.
 
 </Admonition>
@@ -202,8 +202,8 @@ any list of which it is an element.
 # Dictionaries
 
 Python **dictionaries** are data structures that associate **keys** to **values**.
-In other languages, they are called associative arrays or, referencing their
-implementation, **hash tables**.
+In other languages, they are called associative arrays or, with a more explicit
+reference to their implementation, **hash tables**.
 
 The Python dictionary representing the following associations
 
@@ -437,8 +437,8 @@ multiple values or to assign in a single instruction multiple variables.
 ``` 
 
 The statement `value, error = compute_pi()` actually produces a pair
-(a tuple of length 2) that is instantly **unpacked** to
-provide values to the variables `value` and `error`.
+(a tuple of length 2) that is instantly **unpacked** / **destructured** 
+into the variables `value` and `error`.
 This becomes much more evident if we decompose these steps:
 
 ```python
@@ -559,8 +559,8 @@ modify **indirectly** the tuple.
 
 # Sets
 
-A set can be defined by a sequence of objects separated by commas
-and surrounded by braces
+A set is defined by a sequence of objects separated by commas
+and surrounded by braces.
 
 ```python
 >>> {1, 2, 3, 4}
@@ -584,7 +584,7 @@ Conversely, it is easy to convert a set to a list
 
 <Admonition type="warning" title="Empty set vs empty dict" open={true}>
 
-The notation `{}` does not define an empty set, but an empty dictionary[^dict].
+The notation `{}` does not define an empty set, but an empty dictionary.
 
 The empty set can be defined by `set()`.
 
@@ -599,8 +599,6 @@ set()
 
 
 
-[^dict]: Dictionaries existed in Python well before sets were introduced.
-They therefore occupied the `{}` notation first, and sets had to accommodate it afterward.
 
 The implementation of a set is similar to that of a dictionary
 which would have the elements of the set as keys and (for example) `True`

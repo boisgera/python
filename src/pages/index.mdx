@@ -4,7 +4,7 @@ title: Python
 description: Python programming course
 date: "2026-04-28"
 authors: 
-  - name: Sébastien Boisgrault
+  - name: Sébastien Boisgérault
     title: Associate Professor
     email: Sebastien.Boisgerault@minesparis.psl.eu 
     url: https://eul.ink
@@ -12,7 +12,7 @@ authors:
     affiliation: ITN Mines Paris – PSL
     twitter: "boisgera"
     github: "boisgera"
-    linkedin: "Sébastien Boisgrault"
+    linkedin: "Sébastien Boisgérault"
 tags: [Python, programming]
 license: "CC BY 4.0" 
 layout: ../layouts/MDXLayout.astro
@@ -23,6 +23,8 @@ import { Image } from "astro:assets";
 import Card from "/src/components/Card.astro";
 import List from "/src/components/List.astro";
 
+import placeholder from "/src/assets/placeholder.png";
+
 import pyxelStudio from "/src/assets/pyxel-studio.png";
 import snake from "/src/assets/snake.jpg";
 import blacksmith from "/src/assets/blacksmith.jpg";
@@ -32,7 +34,9 @@ import vaccine from "/src/assets/vaccine.jpg";
 import lego from "/src/assets/lego.jpg";
 import whitewater from "/src/assets/white-water.jpg";
 import sheeps from "/src/assets/sheeps.jpg";
-import placeholder from "/src/assets/placeholder.png";
+import shapes from "/src/assets/shapes.jpg";
+import library from "/src/assets/library.jpg";
+
 
 
 
@@ -46,8 +50,8 @@ import placeholder from "/src/assets/placeholder.png";
   <Card image={burger} link="burger" title="I Can Has Cheezburger?" />
   {/* <Card image={vaccine} link="SIR" title="The SIR Epidemiological Model" /> */}
   <Card image={whitewater} link="lec01-control-flow" title="Control Flow" />
-  <Card image={placeholder} link="lec02-data-types" title="Data Types" />
-  <Card image={placeholder} link="lec03-collections" title="Collections" />
+  <Card image={shapes} link="lec02-data-types" title="Data Types" />
+  <Card image={library} link="lec03-collections" title="Collections" />
   <Card image={placeholder} link="lec04-text-binary-and-files" title="Text, Binary and Files" />
   <Card image={placeholder} link="lec05-eval" title="Dynamic Code Evaluation" />
   <Card image={placeholder} link="lec06-scope" title="Variable Scope" />

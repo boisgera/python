@@ -26,7 +26,7 @@ import { Image } from "astro:assets";
 
 <Header frontmatter={frontmatter}/>
 
-# Absence of Value
+# Absence of value
 
 Python provides a value `None` that signals ... the absence of value!
 By the way, the Python interpreter doesn't want to display it when
@@ -69,10 +69,11 @@ False
 True
 ```
 
-Be careful, a variable assigned to `None`; an undefined variable (that is
-not bound to any value) is (subtly) different. If the variable `y` has
-not been introduced yet (or has been deleted with `del y`),
-evaluating the expression `y is None` raises an error
+Be careful, a variable that refers to `None` and an undefined variable 
+(that is not bound to any value) are different situations. 
+If the variable `y` has not been introduced yet 
+(or has been deleted with `del y`), evaluating the expression `y is None` 
+raises an error
 
 ```python
 >>> y is None
@@ -110,9 +111,9 @@ x is false-ish
 x is false-ish
 ```
 
-## Use Cases
+## Use cases
 
-### Functions Without Return Value
+### Functions without return value
 
 Like mathematical functions, Python functions have arguments and return values
 
@@ -121,7 +122,7 @@ Like mathematical functions, Python functions have arguments and return values
 1
 ```
 
-But invoking a Python function can also have **side effects**, for example:
+Invoking a Python function can also have **side effects**, for example:
 
   - displaying text in the terminal,
   
@@ -144,6 +145,7 @@ here is the pause in the program. Let's use this function in our own
 
 ```python
 import time
+
 def think():
     print("I'm thinking ...", end=" ")
     time.sleep(3.0)
@@ -189,10 +191,9 @@ def think():
     return None
 ```
 
-### Function With Optional Return Value
+### Function with optional return value
 
-Python dictionaries raise an error when trying to access
-the value of a key that doesn't exist.
+Looking up a missing key in a dictionary raises a `KeyError`.
 
 ```python
 >>> d = {"a": 1, "b": 2}
@@ -204,9 +205,7 @@ Traceback (most recent call last):
 KeyError: 'c'
 ```
 
-This isn't always very convenient. Fortunately there is an auxiliary method
-that allows returning a particular value on failure.
-By default, this value is `None`.
+Fortunately, `dict.get(key)` returns `None` in this case instead of raising an error.
 
 ```python
 >>> help(dict.get)
@@ -229,7 +228,7 @@ we can do:
 2
 ```
 
-### Function and Absence of Argument
+### Function and absence of argument
 
 The value `None` is often used as a default value
 associated with a function argument. Not assigning (explicitly) a
@@ -240,6 +239,7 @@ We will illustrate this with the `seterr` function from NumPy, whose
 documentation begins as follows:
 
 ```python
+>>> import numpy as np
 >>> help(np.seterr) # doctest: +ELLIPSIS
 Help on function seterr in module numpy:
 
@@ -343,7 +343,7 @@ to modify. This strategy allows reading the configuration without changing it,
 changing the reaction in the presence of division by zero without changing that
 in case of overflow, etc.
 
-# Numeric Types
+# Numeric types
 
 ## Booleans
 
@@ -398,8 +398,7 @@ multiplication `*`, power `**`, etc.
 10715086071862673209484250490600018105614048117055336074437503883703510511249361224931983788156958581275946729175531468251871452856923140435984577574698574803934567774824230985421074605062371141877954182153046474983581941267398767559165543946077062914571196477686542167660429831652624386837205668069376
 ```
 
-It is possible to compute the remainder and quotient of a Euclidean
-division of two integers.
+You can compute the remainder and quotient of the Euclidean division of two integers.
 
 ```python
 >>> 17 % 12
@@ -426,10 +425,10 @@ can also be represented or defined in binary or hexadecimal form:
 True
 ```
 
-## Floating-Point Numbers
+## Floating-point numbers
 
-Floating-point numbers allow representing
-non-integer numeric values, like $e$ or $\pi$:
+Floating-point numbers can represent non-integer numeric values, 
+like $e$ or $\pi$:
 
 ```python
 >>> from math import e, pi
@@ -464,8 +463,8 @@ directly below or above the floating-point number.
 ```
 
 A major characteristic of floating-point numbers is that they are a
-finite precision representation of real numbers and that computations
-performed with them therefore induce (a priori) errors:
+finite precision representation of real numbers ; 
+any computation may also induce additional errors:
 ```python
 >>> 0.1 + 0.2
 0.30000000000000004
