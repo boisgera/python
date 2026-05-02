@@ -14,7 +14,7 @@
 
 ## Quickstart for editors
 
-First [install Bun], then the project dependencies with `bun install`.
+First install [Bun], then the project dependencies with `bun install`.
 
 To preview the book locally while editing:
 
@@ -32,5 +32,5 @@ The output files will be in the `dist` directory. You can preview them with `bun
 
 **Note:** [Node.js] users can substitute `npm` for `bun` and `npx` for `bunx`.
 
-[install Bun]: https://bun.com/docs/installation
+[Bun]: https://bun.com/
 [Node.js]: https://nodejs.org/
