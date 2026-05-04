@@ -1,0 +1,345 @@
+<!DOCTYPE html><html lang="fr" data-astro-cid-vc27etzb> <head><title>Data Types</title><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><link rel="icon" type="image/svg+xml" href="/python/favicon.svg"><meta name="generator" content="Astro v3.6.5"><script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+    }
+    };
+  </script><script defer src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js">
+  </script><style>aside[data-astro-cid-fjubpvhp]{border:.125rem solid var(--dark);border-radius:.25rem;margin-bottom:1rem}summary[data-astro-cid-fjubpvhp]{padding:1rem;border-top-left-radius:.25rem;border-top-right-radius:.25rem;background-color:var(--light)}details[data-astro-cid-fjubpvhp]>summary[data-astro-cid-fjubpvhp]{list-style:none;border-radius:.25rem;border-bottom-left-radius:0;border-bottom-right-radius:0}.minmax[data-astro-cid-fjubpvhp]{color:var(--dark)}details[data-astro-cid-fjubpvhp].lock{pointer-events:none}details[data-astro-cid-fjubpvhp].lock .minmax[data-astro-cid-fjubpvhp]{display:none}details[data-astro-cid-fjubpvhp][open] .open[data-astro-cid-fjubpvhp]{display:inline}details[data-astro-cid-fjubpvhp][open] .closed[data-astro-cid-fjubpvhp]{display:none}details[data-astro-cid-fjubpvhp]:not([open]) .open[data-astro-cid-fjubpvhp]{display:none}details[data-astro-cid-fjubpvhp]:not([open]) .closed[data-astro-cid-fjubpvhp]{display:inline}.content[data-astro-cid-fjubpvhp]{border-bottom-right-radius:.25rem;border-bottom-left-radius:.25rem}svg[data-astro-cid-fjubpvhp]{height:1rem}.circle[data-astro-cid-fjubpvhp]{height:1.25rem;width:1.25rem;border-radius:.25rem;background-color:var(--dark);color:#fff;display:flex;justify-content:center;align-items:center}
+</style>
+<link rel="stylesheet" href="/python/_astro/burger.7e2592e1.css" /><script type="module" src="/python/_astro/hoisted.311de0fb.js"></script></head> <body data-astro-cid-vc27etzb> <nav data-astro-cid-vc27etzb> <a href="/python" data-astro-cid-vc27etzb><svg viewBox="0 0 128 128" style="width:2rem;height:2rem;" data-astro-cid-vc27etzb astro-icon="python"><linearGradient id="astroicon:pythona" x1="70.252" x2="170.659" y1="1237.476" y2="1151.089" gradientTransform="matrix(.563 0 0 -.568 -29.215 707.817)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#5A9FD4"/><stop offset="1" stop-color="#306998"/></linearGradient><linearGradient id="astroicon:pythonb" x1="209.474" x2="173.62" y1="1098.811" y2="1149.537" gradientTransform="matrix(.563 0 0 -.568 -29.215 707.817)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#FFD43B"/><stop offset="1" stop-color="#FFE873"/></linearGradient><path fill="url(#astroicon:pythona)" d="M63.391 1.988c-4.222.02-8.252.379-11.8 1.007-10.45 1.846-12.346 5.71-12.346 12.837v9.411h24.693v3.137H29.977c-7.176 0-13.46 4.313-15.426 12.521-2.268 9.405-2.368 15.275 0 25.096 1.755 7.311 5.947 12.519 13.124 12.519h8.491V67.234c0-8.151 7.051-15.34 15.426-15.34h24.665c6.866 0 12.346-5.654 12.346-12.548V15.833c0-6.693-5.646-11.72-12.346-12.837-4.244-.706-8.645-1.027-12.866-1.008zM50.037 9.557c2.55 0 4.634 2.117 4.634 4.721 0 2.593-2.083 4.69-4.634 4.69-2.56 0-4.633-2.097-4.633-4.69-.001-2.604 2.073-4.721 4.633-4.721z" transform="translate(0 10.26)"/><path fill="url(#astroicon:pythonb)" d="M91.682 28.38v10.966c0 8.5-7.208 15.655-15.426 15.655H51.591c-6.756 0-12.346 5.783-12.346 12.549v23.515c0 6.691 5.818 10.628 12.346 12.547 7.816 2.297 15.312 2.713 24.665 0 6.216-1.801 12.346-5.423 12.346-12.547v-9.412H63.938v-3.138h37.012c7.176 0 9.852-5.005 12.348-12.519 2.578-7.735 2.467-15.174 0-25.096-1.774-7.145-5.161-12.521-12.348-12.521h-9.268zM77.809 87.927c2.561 0 4.634 2.097 4.634 4.692 0 2.602-2.074 4.719-4.634 4.719-2.55 0-4.633-2.117-4.633-4.719 0-2.595 2.083-4.692 4.633-4.692z" transform="translate(0 10.26)"/><radialGradient id="astroicon:pythonc" cx="1825.678" cy="444.45" r="26.743" gradientTransform="matrix(0 -.24 -1.055 0 532.979 557.576)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#B8B8B8" stop-opacity=".498"/><stop offset="1" stop-color="#7F7F7F" stop-opacity="0"/></radialGradient><path fill="url(#astroicon:pythonc)" d="M97.309 119.597c0 3.543-14.816 6.416-33.091 6.416-18.276 0-33.092-2.873-33.092-6.416 0-3.544 14.815-6.417 33.092-6.417 18.275 0 33.091 2.872 33.091 6.417z" opacity=".444"/></svg></a> <a href="https://github.com/boisgera/python" data-astro-cid-vc27etzb><svg viewBox="0 -.5 25 25" style="width:2rem;height:2rem;" data-astro-cid-vc27etzb astro-icon="github"><path d="M12.494 1.18h.084c2.02 0 3.911.553 5.53 1.515l-.049-.028a11.132 11.132 0 0 1 4.01 3.985l.028.052a10.98 10.98 0 0 1 1.49 5.558c0 4.872-3.139 9.013-7.504 10.507l-.079.024a.653.653 0 0 1-.579-.102h.002a.562.562 0 0 1-.187-.42v-.012l.007-1.104q.007-1.062.007-1.942a2.563 2.563 0 0 0-.75-2.05 9.84 9.84 0 0 0 1.548-.274l-.069.015a5.866 5.866 0 0 0 1.386-.578l-.028.015a4.073 4.073 0 0 0 1.164-.954l.006-.006c.335-.429.597-.934.757-1.482l.008-.032a7.11 7.11 0 0 0 .296-2.056v-.122.006-.065a4.263 4.263 0 0 0-1.143-2.911l.002.003a3.83 3.83 0 0 0-.125-2.968l.01.023a1.888 1.888 0 0 0-1.18.163l.01-.004c-.512.189-.95.403-1.363.654l.035-.02-.55.346a10.199 10.199 0 0 0-2.77-.375c-.987 0-1.941.137-2.846.393l.073-.018q-.23-.158-.614-.39a8.204 8.204 0 0 0-1.146-.536l-.06-.02a1.96 1.96 0 0 0-1.237-.193l.011-.002a3.785 3.785 0 0 0-.354 1.612c0 .478.088.937.248 1.36l-.009-.026a4.257 4.257 0 0 0-1.14 2.977v-.004.117c0 .73.107 1.434.31 2.097l-.014-.05c.17.579.429 1.082.766 1.525l-.008-.012c.319.392.704.715 1.142.957l.02.01c.389.227.84.42 1.315.554l.042.01c.42.112.923.204 1.437.256l.042.003a2.43 2.43 0 0 0-.707 1.477v.01a2.754 2.754 0 0 1-.63.213l-.02.004c-.23.046-.495.072-.766.072h-.06.003a1.696 1.696 0 0 1-.95-.314l.005.004a2.56 2.56 0 0 1-.794-.889l-.006-.013a2.346 2.346 0 0 0-.693-.746l-.008-.005a2.101 2.101 0 0 0-.7-.343l-.014-.003-.288-.044a.944.944 0 0 0-.425.067l.007-.003q-.116.065-.072.166a.791.791 0 0 0 .13.203c.054.064.117.12.184.17l.003.002.1.072c.256.134.466.32.626.544l.003.005c.172.214.324.455.445.714l.01.022.144.331c.121.363.342.665.63.884l.005.004c.27.211.597.362.953.43l.014.003c.298.057.644.093.997.1h.006a4.268 4.268 0 0 0 .826-.054l-.024.004.332-.058q0 .55.007 1.279l.007.786v.013a.562.562 0 0 1-.187.42.646.646 0 0 1-.582.1h.004c-4.442-1.521-7.579-5.662-7.579-10.535 0-2.044.552-3.96 1.515-5.605L2.9 6.7a11.132 11.132 0 0 1 3.985-4.01l.052-.028A10.723 10.723 0 0 1 12.41 1.18h.088-.004ZM5.608 17.103q.043-.101-.101-.173-.144-.044-.188.028-.043.101.101.174.13.086.188-.03zm.448.49q.1-.071-.03-.23-.143-.13-.23-.043-.1.072.029.23.143.142.23.043zm.432.65q.13-.101 0-.274-.115-.188-.245-.087-.13.072 0 .26.13.187.245.1zm.606.606q.115-.115-.058-.274-.173-.173-.288-.043-.13.115.058.274.173.173.288.04zm.823.36q.043-.158-.188-.23-.216-.058-.274.101-.057.159.188.216.216.088.274-.086zm.91.073q0-.187-.246-.159-.23 0-.23.159 0 .187.245.159.23 0 .23-.158zm.837-.144q-.03-.159-.26-.13-.23.043-.202.216.029.173.26.116.23-.058.203-.202z"/></svg></a> <main data-astro-cid-vc27etzb> <header style="margin-bottom: 3rem;"> <div style="margin-bottom: 1.5rem;"> <h1 style="font-size: 2.25rem; line-height:1; font-weight:700; color: #020617;
+    margin-bottom: 1rem;"> Data Types </h1> <p style="color: #64748b;"> None, booleans, integers, and floating-point numbers </p> </div> <div style="display: flex; justify-content: left; gap: 1rem;"> <img src="https://2.gravatar.com/avatar/39ec5d637b0753448b97a8e63855a45cb6708d033b656fe9f1d3314bb4bfb202?size=128" alt="avatar" style="margin: 0px; flex: 0 48px; width: 48px; height: 48px; border-radius: 50%;"> <p style="margin: 0px; flex: auto; font-size: 0.875rem; line-height: 1.25rem; color: #1e293b;"> Sébastien Boisgérault <br> Associate Professor, ITN Mines Paris – PSL </p><p></p>  </div> </header>
+<h1 id="absence-of-value">Absence of value</h1>
+<p>Python provides a value <code>None</code> that signals … the absence of value!
+By the way, the Python interpreter doesn’t want to display it when
+you provide this value at the command prompt:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> None</span></span></code></pre>
+<p>Using a variable doesn’t change anything.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> a </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> None</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> a</span></span></code></pre>
+<p>However, you can explicitly display <code>None</code>, for example with the <code>print</code> function:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> print</span><span style="color:#E1E4E8">(a)</span></span>
+<span class="line"><span style="color:#79B8FF">None</span></span></code></pre>
+<p>The value <code>None</code> isn’t very complex in itself; but its classic use cases
+are worth studying: it’s not how <code>None</code> works that is subtle, but rather how
+it can be used appropriately.</p>
+<h2 id="mechanisms">Mechanisms</h2>
+<p><code>None</code> is a unique value in Python (there is no way to generate two
+different <code>None</code> values). So you can test if a variable <code>x</code> is
+<code>None</code> by evaluating the expression <code>x is None</code>:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 1</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">is</span><span style="color:#79B8FF"> None</span></span>
+<span class="line"><span style="color:#79B8FF">False</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> None</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">is</span><span style="color:#79B8FF"> None</span></span>
+<span class="line"><span style="color:#79B8FF">True</span></span></code></pre>
+<p>Be careful, a variable that refers to <code>None</code> and an undefined variable
+(that is not bound to any value) are different situations.
+If the variable <code>y</code> has not been introduced yet
+(or has been deleted with <code>del y</code>), evaluating the expression <code>y is None</code>
+raises an error</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> y </span><span style="color:#F97583">is</span><span style="color:#79B8FF"> None</span></span>
+<span class="line"><span style="color:#E1E4E8">Traceback (most recent call last):</span></span>
+<span class="line"><span style="color:#E1E4E8">  File </span><span style="color:#9ECBFF">&quot;&lt;stdin&gt;&quot;</span><span style="color:#E1E4E8">, line </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#F97583">in</span><span style="color:#F97583"> &lt;</span><span style="color:#E1E4E8">module</span><span style="color:#F97583">&gt;</span></span>
+<span class="line"><span style="color:#79B8FF">NameError</span><span style="color:#E1E4E8">: name </span><span style="color:#9ECBFF">&#39;y&#39;</span><span style="color:#F97583"> is</span><span style="color:#F97583"> not</span><span style="color:#E1E4E8"> defined</span></span></code></pre>
+<p>like any expression that uses <code>y</code>:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> y</span></span>
+<span class="line"><span style="color:#E1E4E8">Traceback (most recent call last):</span></span>
+<span class="line"><span style="color:#E1E4E8">  File </span><span style="color:#9ECBFF">&quot;&lt;stdin&gt;&quot;</span><span style="color:#E1E4E8">, line </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#F97583">in</span><span style="color:#F97583"> &lt;</span><span style="color:#E1E4E8">module</span><span style="color:#F97583">&gt;</span></span>
+<span class="line"><span style="color:#79B8FF">NameError</span><span style="color:#E1E4E8">: name </span><span style="color:#9ECBFF">&#39;y&#39;</span><span style="color:#F97583"> is</span><span style="color:#F97583"> not</span><span style="color:#E1E4E8"> defined</span></span></code></pre>
+<p>In a boolean context, <code>None</code> evaluates to <code>False</code>, but the test
+<code>x is None</code> is more precise, so generally preferable:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> None</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#F97583"> if</span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">is</span><span style="color:#79B8FF"> None</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#79B8FF">...</span><span style="color:#79B8FF">    print</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">&quot;x is None&quot;</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#79B8FF">...</span></span>
+<span class="line"><span style="color:#E1E4E8">x </span><span style="color:#F97583">is</span><span style="color:#79B8FF"> None</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#F97583"> if</span><span style="color:#F97583"> not</span><span style="color:#E1E4E8"> x:</span></span>
+<span class="line"><span style="color:#79B8FF">...</span><span style="color:#79B8FF">    print</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">&quot;x is false-ish&quot;</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#79B8FF">...</span></span>
+<span class="line"><span style="color:#E1E4E8">x </span><span style="color:#F97583">is</span><span style="color:#E1E4E8"> false</span><span style="color:#F97583">-</span><span style="color:#E1E4E8">ish</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 0</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#F97583"> if</span><span style="color:#F97583"> not</span><span style="color:#E1E4E8"> x:</span></span>
+<span class="line"><span style="color:#79B8FF">...</span><span style="color:#79B8FF">    print</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">&quot;x is false-ish&quot;</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#79B8FF">...</span></span>
+<span class="line"><span style="color:#E1E4E8">x </span><span style="color:#F97583">is</span><span style="color:#E1E4E8"> false</span><span style="color:#F97583">-</span><span style="color:#E1E4E8">ish</span></span></code></pre>
+<h2 id="use-cases">Use cases</h2>
+<h3 id="functions-without-return-value">Functions without return value</h3>
+<p>Like mathematical functions, Python functions have arguments and return values</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> abs</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">-</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#79B8FF">1</span></span></code></pre>
+<p>Invoking a Python function can also have <strong>side effects</strong>, for example:</p>
+<ul>
+<li>
+<p>displaying text in the terminal,</p>
+</li>
+<li>
+<p>modifying a global variable,</p>
+</li>
+<li>
+<p>writing to a file,</p>
+</li>
+<li>
+<p>sending an email,</p>
+</li>
+<li>
+<p>etc.</p>
+</li>
+</ul>
+<p>If this side effect is the sole reason for the function’s existence, then
+it is unnecessary to return a value.</p>
+<p>For example, invoking the <code>sleep</code> function from the Python <code>time</code> module will
+pause the program that invokes it (here the Python interpreter) for a
+determined time, then let it continue on its course. The expected side effect
+here is the pause in the program. Let’s use this function in our own
+<code>think</code> function</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> time</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">def</span><span style="color:#B392F0"> think</span><span style="color:#E1E4E8">():</span></span>
+<span class="line"><span style="color:#79B8FF">    print</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">&quot;I&#39;m thinking ...&quot;</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">end</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">&quot; &quot;</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">    time.sleep(</span><span style="color:#79B8FF">3.0</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#79B8FF">    print</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">&quot;I&#39;m done!&quot;</span><span style="color:#E1E4E8">)</span></span></code></pre>
+<p>which will be invoked as follows</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> think()</span></span>
+<span class="line"><span style="color:#E1E4E8">I</span><span style="color:#9ECBFF">&#39;m thinking ... I&#39;</span><span style="color:#E1E4E8">m done!</span></span></code></pre>
+<p>But every Python function implicitly or explicitly returns a value.
+So it is legitimate to assign the result of <code>think()</code> to a variable.
+The difficulty is that the Python interpreter doesn’t display it:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> result </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> think()</span></span>
+<span class="line"><span style="color:#E1E4E8">I</span><span style="color:#9ECBFF">&#39;m thinking ... I&#39;</span><span style="color:#E1E4E8">m done!</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> result</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span></span></code></pre>
+<p>Our function actually returned the special value <code>None</code> which can be
+interpreted as “absence of value” (yes, it’s a bit paradoxical!).
+Insisting, we can still make the Python interpreter confess what the reality is:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> print</span><span style="color:#E1E4E8">(result)</span></span>
+<span class="line"><span style="color:#79B8FF">None</span></span></code></pre>
+<p>It’s as if the Python interpreter, noting that our <code>think</code> function definition
+didn’t <em>explicitly</em> return any value (the <code>return</code> keyword is not used) had added
+the instruction <code>return None</code>:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">def</span><span style="color:#B392F0"> think</span><span style="color:#E1E4E8">():</span></span>
+<span class="line"><span style="color:#79B8FF">    print</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">&quot;I&#39;m thinking ...&quot;</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">end</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">&quot; &quot;</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">    time.sleep(</span><span style="color:#79B8FF">3.0</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#79B8FF">    print</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">&quot;I&#39;m done!&quot;</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#79B8FF"> None</span></span></code></pre>
+<h3 id="function-with-optional-return-value">Function with optional return value</h3>
+<p>Looking up a missing key in a dictionary raises a <code>KeyError</code>.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> d </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> {</span><span style="color:#9ECBFF">&quot;a&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">&quot;b&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">}</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> d[</span><span style="color:#9ECBFF">&quot;a&quot;</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#79B8FF">1</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> d[</span><span style="color:#9ECBFF">&quot;c&quot;</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#E1E4E8">Traceback (most recent call last):</span></span>
+<span class="line"><span style="color:#E1E4E8">  File </span><span style="color:#9ECBFF">&quot;&lt;stdin&gt;&quot;</span><span style="color:#E1E4E8">, line </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#F97583">in</span><span style="color:#F97583"> &lt;</span><span style="color:#E1E4E8">module</span><span style="color:#F97583">&gt;</span></span>
+<span class="line"><span style="color:#79B8FF">KeyError</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&#39;c&#39;</span></span></code></pre>
+<p>Fortunately, <code>dict.get(key)</code> returns <code>None</code> in this case instead of raising an error.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> help</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">dict</span><span style="color:#E1E4E8">.get)</span></span>
+<span class="line"><span style="color:#E1E4E8">Help on method_descriptor:</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">get(</span><span style="color:#79B8FF">self</span><span style="color:#E1E4E8">, key, </span><span style="color:#FFAB70">default</span><span style="color:#F97583">=</span><span style="color:#79B8FF">None</span><span style="color:#E1E4E8">, </span><span style="color:#F97583">/</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">    Return the value </span><span style="color:#F97583">for</span><span style="color:#E1E4E8"> key </span><span style="color:#F97583">if</span><span style="color:#E1E4E8"> key </span><span style="color:#F97583">is</span><span style="color:#F97583"> in</span><span style="color:#E1E4E8"> the dictionary, </span><span style="color:#F97583">else</span><span style="color:#E1E4E8"> default.</span></span></code></pre>
+<p>Thus, if we want to display the values associated with keys <code>&quot;a&quot;</code>, <code>&quot;b&quot;</code>
+and <code>&quot;c&quot;</code> (assumed to be different from <code>None</code>) if they exist and nothing otherwise,
+we can do:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#F97583"> for</span><span style="color:#E1E4E8"> key </span><span style="color:#F97583">in</span><span style="color:#E1E4E8"> [</span><span style="color:#9ECBFF">&quot;a&quot;</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">&quot;b&quot;</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">&quot;c&quot;</span><span style="color:#E1E4E8">]:</span></span>
+<span class="line"><span style="color:#79B8FF">...</span><span style="color:#E1E4E8">     value </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> d.get(key)</span></span>
+<span class="line"><span style="color:#79B8FF">...</span><span style="color:#F97583">     if</span><span style="color:#E1E4E8"> value </span><span style="color:#F97583">is</span><span style="color:#F97583"> not</span><span style="color:#79B8FF"> None</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#79B8FF">...</span><span style="color:#79B8FF">         print</span><span style="color:#E1E4E8">(value)</span></span>
+<span class="line"><span style="color:#79B8FF">1</span></span>
+<span class="line"><span style="color:#79B8FF">2</span></span></code></pre>
+<h3 id="function-and-absence-of-argument">Function and absence of argument</h3>
+<p>The value <code>None</code> is often used as a default value
+associated with a function argument. Not assigning (explicitly) a
+value to this argument is equivalent to assigning it the value <code>None</code>, which
+the function can detect and handle appropriately.</p>
+<p>We will illustrate this with the <code>seterr</code> function from NumPy, whose
+documentation begins as follows:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#F97583"> import</span><span style="color:#E1E4E8"> numpy </span><span style="color:#F97583">as</span><span style="color:#E1E4E8"> np</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> help</span><span style="color:#E1E4E8">(np.seterr) </span><span style="color:#6A737D"># doctest: +ELLIPSIS</span></span>
+<span class="line"><span style="color:#E1E4E8">Help on function seterr </span><span style="color:#F97583">in</span><span style="color:#E1E4E8"> module numpy:</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">seterr(</span><span style="color:#FFAB70">all</span><span style="color:#F97583">=</span><span style="color:#79B8FF">None</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">divide</span><span style="color:#F97583">=</span><span style="color:#79B8FF">None</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">over</span><span style="color:#F97583">=</span><span style="color:#79B8FF">None</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">under</span><span style="color:#F97583">=</span><span style="color:#79B8FF">None</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">invalid</span><span style="color:#F97583">=</span><span style="color:#79B8FF">None</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">    Set how floating</span><span style="color:#F97583">-</span><span style="color:#E1E4E8">point errors are handled.</span></span>
+<span class="line"><span style="color:#79B8FF">...</span></span></code></pre>
+<p>For reference, in case of division by zero, standard Python floating-point numbers (<code>float</code>)
+raise an error:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> 1.0</span><span style="color:#F97583"> /</span><span style="color:#79B8FF"> 0.0</span></span>
+<span class="line"><span style="color:#E1E4E8">Traceback (most recent call last):</span></span>
+<span class="line"><span style="color:#E1E4E8">  File </span><span style="color:#9ECBFF">&quot;&lt;stdin&gt;&quot;</span><span style="color:#E1E4E8">, line </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#F97583">in</span><span style="color:#F97583"> &lt;</span><span style="color:#E1E4E8">module</span><span style="color:#F97583">&gt;</span></span>
+<span class="line"><span style="color:#79B8FF">ZeroDivisionError</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">float</span><span style="color:#E1E4E8"> division by zero</span></span></code></pre>
+<p>But what happens if we use the floating-point numbers
+provided by NumPy (<code>float64</code>) is a bit different:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#F97583"> import</span><span style="color:#E1E4E8"> numpy </span><span style="color:#F97583">as</span><span style="color:#E1E4E8"> np</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> one </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> np.float64(</span><span style="color:#79B8FF">1.0</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> zero </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> np.float64(</span><span style="color:#79B8FF">0.0</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> one </span><span style="color:#F97583">/</span><span style="color:#E1E4E8"> zero</span></span>
+<span class="line"><span style="color:#F97583">&lt;</span><span style="color:#E1E4E8">stdin</span><span style="color:#F97583">&gt;</span><span style="color:#E1E4E8">:</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">RuntimeWarning</span><span style="color:#E1E4E8">: divide by zero encountered </span><span style="color:#F97583">in</span><span style="color:#E1E4E8"> double_scalars</span></span>
+<span class="line"><span style="color:#E1E4E8">inf</span></span></code></pre>
+<p>Python emits a <strong>warning</strong> but returns a value: <code>inf</code> (i.e., $+\infty$).</p>
+<p>This behavior is however configurable: by calling NumPy’s <code>seterr</code> function without arguments,
+you can read the current configuration:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> np.seterr()</span></span>
+<span class="line"><span style="color:#E1E4E8">{</span><span style="color:#9ECBFF">&#39;divide&#39;</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&#39;over&#39;</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">&#39;under&#39;</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&#39;ignore&#39;</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">&#39;invalid&#39;</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&#39;warn&#39;</span><span style="color:#E1E4E8">}</span></span></code></pre>
+<p>If this default behavior doesn’t please you, you can use NumPy’s <code>seterr</code> function to raise an error
+in case of division by zero.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> _ </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> np.seterr(</span><span style="color:#FFAB70">divide</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">&quot;raise&quot;</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> one </span><span style="color:#F97583">/</span><span style="color:#E1E4E8"> zero</span></span>
+<span class="line"><span style="color:#E1E4E8">Traceback (most recent call last):</span></span>
+<span class="line"><span style="color:#E1E4E8">  File </span><span style="color:#9ECBFF">&quot;&lt;stdin&gt;&quot;</span><span style="color:#E1E4E8">, line </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#F97583">in</span><span style="color:#F97583"> &lt;</span><span style="color:#E1E4E8">module</span><span style="color:#F97583">&gt;</span></span>
+<span class="line"><span style="color:#79B8FF">FloatingPointError</span><span style="color:#E1E4E8">: divide by zero encountered </span><span style="color:#F97583">in</span><span style="color:#E1E4E8"> double_scalars</span></span></code></pre>
+<p>If on the contrary you think $1.0 / 0.0$ is a “normal” operation that
+should return a “non-number” ($\bot$ i.e., <code>nan</code>), make sure that NumPy’s
+warning and error handling mechanism ignores them.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> _ </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> np.seterr(</span><span style="color:#FFAB70">divide</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">&quot;ignore&quot;</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> one </span><span style="color:#F97583">/</span><span style="color:#E1E4E8"> zero</span></span>
+<span class="line"><span style="color:#E1E4E8">inf</span></span></code></pre>
+<p>If this result suits you, but you want an error in case of
+<strong>overflow</strong> (i.e., of the largest finite floating-point number),
+you can invoke <code>seterr</code> accordingly:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> _ </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> np.seterr(</span><span style="color:#FFAB70">overflow</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">&quot;raise&quot;</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> np.float64(</span><span style="color:#79B8FF">2.0</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">**</span><span style="color:#79B8FF"> 10000</span></span>
+<span class="line"><span style="color:#E1E4E8">Traceback (most recent call last):</span></span>
+<span class="line"><span style="color:#E1E4E8">  File </span><span style="color:#9ECBFF">&quot;&lt;stdin&gt;&quot;</span><span style="color:#E1E4E8">, line </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#F97583">in</span><span style="color:#F97583"> &lt;</span><span style="color:#E1E4E8">module</span><span style="color:#F97583">&gt;</span></span>
+<span class="line"><span style="color:#79B8FF">FloatingPointError</span><span style="color:#E1E4E8">: overflow encountered </span><span style="color:#F97583">in</span><span style="color:#E1E4E8"> double_scalars</span></span></code></pre>
+<p>The <code>seterr</code> documentation tells us that the function has 5 arguments,
+all of which have the default value <code>None</code>.
+The successive calls we made to <code>seterr</code></p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#E1E4E8">np.seterr()</span></span>
+<span class="line"><span style="color:#E1E4E8">np.seterr(</span><span style="color:#FFAB70">divide</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">&quot;raise&quot;</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">np.seterr(</span><span style="color:#FFAB70">divide</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">&quot;error&quot;</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">np.seterr(</span><span style="color:#FFAB70">over</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">&quot;raise&quot;</span><span style="color:#E1E4E8">)</span></span></code></pre>
+<p>are therefore equivalent to</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#E1E4E8">np.seterr(</span><span style="color:#FFAB70">all</span><span style="color:#F97583">=</span><span style="color:#79B8FF">None</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">divide</span><span style="color:#F97583">=</span><span style="color:#79B8FF">None</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">over</span><span style="color:#F97583">=</span><span style="color:#79B8FF">None</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">under</span><span style="color:#F97583">=</span><span style="color:#79B8FF">None</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">invalid</span><span style="color:#F97583">=</span><span style="color:#79B8FF">None</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">np.seterr(</span><span style="color:#FFAB70">all</span><span style="color:#F97583">=</span><span style="color:#79B8FF">None</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">divide</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">&quot;error&quot;</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">over</span><span style="color:#F97583">=</span><span style="color:#79B8FF">None</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">under</span><span style="color:#F97583">=</span><span style="color:#79B8FF">None</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">invalid</span><span style="color:#F97583">=</span><span style="color:#79B8FF">None</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">np.seterr(</span><span style="color:#FFAB70">all</span><span style="color:#F97583">=</span><span style="color:#79B8FF">None</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">divide</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">&quot;raise&quot;</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">over</span><span style="color:#F97583">=</span><span style="color:#79B8FF">None</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">under</span><span style="color:#F97583">=</span><span style="color:#79B8FF">None</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">invalid</span><span style="color:#F97583">=</span><span style="color:#79B8FF">None</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">np.seterr(</span><span style="color:#FFAB70">all</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">&quot;raise&quot;</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">divide</span><span style="color:#F97583">=</span><span style="color:#79B8FF">None</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">over</span><span style="color:#F97583">=</span><span style="color:#79B8FF">None</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">under</span><span style="color:#F97583">=</span><span style="color:#79B8FF">None</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">invalid</span><span style="color:#F97583">=</span><span style="color:#79B8FF">None</span><span style="color:#E1E4E8">)</span></span></code></pre>
+<p>The value <code>None</code> is interpreted by <code>seterr</code> as an argument that
+was not explicitly specified and therefore whose configuration we don’t wish
+to modify. This strategy allows reading the configuration without changing it,
+changing the reaction in the presence of division by zero without changing that
+in case of overflow, etc.</p>
+<h1 id="numeric-types">Numeric types</h1>
+<h2 id="booleans">Booleans</h2>
+<p>You can consider that the booleans <code>True</code> and <code>False</code> are numeric values.
+They combine using logical operators and are mainly used
+in tests that control the flow of execution of programs.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#F97583"> not</span><span style="color:#79B8FF"> False</span></span>
+<span class="line"><span style="color:#79B8FF">True</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#F97583"> not</span><span style="color:#79B8FF"> True</span></span>
+<span class="line"><span style="color:#79B8FF">False</span></span></code></pre>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> False</span><span style="color:#F97583"> or</span><span style="color:#79B8FF"> False</span></span>
+<span class="line"><span style="color:#79B8FF">False</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> False</span><span style="color:#F97583"> or</span><span style="color:#79B8FF"> True</span></span>
+<span class="line"><span style="color:#79B8FF">True</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> True</span><span style="color:#F97583"> or</span><span style="color:#79B8FF"> False</span></span>
+<span class="line"><span style="color:#79B8FF">True</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> True</span><span style="color:#F97583"> or</span><span style="color:#79B8FF"> True</span></span>
+<span class="line"><span style="color:#79B8FF">True</span></span></code></pre>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> False</span><span style="color:#F97583"> and</span><span style="color:#79B8FF"> False</span></span>
+<span class="line"><span style="color:#79B8FF">False</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> False</span><span style="color:#F97583"> and</span><span style="color:#79B8FF"> True</span></span>
+<span class="line"><span style="color:#79B8FF">False</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> True</span><span style="color:#F97583"> and</span><span style="color:#79B8FF"> False</span></span>
+<span class="line"><span style="color:#79B8FF">False</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> True</span><span style="color:#F97583"> and</span><span style="color:#79B8FF"> True</span></span>
+<span class="line"><span style="color:#79B8FF">True</span></span></code></pre>
+<h2 id="integers">Integers</h2>
+<p>Python integers are numbers with a sign and without any size limit
+(other than that fixed by your computer’s memory!).
+They support the classic arithmetic operations: addition <code>+</code>,
+multiplication <code>*</code>, power <code>**</code>, etc.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#F97583"> -</span><span style="color:#79B8FF">1</span></span>
+<span class="line"><span style="color:#F97583">-</span><span style="color:#79B8FF">1</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> 1</span><span style="color:#F97583"> +</span><span style="color:#79B8FF"> 3</span><span style="color:#F97583"> *</span><span style="color:#79B8FF"> 2</span></span>
+<span class="line"><span style="color:#79B8FF">7</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> 2</span><span style="color:#F97583">**</span><span style="color:#79B8FF">8</span></span>
+<span class="line"><span style="color:#79B8FF">256</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> 2</span><span style="color:#F97583">**</span><span style="color:#79B8FF">1000</span></span>
+<span class="line"><span style="color:#79B8FF">10715086071862673209484250490600018105614048117055336074437503883703510511249361224931983788156958581275946729175531468251871452856923140435984577574698574803934567774824230985421074605062371141877954182153046474983581941267398767559165543946077062914571196477686542167660429831652624386837205668069376</span></span></code></pre>
+<p>You can compute the remainder and quotient of the Euclidean division of two integers.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> 17</span><span style="color:#F97583"> %</span><span style="color:#79B8FF"> 12</span></span>
+<span class="line"><span style="color:#79B8FF">5</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> 17</span><span style="color:#F97583"> //</span><span style="color:#79B8FF"> 2</span></span>
+<span class="line"><span style="color:#79B8FF">8</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> 17</span><span style="color:#F97583"> /</span><span style="color:#79B8FF"> 12</span></span>
+<span class="line"><span style="color:#79B8FF">1.4166666666666667</span></span></code></pre>
+<p>Even if their preferred representation is decimal, Python integers
+can also be represented or defined in binary or hexadecimal form:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> bin</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">42</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#9ECBFF">&#39;0b101010&#39;</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> hex</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">42</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#9ECBFF">&#39;0x2a&#39;</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#F97583"> 0b</span><span style="color:#79B8FF">101010</span></span>
+<span class="line"><span style="color:#79B8FF">42</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#F97583"> 0x</span><span style="color:#79B8FF">2a</span></span>
+<span class="line"><span style="color:#79B8FF">42</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#F97583"> 0b</span><span style="color:#79B8FF">101010</span><span style="color:#F97583"> ==</span><span style="color:#F97583"> 0x</span><span style="color:#79B8FF">2a</span><span style="color:#F97583"> ==</span><span style="color:#79B8FF"> 42</span></span>
+<span class="line"><span style="color:#79B8FF">True</span></span></code></pre>
+<h2 id="floating-point-numbers">Floating-point numbers</h2>
+<p>Floating-point numbers can represent non-integer numeric values,
+like $e$ or $\pi$:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#F97583"> from</span><span style="color:#E1E4E8"> math </span><span style="color:#F97583">import</span><span style="color:#E1E4E8"> e, pi</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> e</span></span>
+<span class="line"><span style="color:#79B8FF">2.718281828459045</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> pi</span></span>
+<span class="line"><span style="color:#79B8FF">3.141592653589793</span></span></code></pre>
+<p>You can convert a floating-point number to an integer approximation with <code>int</code>,
+but this doesn’t guarantee getting the closest integer.
+For that, you will need to use the <code>round</code> function.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> int</span><span style="color:#E1E4E8">(pi)</span></span>
+<span class="line"><span style="color:#79B8FF">3</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> int</span><span style="color:#E1E4E8">(e)</span></span>
+<span class="line"><span style="color:#79B8FF">2</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> round</span><span style="color:#E1E4E8">(pi)</span></span>
+<span class="line"><span style="color:#79B8FF">3</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> round</span><span style="color:#E1E4E8">(e)</span></span>
+<span class="line"><span style="color:#79B8FF">3</span></span></code></pre>
+<p>It is also possible to get “directed” approximations to the integer
+directly below or above the floating-point number.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#F97583"> import</span><span style="color:#E1E4E8"> math</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> math.floor(pi)</span></span>
+<span class="line"><span style="color:#79B8FF">3</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> math.ceil(pi)</span></span>
+<span class="line"><span style="color:#79B8FF">4</span></span></code></pre>
+<p>A major characteristic of floating-point numbers is that they are a
+finite precision representation of real numbers ;
+any computation may also induce additional errors:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> 0.1</span><span style="color:#F97583"> +</span><span style="color:#79B8FF"> 0.2</span></span>
+<span class="line"><span style="color:#79B8FF">0.30000000000000004</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> 0.1</span><span style="color:#F97583"> +</span><span style="color:#79B8FF"> 0.2</span><span style="color:#F97583"> ==</span><span style="color:#79B8FF"> 0.3</span></span>
+<span class="line"><span style="color:#79B8FF">False</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> math.sin(pi)</span></span>
+<span class="line"><span style="color:#79B8FF">1.2246467991473532e-16</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> math.sin(pi) </span><span style="color:#F97583">==</span><span style="color:#79B8FF"> 0.0</span></span>
+<span class="line"><span style="color:#79B8FF">False</span></span></code></pre>
+<p>If necessary, you can get the real representation of a floating-point number,
+which is not what is displayed by default:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> print</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">0.1</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#79B8FF">0.1</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> print</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">f</span><span style="color:#9ECBFF">&quot;</span><span style="color:#79B8FF">{0.1</span><span style="color:#F97583">:.1000</span><span style="color:#79B8FF">}</span><span style="color:#9ECBFF">&quot;</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#79B8FF">0.1000000000000000055511151231257827021181583404541015625</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> print</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">0.2</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#79B8FF">0.2</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> print</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">f</span><span style="color:#9ECBFF">&quot;</span><span style="color:#79B8FF">{0.2</span><span style="color:#F97583">:.1000</span><span style="color:#79B8FF">}</span><span style="color:#9ECBFF">&quot;</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#79B8FF">0.200000000000000011102230246251565404236316680908203125</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> print</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">0.3</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#79B8FF">0.3</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> print</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">f</span><span style="color:#9ECBFF">&quot;</span><span style="color:#79B8FF">{0.3</span><span style="color:#F97583">:.1000</span><span style="color:#79B8FF">}</span><span style="color:#9ECBFF">&quot;</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#9ECBFF">&#39;0.299999999999999988897769753748434595763683319091796875&#39;</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> print</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">0.1</span><span style="color:#F97583">+</span><span style="color:#79B8FF">0.2</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#79B8FF">0.30000000000000004</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> print</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">f</span><span style="color:#9ECBFF">&quot;</span><span style="color:#79B8FF">{0.1</span><span style="color:#F97583">+</span><span style="color:#79B8FF">0.2</span><span style="color:#F97583">:.1000</span><span style="color:#79B8FF">}</span><span style="color:#9ECBFF">&quot;</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#79B8FF">0.3000000000000000444089209850062616169452667236328125</span></span></code></pre>
+<p>Floating-point numbers also include special values: $\infty$ (infinity)
+and $\bot$ (not-a-number):</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#F97583"> from</span><span style="color:#E1E4E8"> math </span><span style="color:#F97583">import</span><span style="color:#E1E4E8"> inf, nan</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> inf</span></span>
+<span class="line"><span style="color:#E1E4E8">inf</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#F97583"> -</span><span style="color:#E1E4E8">inf</span></span>
+<span class="line"><span style="color:#F97583">-</span><span style="color:#E1E4E8">inf</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> inf </span><span style="color:#F97583">+</span><span style="color:#79B8FF"> 1.0</span></span>
+<span class="line"><span style="color:#E1E4E8">inf</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> inf </span><span style="color:#F97583">-</span><span style="color:#E1E4E8"> inf</span></span>
+<span class="line"><span style="color:#E1E4E8">nan</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> nan </span><span style="color:#F97583">+</span><span style="color:#E1E4E8"> inf</span></span>
+<span class="line"><span style="color:#E1E4E8">nan</span></span></code></pre> </main> </nav> </body></html>

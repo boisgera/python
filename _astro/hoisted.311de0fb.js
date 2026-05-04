@@ -1,0 +1,1 @@
+import"./hoisted.b003a89c.js";document.startViewTransition&&document.querySelectorAll("details").forEach(t=>{t.addEventListener("click",e=>{e.preventDefault(),document.startViewTransition(()=>t.toggleAttribute("open"))})});

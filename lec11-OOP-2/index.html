@@ -1,0 +1,606 @@
+<!DOCTYPE html><html lang="fr" data-astro-cid-vc27etzb> <head><title>Object-Oriented Programming 2</title><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><link rel="icon" type="image/svg+xml" href="/python/favicon.svg"><meta name="generator" content="Astro v3.6.5"><script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+    }
+    };
+  </script><script defer src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js">
+  </script><style>aside[data-astro-cid-fjubpvhp]{border:.125rem solid var(--dark);border-radius:.25rem;margin-bottom:1rem}summary[data-astro-cid-fjubpvhp]{padding:1rem;border-top-left-radius:.25rem;border-top-right-radius:.25rem;background-color:var(--light)}details[data-astro-cid-fjubpvhp]>summary[data-astro-cid-fjubpvhp]{list-style:none;border-radius:.25rem;border-bottom-left-radius:0;border-bottom-right-radius:0}.minmax[data-astro-cid-fjubpvhp]{color:var(--dark)}details[data-astro-cid-fjubpvhp].lock{pointer-events:none}details[data-astro-cid-fjubpvhp].lock .minmax[data-astro-cid-fjubpvhp]{display:none}details[data-astro-cid-fjubpvhp][open] .open[data-astro-cid-fjubpvhp]{display:inline}details[data-astro-cid-fjubpvhp][open] .closed[data-astro-cid-fjubpvhp]{display:none}details[data-astro-cid-fjubpvhp]:not([open]) .open[data-astro-cid-fjubpvhp]{display:none}details[data-astro-cid-fjubpvhp]:not([open]) .closed[data-astro-cid-fjubpvhp]{display:inline}.content[data-astro-cid-fjubpvhp]{border-bottom-right-radius:.25rem;border-bottom-left-radius:.25rem}svg[data-astro-cid-fjubpvhp]{height:1rem}.circle[data-astro-cid-fjubpvhp]{height:1.25rem;width:1.25rem;border-radius:.25rem;background-color:var(--dark);color:#fff;display:flex;justify-content:center;align-items:center}
+</style>
+<link rel="stylesheet" href="/python/_astro/burger.7e2592e1.css" /><script type="module" src="/python/_astro/hoisted.311de0fb.js"></script></head> <body data-astro-cid-vc27etzb> <nav data-astro-cid-vc27etzb> <a href="/python" data-astro-cid-vc27etzb><svg viewBox="0 0 128 128" style="width:2rem;height:2rem;" data-astro-cid-vc27etzb astro-icon="python"><linearGradient id="astroicon:pythona" x1="70.252" x2="170.659" y1="1237.476" y2="1151.089" gradientTransform="matrix(.563 0 0 -.568 -29.215 707.817)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#5A9FD4"/><stop offset="1" stop-color="#306998"/></linearGradient><linearGradient id="astroicon:pythonb" x1="209.474" x2="173.62" y1="1098.811" y2="1149.537" gradientTransform="matrix(.563 0 0 -.568 -29.215 707.817)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#FFD43B"/><stop offset="1" stop-color="#FFE873"/></linearGradient><path fill="url(#astroicon:pythona)" d="M63.391 1.988c-4.222.02-8.252.379-11.8 1.007-10.45 1.846-12.346 5.71-12.346 12.837v9.411h24.693v3.137H29.977c-7.176 0-13.46 4.313-15.426 12.521-2.268 9.405-2.368 15.275 0 25.096 1.755 7.311 5.947 12.519 13.124 12.519h8.491V67.234c0-8.151 7.051-15.34 15.426-15.34h24.665c6.866 0 12.346-5.654 12.346-12.548V15.833c0-6.693-5.646-11.72-12.346-12.837-4.244-.706-8.645-1.027-12.866-1.008zM50.037 9.557c2.55 0 4.634 2.117 4.634 4.721 0 2.593-2.083 4.69-4.634 4.69-2.56 0-4.633-2.097-4.633-4.69-.001-2.604 2.073-4.721 4.633-4.721z" transform="translate(0 10.26)"/><path fill="url(#astroicon:pythonb)" d="M91.682 28.38v10.966c0 8.5-7.208 15.655-15.426 15.655H51.591c-6.756 0-12.346 5.783-12.346 12.549v23.515c0 6.691 5.818 10.628 12.346 12.547 7.816 2.297 15.312 2.713 24.665 0 6.216-1.801 12.346-5.423 12.346-12.547v-9.412H63.938v-3.138h37.012c7.176 0 9.852-5.005 12.348-12.519 2.578-7.735 2.467-15.174 0-25.096-1.774-7.145-5.161-12.521-12.348-12.521h-9.268zM77.809 87.927c2.561 0 4.634 2.097 4.634 4.692 0 2.602-2.074 4.719-4.634 4.719-2.55 0-4.633-2.117-4.633-4.719 0-2.595 2.083-4.692 4.633-4.692z" transform="translate(0 10.26)"/><radialGradient id="astroicon:pythonc" cx="1825.678" cy="444.45" r="26.743" gradientTransform="matrix(0 -.24 -1.055 0 532.979 557.576)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#B8B8B8" stop-opacity=".498"/><stop offset="1" stop-color="#7F7F7F" stop-opacity="0"/></radialGradient><path fill="url(#astroicon:pythonc)" d="M97.309 119.597c0 3.543-14.816 6.416-33.091 6.416-18.276 0-33.092-2.873-33.092-6.416 0-3.544 14.815-6.417 33.092-6.417 18.275 0 33.091 2.872 33.091 6.417z" opacity=".444"/></svg></a> <a href="https://github.com/boisgera/python" data-astro-cid-vc27etzb><svg viewBox="0 -.5 25 25" style="width:2rem;height:2rem;" data-astro-cid-vc27etzb astro-icon="github"><path d="M12.494 1.18h.084c2.02 0 3.911.553 5.53 1.515l-.049-.028a11.132 11.132 0 0 1 4.01 3.985l.028.052a10.98 10.98 0 0 1 1.49 5.558c0 4.872-3.139 9.013-7.504 10.507l-.079.024a.653.653 0 0 1-.579-.102h.002a.562.562 0 0 1-.187-.42v-.012l.007-1.104q.007-1.062.007-1.942a2.563 2.563 0 0 0-.75-2.05 9.84 9.84 0 0 0 1.548-.274l-.069.015a5.866 5.866 0 0 0 1.386-.578l-.028.015a4.073 4.073 0 0 0 1.164-.954l.006-.006c.335-.429.597-.934.757-1.482l.008-.032a7.11 7.11 0 0 0 .296-2.056v-.122.006-.065a4.263 4.263 0 0 0-1.143-2.911l.002.003a3.83 3.83 0 0 0-.125-2.968l.01.023a1.888 1.888 0 0 0-1.18.163l.01-.004c-.512.189-.95.403-1.363.654l.035-.02-.55.346a10.199 10.199 0 0 0-2.77-.375c-.987 0-1.941.137-2.846.393l.073-.018q-.23-.158-.614-.39a8.204 8.204 0 0 0-1.146-.536l-.06-.02a1.96 1.96 0 0 0-1.237-.193l.011-.002a3.785 3.785 0 0 0-.354 1.612c0 .478.088.937.248 1.36l-.009-.026a4.257 4.257 0 0 0-1.14 2.977v-.004.117c0 .73.107 1.434.31 2.097l-.014-.05c.17.579.429 1.082.766 1.525l-.008-.012c.319.392.704.715 1.142.957l.02.01c.389.227.84.42 1.315.554l.042.01c.42.112.923.204 1.437.256l.042.003a2.43 2.43 0 0 0-.707 1.477v.01a2.754 2.754 0 0 1-.63.213l-.02.004c-.23.046-.495.072-.766.072h-.06.003a1.696 1.696 0 0 1-.95-.314l.005.004a2.56 2.56 0 0 1-.794-.889l-.006-.013a2.346 2.346 0 0 0-.693-.746l-.008-.005a2.101 2.101 0 0 0-.7-.343l-.014-.003-.288-.044a.944.944 0 0 0-.425.067l.007-.003q-.116.065-.072.166a.791.791 0 0 0 .13.203c.054.064.117.12.184.17l.003.002.1.072c.256.134.466.32.626.544l.003.005c.172.214.324.455.445.714l.01.022.144.331c.121.363.342.665.63.884l.005.004c.27.211.597.362.953.43l.014.003c.298.057.644.093.997.1h.006a4.268 4.268 0 0 0 .826-.054l-.024.004.332-.058q0 .55.007 1.279l.007.786v.013a.562.562 0 0 1-.187.42.646.646 0 0 1-.582.1h.004c-4.442-1.521-7.579-5.662-7.579-10.535 0-2.044.552-3.96 1.515-5.605L2.9 6.7a11.132 11.132 0 0 1 3.985-4.01l.052-.028A10.723 10.723 0 0 1 12.41 1.18h.088-.004ZM5.608 17.103q.043-.101-.101-.173-.144-.044-.188.028-.043.101.101.174.13.086.188-.03zm.448.49q.1-.071-.03-.23-.143-.13-.23-.043-.1.072.029.23.143.142.23.043zm.432.65q.13-.101 0-.274-.115-.188-.245-.087-.13.072 0 .26.13.187.245.1zm.606.606q.115-.115-.058-.274-.173-.173-.288-.043-.13.115.058.274.173.173.288.04zm.823.36q.043-.158-.188-.23-.216-.058-.274.101-.057.159.188.216.216.088.274-.086zm.91.073q0-.187-.246-.159-.23 0-.23.159 0 .187.245.159.23 0 .23-.158zm.837-.144q-.03-.159-.26-.13-.23.043-.202.216.029.173.26.116.23-.058.203-.202z"/></svg></a> <main data-astro-cid-vc27etzb> <header style="margin-bottom: 3rem;"> <div style="margin-bottom: 1.5rem;"> <h1 style="font-size: 2.25rem; line-height:1; font-weight:700; color: #020617;
+    margin-bottom: 1rem;"> Object-Oriented Programming 2 </h1> <p style="color: #64748b;"> Duck typing, inheritance, and protocols </p> </div> <div style="display: flex; justify-content: left; gap: 1rem;"> <img src="https://2.gravatar.com/avatar/39ec5d637b0753448b97a8e63855a45cb6708d033b656fe9f1d3314bb4bfb202?size=128" alt="avatar" style="margin: 0px; flex: 0 48px; width: 48px; height: 48px; border-radius: 50%;"> <p style="margin: 0px; flex: auto; font-size: 0.875rem; line-height: 1.25rem; color: #1e293b;"> Sébastien Boisgérault <br> Associate Professor, ITN Mines Paris – PSL </p><p></p>  </div> </header>
+<img src="/python/_astro/lego.38721cbc_ZL4djy.webp" class="img-full" style="object-fit:cover;width:100%; height:300px;" alt="objects" width="3072" height="4608" loading="lazy" decoding="async">
+<h1 id="duck-typing">Duck Typing</h1>
+<figure><img src="/python/_astro/duck.3ffdfe76_lLPb0.webp" class="img-full" style="object-fit:cover;width:100%; height:300px;" alt="duck" width="4864" height="3648" loading="lazy" decoding="async"><figcaption>If it looks like a duck, swims like a duck, and quacks like a duck, then it probably is a duck.</figcaption></figure>
+<h2 id="case-study">Case Study</h2>
+<p>The function below reads the content of a file object and writes it to another one:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">def</span><span style="color:#B392F0"> copy_file</span><span style="color:#E1E4E8">(input, output):</span></span>
+<span class="line"><span style="color:#E1E4E8">    data </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> input</span><span style="color:#E1E4E8">.read()</span></span>
+<span class="line"><span style="color:#E1E4E8">    output.write(data)</span></span></code></pre>
+<p>Let’s create a (very small) binary file <code>image.png</code> on our hard drive</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#F97583"> with</span><span style="color:#79B8FF"> open</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">&quot;image.png&quot;</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">mode</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">&quot;bw&quot;</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">as</span><span style="color:#E1E4E8"> image_file:</span></span>
+<span class="line"><span style="color:#79B8FF">...</span><span style="color:#E1E4E8">     image_file.write(</span><span style="color:#F97583">b</span><span style="color:#9ECBFF">&#39;</span><span style="color:#79B8FF">\x89</span><span style="color:#9ECBFF">PNG</span><span style="color:#79B8FF">\r\n\x1a\n\x00\x00\x00\r</span><span style="color:#9ECBFF">IHDR</span><span style="color:#79B8FF">\x00\x00\x01\x00\x00\x00\x01\x00\x01\x03\x00\x00\x00</span><span style="color:#9ECBFF">f</span><span style="color:#79B8FF">\xbc</span><span style="color:#9ECBFF">:%</span><span style="color:#79B8FF">\x00\x00\x00\x03</span><span style="color:#9ECBFF">PLTE</span><span style="color:#79B8FF">\xb5\xd0\xd0</span><span style="color:#9ECBFF">c</span><span style="color:#79B8FF">\x04\x16\xea\x00\x00\x00\x1f</span><span style="color:#9ECBFF">IDATh</span><span style="color:#79B8FF">\x81\xed\xc1\x01\r\x00\x00\x00\xc2\xa0\xf7</span><span style="color:#9ECBFF">Om</span><span style="color:#79B8FF">\x0e</span><span style="color:#9ECBFF">7</span><span style="color:#79B8FF">\xa0\x00\x00\x00\x00\x00\x00\x00\x00\xbe\r</span><span style="color:#9ECBFF">!</span><span style="color:#79B8FF">\x00\x00\x01\x9a</span><span style="color:#9ECBFF">`</span><span style="color:#79B8FF">\xe1\xd5\x00\x00\x00\x00</span><span style="color:#9ECBFF">IEND</span><span style="color:#79B8FF">\xae</span><span style="color:#9ECBFF">B`</span><span style="color:#79B8FF">\x82</span><span style="color:#9ECBFF">&#39;</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#79B8FF">...</span></span></code></pre>
+<p>Then let’s use <code>copy_file</code> to create a copy named <code>image-copy.png</code>.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> input</span><span style="color:#F97583"> =</span><span style="color:#79B8FF"> open</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">&quot;image.png&quot;</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">mode</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">&quot;br&quot;</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> output </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> open</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">&quot;image-copy.png&quot;</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">mode</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">&quot;bw&quot;</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> copy_file(</span><span style="color:#79B8FF">input</span><span style="color:#E1E4E8">, output)</span></span></code></pre>
+<p>Everything goes as planned! However, we could have saved ourselves the creation of the
+initial file and create an object similar to a file, but which stores its content in
+memory rather than on our hard drive.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#F97583"> import</span><span style="color:#E1E4E8"> io</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> buffer </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> io.BytesIO(</span><span style="color:#F97583">b</span><span style="color:#9ECBFF">&#39;</span><span style="color:#79B8FF">\x89</span><span style="color:#9ECBFF">PNG</span><span style="color:#79B8FF">\r\n\x1a\n\x00\x00\x00\r</span><span style="color:#9ECBFF">IHDR</span><span style="color:#79B8FF">\x00\x00\x01\x00\x00\x00\x01\x00\x01\x03\x00\x00\x00</span><span style="color:#9ECBFF">f</span><span style="color:#79B8FF">\xbc</span><span style="color:#9ECBFF">:%</span><span style="color:#79B8FF">\x00\x00\x00\x03</span><span style="color:#9ECBFF">PLTE</span><span style="color:#79B8FF">\xb5\xd0\xd0</span><span style="color:#9ECBFF">c</span><span style="color:#79B8FF">\x04\x16\xea\x00\x00\x00\x1f</span><span style="color:#9ECBFF">IDATh</span><span style="color:#79B8FF">\x81\xed\xc1\x01\r\x00\x00\x00\xc2\xa0\xf7</span><span style="color:#9ECBFF">Om</span><span style="color:#79B8FF">\x0e</span><span style="color:#9ECBFF">7</span><span style="color:#79B8FF">\xa0\x00\x00\x00\x00\x00\x00\x00\x00\xbe\r</span><span style="color:#9ECBFF">!</span><span style="color:#79B8FF">\x00\x00\x01\x9a</span><span style="color:#9ECBFF">`</span><span style="color:#79B8FF">\xe1\xd5\x00\x00\x00\x00</span><span style="color:#9ECBFF">IEND</span><span style="color:#79B8FF">\xae</span><span style="color:#9ECBFF">B`</span><span style="color:#79B8FF">\x82</span><span style="color:#9ECBFF">&#39;</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> buffer.seek(</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">)</span></span></code></pre>
+<p>(The call <code>buffer.seek(0)</code> reposition the read/write cursor at the beginning of the file.)</p>
+<p>We can then copy its content the same way as before</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> input</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> buffer</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> output </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> open</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">&quot;image-copy.png&quot;</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">mode</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">&quot;bw&quot;</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> copy_file(</span><span style="color:#79B8FF">input</span><span style="color:#E1E4E8">, output)</span></span></code></pre>
+<p>In fact the original image is a blue-gray tile used by the OpenStreetMap mapping project
+(cf. <a href="https://www.mjt.me.uk/posts/smallest-png/">“The smallest 256x256 single-color PNG file, and where you’ve seen it”</a>).</p>
+<p><img src="https://www.mjt.me.uk/assets/images/smallest-png/openstreetmap.png" alt="The smallest 256x256 single-color PNG file"/></p>
+<p>It is available <a href="https://www.mjt.me.uk/assets/images/smallest-png/openstreetmap.png">online</a>
+at the address <code>https://www.mjt.me.uk/assets/images/smallest-png/openstreetmap.png</code>.
+So we could have created an object similar to a file but that knows how to open web resources rather than manually copying its content.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#F97583"> from</span><span style="color:#E1E4E8"> urllib.request </span><span style="color:#F97583">import</span><span style="color:#E1E4E8"> urlopen</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> url </span><span style="color:#F97583">=</span><span style="color:#9ECBFF"> &quot;https://www.mjt.me.uk/assets/images/smallest-png/openstreetmap.png&quot;</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> input</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> urlopen(url)</span></span></code></pre>
+<p>Again, the copy between this remote file and its local copy takes place as before.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> output </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> open</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">&quot;image-copy.png&quot;</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">mode</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">&quot;bw&quot;</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> copy_file(</span><span style="color:#79B8FF">input</span><span style="color:#E1E4E8">, output)</span></span></code></pre>
+<h2 id="protocols">Protocols</h2>
+<p>What matters in the three previous use cases is not that the object
+<code>input</code> is a real file, but that it behaves like one. Here, precisely,
+the function <code>copy_file</code> needs an object <code>input</code> that:</p>
+<ul>
+<li>has a method <code>read</code>,</li>
+<li>which is invoked without arguments,</li>
+<li>and returns an object of type <code>bytes</code>.</li>
+</ul>
+<p>That’s all the function <code>copy_file</code> asks of its argument <code>input</code> for
+it to work: that it be sufficiently similar to a “real” file.
+We don’t ask that it be of a particular type, for example that it passes
+the isinstance test <code>isinstance(input, File)</code>.</p>
+<p>This less demanding type of typing is what in Python is called <strong>duck typing</strong>.</p>
+<aside data-astro-cid-fjubpvhp style="--light: #e0f2fe;--dark: #164e63;"> <details open class="" data-astro-cid-fjubpvhp style="--light: #e0f2fe;--dark: #164e63;"> <summary style="display:flex;align-items:center;justify-content:space-between;; --light: #e0f2fe;--dark: #164e63;" data-astro-cid-fjubpvhp> <span style="display:flex;gap:0.5em;align-items:center;; --light: #e0f2fe;--dark: #164e63;" data-astro-cid-fjubpvhp> <span class="circle" data-astro-cid-fjubpvhp style="--light: #e0f2fe;--dark: #164e63;"> <svg viewBox="0 0 24 24" data-astro-cid-fjubpvhp astro-icon="tabler:pencil"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="icon-tabler"><path d="M4 20h4L18.5 9.5a1.5 1.5 0 0 0-4-4L4 16v4M13.5 6.5l4 4"/></g></svg> </span> <span style="font-weight:500;; --light: #e0f2fe;--dark: #164e63;" data-astro-cid-fjubpvhp>Origin of the terminology</span> </span> <span class="minmax" data-astro-cid-fjubpvhp style="--light: #e0f2fe;--dark: #164e63;"> <svg viewBox="0 0 24 24" data-astro-cid-fjubpvhp class="closed" astro-icon="tabler:arrows-maximize"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="icon-tabler"><path d="M16 4h4v4M14 10l6-6M8 20H4v-4M4 20l6-6M16 20h4v-4M14 14l6 6M8 4H4v4M4 4l6 6"/></g></svg> <svg viewBox="0 0 24 24" data-astro-cid-fjubpvhp class="open" astro-icon="tabler:arrows-minimize"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="icon-tabler"><path d="M5 9h4V5M3 3l6 6M5 15h4v4M3 21l6-6M19 9h-4V5M15 9l6-6M19 15h-4v4M15 15l6 6"/></g></svg> </span> </summary> <div class="content" data-astro-cid-fjubpvhp style="--light: #e0f2fe;--dark: #164e63;"> <div style="margin: 1rem;; --light: #e0f2fe;--dark: #164e63;" data-astro-cid-fjubpvhp> <p>The following quote is attributed to <a href="https://en.wikipedia.org/wiki/James_Whitcomb_Riley">James Whitcomb Riley</a></p><blockquote>
+<p>When I see a bird that walks like a duck and swims like a duck and
+quacks like a duck, I call that bird a duck. 🦆</p>
+</blockquote> </div> </div> </details> </aside>   
+<p>Note that for the moment, the constraints that argument <code>input</code> of the function
+<code>copy_file</code> must satisfy is only a (moral) contract between the designer of
+the function and its user: as long as the user respects the contract,
+everything will go as planned. We sometimes speak of <strong>protocol</strong>
+to refer to this kind of contract.</p>
+<p>At this stage, the Python interpreter is <strong>not</strong> informed of this contract
+and does nothing to ensure that the mutual commitment is respected.
+It is up to the developer of the function to document this protocol
+and to the user to read this documentation and respect it.</p>
+<h2 id="static-verification">Static Verification</h2>
+<p>There are tools that allow (partially) formalizing the contracts on which
+your programs depend, for example <a href="http://mypy-lang.org/">mypy</a>.</p>
+<p>In return for the work that will consist of describing the protocols,
+you will have a tool that informs you of certain violations of the contracts
+when writing the code, and not much later, during execution.</p>
+<p>For example, we can formalize the two protocols associated with the arguments
+of our function <code>copy_file</code></p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">from</span><span style="color:#E1E4E8"> typing </span><span style="color:#F97583">import</span><span style="color:#E1E4E8"> Protocol</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> Readable</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">Protocol</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> read</span><span style="color:#E1E4E8">(self) -&gt; </span><span style="color:#79B8FF">bytes</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">        pass</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> Writable</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">Protocol</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> write</span><span style="color:#E1E4E8">(self, data: </span><span style="color:#79B8FF">bytes</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#F97583">        pass</span></span></code></pre>
+<p>Then annotate the type of the function arguments to indicate which protocol
+must be respected.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">def</span><span style="color:#B392F0"> copy_file</span><span style="color:#E1E4E8">(input: Readable, output: Writable):</span></span>
+<span class="line"><span style="color:#E1E4E8">    data </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> input</span><span style="color:#E1E4E8">.read()</span></span>
+<span class="line"><span style="color:#E1E4E8">    output.write(data)</span></span></code></pre>
+<p>If we use the client code</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">from</span><span style="color:#E1E4E8"> urllib.request </span><span style="color:#F97583">import</span><span style="color:#E1E4E8"> urlopen</span></span>
+<span class="line"><span style="color:#E1E4E8">url </span><span style="color:#F97583">=</span><span style="color:#9ECBFF"> &quot;https://www.mjt.me.uk/assets/images/smallest-png/openstreetmap.png&quot;</span></span>
+<span class="line"><span style="color:#79B8FF">input</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> urlopen(url)</span></span>
+<span class="line"><span style="color:#E1E4E8">output </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> open</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">&quot;image-copy.png&quot;</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">mode</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">&quot;bw&quot;</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">copy_file(</span><span style="color:#79B8FF">input</span><span style="color:#E1E4E8">, output)</span></span></code></pre>
+<p>Mypy will affirm that from its point of view, everything is fine</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> mypy</span><span style="color:#9ECBFF"> main.py</span><span style="color:#E1E4E8"> </span></span>
+<span class="line"><span style="color:#B392F0">Success:</span><span style="color:#9ECBFF"> no</span><span style="color:#9ECBFF"> issues</span><span style="color:#9ECBFF"> found</span><span style="color:#9ECBFF"> in</span><span style="color:#79B8FF"> 1</span><span style="color:#9ECBFF"> source</span><span style="color:#9ECBFF"> file</span></span></code></pre>
+<p>However, if we make a mistake by providing, for example as second argument to the
+function <code>copy_file</code> a file name rather than a file object</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">from</span><span style="color:#E1E4E8"> urllib.request </span><span style="color:#F97583">import</span><span style="color:#E1E4E8"> urlopen</span></span>
+<span class="line"><span style="color:#E1E4E8">url </span><span style="color:#F97583">=</span><span style="color:#9ECBFF"> &quot;https://www.mjt.me.uk/assets/images/smallest-png/openstreetmap.png&quot;</span></span>
+<span class="line"><span style="color:#79B8FF">input</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> urlopen(url)</span></span>
+<span class="line"><span style="color:#E1E4E8">output </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> open</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">&quot;image-copy.png&quot;</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">mode</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">&quot;bw&quot;</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">copy_file(</span><span style="color:#79B8FF">input</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">&quot;image-copy.png&quot;</span><span style="color:#E1E4E8">)</span></span></code></pre>
+<p>Then mypy will inform us.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> mypy</span><span style="color:#9ECBFF"> main.py</span><span style="color:#E1E4E8"> </span></span>
+<span class="line"><span style="color:#B392F0">main.py:</span><span style="color:#9ECBFF"> error:</span><span style="color:#9ECBFF"> Argument</span><span style="color:#79B8FF"> 2</span><span style="color:#9ECBFF"> to</span><span style="color:#9ECBFF"> &quot;copy_file&quot;</span><span style="color:#9ECBFF"> has</span><span style="color:#9ECBFF"> incompatible</span><span style="color:#9ECBFF"> type</span><span style="color:#9ECBFF"> &quot;str&quot;</span><span style="color:#E1E4E8">; </span><span style="color:#B392F0">expected</span><span style="color:#9ECBFF"> &quot;Writable&quot;</span></span>
+<span class="line"><span style="color:#B392F0">Found</span><span style="color:#79B8FF"> 1</span><span style="color:#9ECBFF"> error</span><span style="color:#9ECBFF"> in</span><span style="color:#79B8FF"> 1</span><span style="color:#9ECBFF"> file</span><span style="color:#E1E4E8"> (checked </span><span style="color:#79B8FF">1</span><span style="color:#9ECBFF"> source</span><span style="color:#9ECBFF"> file</span><span style="color:#E1E4E8">)</span></span></code></pre>
+<h1 id="inheritance">Inheritance</h1>
+<p>Let’s consider our “homemade” complex number class again.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> Complex</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#79B8FF"> __init__</span><span style="color:#E1E4E8">(self, real, imag):</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">.set_real(real)</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">.set_imag(imag)</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> get_real</span><span style="color:#E1E4E8">(self):</span></span>
+<span class="line"><span style="color:#F97583">        return</span><span style="color:#79B8FF"> self</span><span style="color:#E1E4E8">._real</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> set_real</span><span style="color:#E1E4E8">(self, real):</span></span>
+<span class="line"><span style="color:#F97583">        if</span><span style="color:#79B8FF"> isinstance</span><span style="color:#E1E4E8">(real, </span><span style="color:#79B8FF">float</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#79B8FF">            self</span><span style="color:#E1E4E8">._real </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> real</span></span>
+<span class="line"><span style="color:#F97583">        else</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">            raise</span><span style="color:#79B8FF"> TypeError</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">f</span><span style="color:#9ECBFF">&quot;</span><span style="color:#79B8FF">{</span><span style="color:#E1E4E8">real</span><span style="color:#F97583">!r</span><span style="color:#79B8FF">}</span><span style="color:#9ECBFF"> is not a float&quot;</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">    real </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> property</span><span style="color:#E1E4E8">(get_real, set_real)</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> get_imag</span><span style="color:#E1E4E8">(self):</span></span>
+<span class="line"><span style="color:#F97583">        return</span><span style="color:#79B8FF"> self</span><span style="color:#E1E4E8">._imag</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> set_imag</span><span style="color:#E1E4E8">(self, imag):</span></span>
+<span class="line"><span style="color:#F97583">        if</span><span style="color:#79B8FF"> isinstance</span><span style="color:#E1E4E8">(imag, </span><span style="color:#79B8FF">float</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#79B8FF">            self</span><span style="color:#E1E4E8">._imag </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> imag</span></span>
+<span class="line"><span style="color:#F97583">        else</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">            raise</span><span style="color:#79B8FF"> TypeError</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">f</span><span style="color:#9ECBFF">&quot;</span><span style="color:#79B8FF">{</span><span style="color:#E1E4E8">imag</span><span style="color:#F97583">!r</span><span style="color:#79B8FF">}</span><span style="color:#9ECBFF"> is not a float&quot;</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">    imag </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> property</span><span style="color:#E1E4E8">(get_imag, set_imag)</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> conjugate</span><span style="color:#E1E4E8">(self):</span></span>
+<span class="line"><span style="color:#F97583">        return</span><span style="color:#E1E4E8"> Complex(</span><span style="color:#79B8FF">self</span><span style="color:#E1E4E8">._real, </span><span style="color:#F97583">-</span><span style="color:#79B8FF">self</span><span style="color:#E1E4E8">._imag)</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#79B8FF"> __repr__</span><span style="color:#E1E4E8">(self):</span></span>
+<span class="line"><span style="color:#6A737D">        # ⚠️ weird output when self.imag &lt; 0</span></span>
+<span class="line"><span style="color:#F97583">        return</span><span style="color:#F97583"> f</span><span style="color:#9ECBFF">&quot;(</span><span style="color:#79B8FF">{self</span><span style="color:#E1E4E8">._real</span><span style="color:#79B8FF">}</span><span style="color:#9ECBFF">+</span><span style="color:#79B8FF">{self</span><span style="color:#E1E4E8">._imag</span><span style="color:#79B8FF">}</span><span style="color:#9ECBFF">j)&quot;</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#79B8FF"> __add__</span><span style="color:#E1E4E8">(self, other):</span></span>
+<span class="line"><span style="color:#F97583">        return</span><span style="color:#E1E4E8"> Complex(</span></span>
+<span class="line"><span style="color:#79B8FF">            self</span><span style="color:#E1E4E8">._real </span><span style="color:#F97583">+</span><span style="color:#E1E4E8"> other._real, </span></span>
+<span class="line"><span style="color:#79B8FF">            self</span><span style="color:#E1E4E8">._imag </span><span style="color:#F97583">+</span><span style="color:#E1E4E8"> other._imag</span></span>
+<span class="line"><span style="color:#E1E4E8">        )</span></span></code></pre>
+<p>We will try to equip ourselves with a new complex number class,
+<code>Complex2</code> whose instances will have a behavior that suits us better,
+without modifying the source code of <code>Complex</code>, but by exploiting its
+functionality to the maximum.</p>
+<p>To do this, we will <strong>derive</strong> the class <code>Complex2</code> from the class <code>Complex</code>;
+the new class will <strong>inherit</strong> the behavior of the previous class.
+At minimum, this means a declaration of the form</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> Complex2</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">Complex</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#F97583">    pass</span></span></code></pre>
+<p>At this stage, essentially no change in the behavior of complex numbers
+that are instances of it, because all methods of <code>Complex2</code> are inherited
+from those of <code>Complex</code>:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> z </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> Complex2(</span><span style="color:#79B8FF">0.5</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">1.5</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> z</span></span>
+<span class="line"><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">0.5</span><span style="color:#F97583">+</span><span style="color:#79B8FF">1.5</span><span style="color:#F97583">j</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> z.real</span></span>
+<span class="line"><span style="color:#79B8FF">0.5</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> z.real </span><span style="color:#F97583">=</span><span style="color:#F97583"> -</span><span style="color:#79B8FF">0.5</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> z</span></span>
+<span class="line"><span style="color:#E1E4E8">(</span><span style="color:#F97583">-</span><span style="color:#79B8FF">0.5</span><span style="color:#F97583">+</span><span style="color:#79B8FF">1.5</span><span style="color:#F97583">j</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> z.real </span><span style="color:#F97583">=</span><span style="color:#9ECBFF"> &quot;Hello&quot;</span></span>
+<span class="line"><span style="color:#E1E4E8">Traceback (most recent call last):</span></span>
+<span class="line"><span style="color:#E1E4E8">  File </span><span style="color:#9ECBFF">&quot;&lt;stdin&gt;&quot;</span><span style="color:#E1E4E8">, line </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#F97583">in</span><span style="color:#F97583"> &lt;</span><span style="color:#E1E4E8">module</span><span style="color:#F97583">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">  File </span><span style="color:#9ECBFF">&quot;&lt;stdin&gt;&quot;</span><span style="color:#E1E4E8">, line </span><span style="color:#79B8FF">11</span><span style="color:#E1E4E8">, </span><span style="color:#F97583">in</span><span style="color:#E1E4E8"> set_real</span></span>
+<span class="line"><span style="color:#79B8FF">TypeError</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&#39;Hello&#39;</span><span style="color:#F97583"> is</span><span style="color:#F97583"> not</span><span style="color:#E1E4E8"> a </span><span style="color:#79B8FF">float</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> w </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> Complex2.conjugate(z)</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> w.real</span></span>
+<span class="line"><span style="color:#79B8FF">0.5</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> w.imag</span></span>
+<span class="line"><span style="color:#F97583">-</span><span style="color:#79B8FF">1.5</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> z </span><span style="color:#F97583">+</span><span style="color:#E1E4E8"> z.conjugate()</span></span>
+<span class="line"><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">1</span><span style="color:#F97583">+</span><span style="color:#79B8FF">0</span><span style="color:#F97583">j</span><span style="color:#E1E4E8">)</span></span></code></pre>
+<p>We even have</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> isinstance</span><span style="color:#E1E4E8">(z, Complex)</span></span>
+<span class="line"><span style="color:#79B8FF">True</span></span></code></pre>
+<p>As a consequence, we can <strong>substitute</strong> an instance of class <code>Complex2</code> to a function that
+expects an instance of class <code>Complex</code>. The function is said to be <strong>polymorphic</strong>: it works
+with a given type of object, but also with derived types designed by the programmer.</p>
+<p>The only visible changes between <code>Complex</code> and <code>Complex2</code> are the
+tests that explicitly ask for the type of the complex object <code>z</code> and the test
+<code>isinstance(z, Complex2)</code>.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> type</span><span style="color:#E1E4E8">(z) </span><span style="color:#F97583">is</span><span style="color:#E1E4E8"> Complex</span></span>
+<span class="line"><span style="color:#79B8FF">False</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> type</span><span style="color:#E1E4E8">(z) </span><span style="color:#F97583">is</span><span style="color:#E1E4E8"> Complex2</span></span>
+<span class="line"><span style="color:#79B8FF">True</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> isinstance</span><span style="color:#E1E4E8">(z, Complex2)</span></span></code></pre>
+<p>What motivates the introduction of a new complex number class initially is that
+we forgot to implement multiplication:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> Complex(</span><span style="color:#79B8FF">1.0</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">0.0</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">*</span><span style="color:#E1E4E8"> Complex(</span><span style="color:#79B8FF">0.0</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">1.0</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">Traceback (most recent call last):</span></span>
+<span class="line"><span style="color:#E1E4E8">  File </span><span style="color:#9ECBFF">&quot;&lt;stdin&gt;&quot;</span><span style="color:#E1E4E8">, line </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#F97583">in</span><span style="color:#F97583"> &lt;</span><span style="color:#E1E4E8">module</span><span style="color:#F97583">&gt;</span></span>
+<span class="line"><span style="color:#79B8FF">TypeError</span><span style="color:#E1E4E8">: unsupported operand </span><span style="color:#79B8FF">type</span><span style="color:#E1E4E8">(s) </span><span style="color:#F97583">for</span><span style="color:#F97583"> *</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&#39;Complex&#39;</span><span style="color:#F97583"> and</span><span style="color:#9ECBFF"> &#39;Complex&#39;</span></span></code></pre>
+<p>Let’s fix this oversight by adding a method <code>__mul__</code> to the class <code>Complex2</code></p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> Complex2</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">Complex</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#79B8FF"> __mul__</span><span style="color:#E1E4E8">(self, other):</span></span>
+<span class="line"><span style="color:#E1E4E8">        r1, i1 </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> self</span><span style="color:#E1E4E8">.real, </span><span style="color:#79B8FF">self</span><span style="color:#E1E4E8">.imag</span></span>
+<span class="line"><span style="color:#E1E4E8">        r2, i2 </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> other.real, other.imag</span></span>
+<span class="line"><span style="color:#E1E4E8">        real </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> r1</span><span style="color:#F97583">*</span><span style="color:#E1E4E8">r2 </span><span style="color:#F97583">-</span><span style="color:#E1E4E8"> i1</span><span style="color:#F97583">*</span><span style="color:#E1E4E8">i2</span></span>
+<span class="line"><span style="color:#E1E4E8">        imag </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> r1</span><span style="color:#F97583">*</span><span style="color:#E1E4E8">i2 </span><span style="color:#F97583">+</span><span style="color:#E1E4E8"> r2</span><span style="color:#F97583">*</span><span style="color:#E1E4E8">i1</span></span>
+<span class="line"><span style="color:#F97583">        return</span><span style="color:#E1E4E8"> Complex2(real, imag)</span></span></code></pre>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> Complex2(</span><span style="color:#79B8FF">1.0</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">0.0</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">*</span><span style="color:#E1E4E8"> Complex2(</span><span style="color:#79B8FF">0.0</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">1.0</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">0.0</span><span style="color:#F97583">+</span><span style="color:#79B8FF">1.0</span><span style="color:#F97583">j</span><span style="color:#E1E4E8">)</span></span></code></pre>
+<p>It’s better! There is actually a subtle bug (do you see which one?) but we will
+wait a bit to fix it, we will soon be better placed to correct the problem.</p>
+<p>In the meantime, we want to make our constructor a bit more versatile;
+we would like to be able to construct a complex number from any object that has numeric
+attributes <code>real</code> and <code>imag</code>, for example, a built-in complex number, instance of
+the class <code>complex</code>. With the <code>Complex</code> class, this doesn’t work:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> Complex(</span><span style="color:#79B8FF">0.5</span><span style="color:#F97583">+</span><span style="color:#79B8FF">1.5</span><span style="color:#F97583">j</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">Traceback (most recent call last):</span></span>
+<span class="line"><span style="color:#E1E4E8">  File </span><span style="color:#9ECBFF">&quot;&lt;stdin&gt;&quot;</span><span style="color:#E1E4E8">, line </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#F97583">in</span><span style="color:#F97583"> &lt;</span><span style="color:#E1E4E8">module</span><span style="color:#F97583">&gt;</span></span>
+<span class="line"><span style="color:#79B8FF">TypeError</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">__init__</span><span style="color:#E1E4E8">() missing </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8"> required positional argument: </span><span style="color:#9ECBFF">&#39;imag&#39;</span></span></code></pre>
+<p>And not more with the <code>Complex2</code> class:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> Complex2(</span><span style="color:#79B8FF">0.5</span><span style="color:#F97583">+</span><span style="color:#79B8FF">1.5</span><span style="color:#F97583">j</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">Traceback (most recent call last):</span></span>
+<span class="line"><span style="color:#E1E4E8">  File </span><span style="color:#9ECBFF">&quot;&lt;stdin&gt;&quot;</span><span style="color:#E1E4E8">, line </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#F97583">in</span><span style="color:#F97583"> &lt;</span><span style="color:#E1E4E8">module</span><span style="color:#F97583">&gt;</span></span>
+<span class="line"><span style="color:#79B8FF">TypeError</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">__init__</span><span style="color:#E1E4E8">() missing </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8"> required positional argument: </span><span style="color:#9ECBFF">&#39;imag&#39;</span></span></code></pre>
+<p>Indeed, in the absence of a constructor <code>__init__</code> that is its own,
+new complexes are instantiated using the inherited method <code>__init__</code>.</p>
+<p>But we can define a new constructor <code>__init__</code> that will have priority. To do this, we test
+if the first argument named <code>real_or_complex</code> has fields <code>real</code> and <code>imag</code>. If not,
+we interpret it as a complex number; otherwise, we use this argument as the real
+part and the second as the imaginary part.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> Complex2</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">Complex</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#79B8FF"> __init__</span><span style="color:#E1E4E8">(self, real_or_complex, imag</span><span style="color:#F97583">=</span><span style="color:#79B8FF">None</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#F97583">        try</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#E1E4E8">            real </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> real_or_complex.real</span></span>
+<span class="line"><span style="color:#E1E4E8">            imag </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> real_or_complex.imag</span></span>
+<span class="line"><span style="color:#F97583">        except</span><span style="color:#79B8FF"> AttributeError</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#E1E4E8">            real </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> real_or_complex</span></span>
+<span class="line"><span style="color:#E1E4E8">            imag </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> imag</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">.real </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> real</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">.imag </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> imag</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#79B8FF"> __mul__</span><span style="color:#E1E4E8">(self, other):</span></span>
+<span class="line"><span style="color:#E1E4E8">        r1, i1 </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> self</span><span style="color:#E1E4E8">.real, </span><span style="color:#79B8FF">self</span><span style="color:#E1E4E8">.imag</span></span>
+<span class="line"><span style="color:#E1E4E8">        r2, i2 </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> other.real, other.imag</span></span>
+<span class="line"><span style="color:#E1E4E8">        real </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> r1</span><span style="color:#F97583">*</span><span style="color:#E1E4E8">r2 </span><span style="color:#F97583">-</span><span style="color:#E1E4E8"> i1</span><span style="color:#F97583">*</span><span style="color:#E1E4E8">i2</span></span>
+<span class="line"><span style="color:#E1E4E8">        imag </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> r1</span><span style="color:#F97583">*</span><span style="color:#E1E4E8">i2 </span><span style="color:#F97583">+</span><span style="color:#E1E4E8"> r2</span><span style="color:#F97583">*</span><span style="color:#E1E4E8">i1</span></span>
+<span class="line"><span style="color:#F97583">        return</span><span style="color:#E1E4E8"> Complex2(real, imag)</span></span></code></pre>
+<p>Note that the last two lines of the constructor are a copy-paste from the parent constructor.
+We might as well directly call that one! We can either use the explicit syntax
+<code>Complex.__init__(self, real, imag)</code> or the <code>super()</code> construction as
+below:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> Complex2</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">Complex</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#79B8FF"> __init__</span><span style="color:#E1E4E8">(self, real_or_complex, imag</span><span style="color:#F97583">=</span><span style="color:#79B8FF">None</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#F97583">        try</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#E1E4E8">            real </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> real_or_complex.real</span></span>
+<span class="line"><span style="color:#E1E4E8">            imag </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> real_or_complex.imag</span></span>
+<span class="line"><span style="color:#F97583">        except</span><span style="color:#79B8FF"> AttributeError</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#E1E4E8">            real </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> real_or_complex</span></span>
+<span class="line"><span style="color:#E1E4E8">            imag </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> imag</span></span>
+<span class="line"><span style="color:#79B8FF">        super</span><span style="color:#E1E4E8">().</span><span style="color:#79B8FF">__init__</span><span style="color:#E1E4E8">(real, imag)</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#79B8FF"> __mul__</span><span style="color:#E1E4E8">(self, other):</span></span>
+<span class="line"><span style="color:#E1E4E8">        r1, i1 </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> self</span><span style="color:#E1E4E8">.real, </span><span style="color:#79B8FF">self</span><span style="color:#E1E4E8">.imag</span></span>
+<span class="line"><span style="color:#E1E4E8">        r2, i2 </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> other.real, other.imag</span></span>
+<span class="line"><span style="color:#E1E4E8">        real </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> r1</span><span style="color:#F97583">*</span><span style="color:#E1E4E8">r2 </span><span style="color:#F97583">-</span><span style="color:#E1E4E8"> i1</span><span style="color:#F97583">*</span><span style="color:#E1E4E8">i2</span></span>
+<span class="line"><span style="color:#E1E4E8">        imag </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> r1</span><span style="color:#F97583">*</span><span style="color:#E1E4E8">i2 </span><span style="color:#F97583">+</span><span style="color:#E1E4E8"> r2</span><span style="color:#F97583">*</span><span style="color:#E1E4E8">i1</span></span>
+<span class="line"><span style="color:#F97583">        return</span><span style="color:#E1E4E8"> Complex2(real, imag)</span></span></code></pre>
+<p>Now, the constructor of <code>Complex2</code> accepts complex arguments:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> Complex2(</span><span style="color:#79B8FF">0.5</span><span style="color:#F97583">+</span><span style="color:#79B8FF">1.5</span><span style="color:#F97583">j</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">0.5</span><span style="color:#F97583">+</span><span style="color:#79B8FF">1.5</span><span style="color:#F97583">j</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> Complex2(Complex(</span><span style="color:#79B8FF">0.5</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">1.5</span><span style="color:#E1E4E8">))</span></span>
+<span class="line"><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">0.5</span><span style="color:#F97583">+</span><span style="color:#79B8FF">1.5</span><span style="color:#F97583">j</span><span style="color:#E1E4E8">)</span></span></code></pre>
+<p>It’s time to come back to the subtle bug we mentioned.
+By inheriting the method <code>__add__</code> from the parent class <code>Complex</code>,
+we will unfortunately always get an instance of <code>Complex</code> when adding
+instances of <code>Complex2</code>.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> z </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> Complex2(</span><span style="color:#79B8FF">0.5</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">1.5</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> w </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> z </span><span style="color:#F97583">+</span><span style="color:#E1E4E8"> z</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> type</span><span style="color:#E1E4E8">(w)</span></span>
+<span class="line"><span style="color:#F97583">&lt;class</span><span style="color:#9ECBFF"> &#39;__main__.Complex&#39;</span><span style="color:#F97583">&gt;</span></span></code></pre>
+<p>It is possible to fix this directly by reimplementing <code>__add__</code> in the derived class</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> Complex2</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">Complex</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#79B8FF"> __init__</span><span style="color:#E1E4E8">(self, real_or_complex, imag</span><span style="color:#F97583">=</span><span style="color:#79B8FF">None</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#F97583">        try</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#E1E4E8">            real </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> real_or_complex.real</span></span>
+<span class="line"><span style="color:#E1E4E8">            imag </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> real_or_complex.imag</span></span>
+<span class="line"><span style="color:#F97583">        except</span><span style="color:#79B8FF"> AttributeError</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#E1E4E8">            real </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> real_or_complex</span></span>
+<span class="line"><span style="color:#E1E4E8">            imag </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> imag</span></span>
+<span class="line"><span style="color:#79B8FF">        super</span><span style="color:#E1E4E8">().</span><span style="color:#79B8FF">__init__</span><span style="color:#E1E4E8">(real, imag)</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#79B8FF"> __add__</span><span style="color:#E1E4E8">(self, other):</span></span>
+<span class="line"><span style="color:#F97583">        return</span><span style="color:#E1E4E8"> Complex2(</span></span>
+<span class="line"><span style="color:#79B8FF">            self</span><span style="color:#E1E4E8">.real </span><span style="color:#F97583">+</span><span style="color:#E1E4E8"> other.real, </span></span>
+<span class="line"><span style="color:#79B8FF">            self</span><span style="color:#E1E4E8">.imag </span><span style="color:#F97583">+</span><span style="color:#E1E4E8"> other.imag</span></span>
+<span class="line"><span style="color:#E1E4E8">        )</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#79B8FF"> __mul__</span><span style="color:#E1E4E8">(self, other):</span></span>
+<span class="line"><span style="color:#E1E4E8">        r1, i1 </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> self</span><span style="color:#E1E4E8">.real, </span><span style="color:#79B8FF">self</span><span style="color:#E1E4E8">.imag</span></span>
+<span class="line"><span style="color:#E1E4E8">        r2, i2 </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> other.real, other.imag</span></span>
+<span class="line"><span style="color:#E1E4E8">        real </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> r1</span><span style="color:#F97583">*</span><span style="color:#E1E4E8">r2 </span><span style="color:#F97583">-</span><span style="color:#E1E4E8"> i1</span><span style="color:#F97583">*</span><span style="color:#E1E4E8">i2</span></span>
+<span class="line"><span style="color:#E1E4E8">        imag </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> r1</span><span style="color:#F97583">*</span><span style="color:#E1E4E8">i2 </span><span style="color:#F97583">+</span><span style="color:#E1E4E8"> r2</span><span style="color:#F97583">*</span><span style="color:#E1E4E8">i1</span></span>
+<span class="line"><span style="color:#F97583">        return</span><span style="color:#E1E4E8"> Complex2(real, imag)</span></span></code></pre>
+<p>It works, but it means losing the benefit of what has already been implemented.
+We can be more subtle, call the parent class method for addition and correct the
+result type afterward, with our brand-new constructor:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> Complex2</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">Complex</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#79B8FF"> __init__</span><span style="color:#E1E4E8">(self, real_or_complex, imag</span><span style="color:#F97583">=</span><span style="color:#79B8FF">None</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#F97583">        try</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#E1E4E8">            real </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> real_or_complex.real</span></span>
+<span class="line"><span style="color:#E1E4E8">            imag </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> real_or_complex.imag</span></span>
+<span class="line"><span style="color:#F97583">        except</span><span style="color:#79B8FF"> AttributeError</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#E1E4E8">            real </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> real_or_complex</span></span>
+<span class="line"><span style="color:#E1E4E8">            imag </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> imag</span></span>
+<span class="line"><span style="color:#79B8FF">        super</span><span style="color:#E1E4E8">().</span><span style="color:#79B8FF">__init__</span><span style="color:#E1E4E8">(real, imag)</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#79B8FF"> __add__</span><span style="color:#E1E4E8">(self, other):</span></span>
+<span class="line"><span style="color:#6A737D">        # sum = Complex.__add__(self, other) would also work.</span></span>
+<span class="line"><span style="color:#79B8FF">        sum</span><span style="color:#F97583"> =</span><span style="color:#79B8FF"> super</span><span style="color:#E1E4E8">().</span><span style="color:#79B8FF">__add__</span><span style="color:#E1E4E8">(other) </span></span>
+<span class="line"><span style="color:#F97583">        return</span><span style="color:#E1E4E8"> Complex2(</span><span style="color:#79B8FF">sum</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#79B8FF"> __mul__</span><span style="color:#E1E4E8">(self, other):</span></span>
+<span class="line"><span style="color:#E1E4E8">        r1, i1 </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> self</span><span style="color:#E1E4E8">.real, </span><span style="color:#79B8FF">self</span><span style="color:#E1E4E8">.imag</span></span>
+<span class="line"><span style="color:#E1E4E8">        r2, i2 </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> other.real, other.imag</span></span>
+<span class="line"><span style="color:#E1E4E8">        real </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> r1</span><span style="color:#F97583">*</span><span style="color:#E1E4E8">r2 </span><span style="color:#F97583">-</span><span style="color:#E1E4E8"> i1</span><span style="color:#F97583">*</span><span style="color:#E1E4E8">i2</span></span>
+<span class="line"><span style="color:#E1E4E8">        imag </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> r1</span><span style="color:#F97583">*</span><span style="color:#E1E4E8">i2 </span><span style="color:#F97583">+</span><span style="color:#E1E4E8"> r2</span><span style="color:#F97583">*</span><span style="color:#E1E4E8">i1</span></span>
+<span class="line"><span style="color:#F97583">        return</span><span style="color:#E1E4E8"> Complex2(real, imag)</span></span></code></pre>
+<p>And now the sum behaves as expected</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> z </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> Complex2(</span><span style="color:#79B8FF">0.5</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">1.5</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> w </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> z </span><span style="color:#F97583">+</span><span style="color:#E1E4E8"> z</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> type</span><span style="color:#E1E4E8">(w)</span></span>
+<span class="line"><span style="color:#F97583">&lt;class</span><span style="color:#9ECBFF"> &#39;__main__.Complex2&#39;</span><span style="color:#F97583">&gt;</span></span></code></pre>
+<p>Incidentally, let’s note that if a future generation of developers needs to
+take over our work and introduce a class <code>Complex3</code> that derives from <code>Complex2</code>,
+they will face the same problem. To make their lives easier, we can use code that
+will adapt the type of the returned value to the type of <code>self</code> and which can therefore
+be inherited as-is in <code>Complex3</code>.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> Complex2</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">Complex</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#79B8FF"> __init__</span><span style="color:#E1E4E8">(self, real_or_complex, imag</span><span style="color:#F97583">=</span><span style="color:#79B8FF">None</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#F97583">        try</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#E1E4E8">            real </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> real_or_complex.real</span></span>
+<span class="line"><span style="color:#E1E4E8">            imag </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> real_or_complex.imag</span></span>
+<span class="line"><span style="color:#F97583">        except</span><span style="color:#79B8FF"> AttributeError</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#E1E4E8">            real </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> real_or_complex</span></span>
+<span class="line"><span style="color:#E1E4E8">            imag </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> imag</span></span>
+<span class="line"><span style="color:#79B8FF">        super</span><span style="color:#E1E4E8">().</span><span style="color:#79B8FF">__init__</span><span style="color:#E1E4E8">(real, imag)</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#79B8FF"> __add__</span><span style="color:#E1E4E8">(self, other):</span></span>
+<span class="line"><span style="color:#E1E4E8">        ComplexType </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> type</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">self</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#79B8FF">        sum</span><span style="color:#F97583"> =</span><span style="color:#79B8FF"> super</span><span style="color:#E1E4E8">().</span><span style="color:#79B8FF">__add__</span><span style="color:#E1E4E8">(other)</span></span>
+<span class="line"><span style="color:#F97583">        return</span><span style="color:#E1E4E8"> ComplexType(</span><span style="color:#79B8FF">sum</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#79B8FF"> __mul__</span><span style="color:#E1E4E8">(self, other):</span></span>
+<span class="line"><span style="color:#E1E4E8">        ComplexType </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> type</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">self</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">        r1, i1 </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> self</span><span style="color:#E1E4E8">.real, </span><span style="color:#79B8FF">self</span><span style="color:#E1E4E8">.imag</span></span>
+<span class="line"><span style="color:#E1E4E8">        r2, i2 </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> other.real, other.imag</span></span>
+<span class="line"><span style="color:#E1E4E8">        real </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> r1</span><span style="color:#F97583">*</span><span style="color:#E1E4E8">r2 </span><span style="color:#F97583">-</span><span style="color:#E1E4E8"> i1</span><span style="color:#F97583">*</span><span style="color:#E1E4E8">i2</span></span>
+<span class="line"><span style="color:#E1E4E8">        imag </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> r1</span><span style="color:#F97583">*</span><span style="color:#E1E4E8">i2 </span><span style="color:#F97583">+</span><span style="color:#E1E4E8"> r2</span><span style="color:#F97583">*</span><span style="color:#E1E4E8">i1</span></span>
+<span class="line"><span style="color:#F97583">        return</span><span style="color:#E1E4E8"> ComplexType(real, imag)</span></span></code></pre>
+<h1 id="the-standard-library">The Standard Library</h1>
+<h2 id="pathlib"><code>pathlib</code></h2>
+<p>The <a href="https://docs.python.org/3/library/pathlib.html">pathlib</a> module of the Python standard library
+provides path classes representing files and directories in a file system.
+More precisely</p>
+<blockquote>
+<p>Path classes are divided into pure paths, which provide only file system manipulation operations without I/O, and concrete paths, which inherit from pure paths and also provide I/O operations.</p>
+</blockquote>
+<p>In other words, pure paths (instances of <code>PurePath</code>)
+allow us to designate files but without accessing the file system properly.
+Instances of <code>Path</code> — which derive from <code>PurePath</code> — allow it.</p>
+<p>Path classes are also distinguished depending on whether the file system is Windows or POSIX
+(Linux and MacOS), but we won’t worry about that here.</p>
+<p>For example, on my Linux computer, I can designate the root of the file system
+with a pure path and use it to construct the (pure) path to the home directory
+of hypothetical users <code>linus</code> and <code>boisgera</code>:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> ROOT</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> PurePath(</span><span style="color:#9ECBFF">&quot;/&quot;</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> LINUS_HOMEDIR</span><span style="color:#F97583"> =</span><span style="color:#79B8FF"> ROOT</span><span style="color:#F97583"> /</span><span style="color:#9ECBFF"> &quot;home&quot;</span><span style="color:#F97583"> /</span><span style="color:#9ECBFF"> &quot;linus&quot;</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> BOISGERA_HOMEDIR</span><span style="color:#F97583"> =</span><span style="color:#79B8FF"> ROOT</span><span style="color:#F97583"> /</span><span style="color:#9ECBFF"> &quot;home&quot;</span><span style="color:#F97583"> /</span><span style="color:#9ECBFF"> &quot;boisgera&quot;</span></span></code></pre>
+<p>But I can’t test if these directories actually exist:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> LINUS_HOMEDIR</span><span style="color:#E1E4E8">.exists()</span></span>
+<span class="line"><span style="color:#E1E4E8">Traceback (most recent call last):</span></span>
+<span class="line"><span style="color:#E1E4E8">  File </span><span style="color:#9ECBFF">&quot;&lt;stdin&gt;&quot;</span><span style="color:#E1E4E8">, line </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#F97583">in</span><span style="color:#F97583"> &lt;</span><span style="color:#E1E4E8">module</span><span style="color:#F97583">&gt;</span></span>
+<span class="line"><span style="color:#79B8FF">AttributeError</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&#39;PurePosixPath&#39;</span><span style="color:#79B8FF"> object</span><span style="color:#E1E4E8"> has no attribute </span><span style="color:#9ECBFF">&#39;exists&#39;</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> BOISGERA_HOMEDIR</span><span style="color:#E1E4E8">.exists()</span></span>
+<span class="line"><span style="color:#E1E4E8">Traceback (most recent call last):</span></span>
+<span class="line"><span style="color:#E1E4E8">  File </span><span style="color:#9ECBFF">&quot;&lt;stdin&gt;&quot;</span><span style="color:#E1E4E8">, line </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#F97583">in</span><span style="color:#F97583"> &lt;</span><span style="color:#E1E4E8">module</span><span style="color:#F97583">&gt;</span></span>
+<span class="line"><span style="color:#79B8FF">AttributeError</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&#39;PurePosixPath&#39;</span><span style="color:#79B8FF"> object</span><span style="color:#E1E4E8"> has no attribute </span><span style="color:#9ECBFF">&#39;exists&#39;</span></span></code></pre>
+<p>However, I can do it after converting these to instances of <code>Path</code>:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> LINUS_HOMEDIR</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> Path(</span><span style="color:#79B8FF">LINUS_HOMEDIR</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> BOISGERA_HOMEDIR</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> Path(</span><span style="color:#79B8FF">BOISGERA_HOMEDIR</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> LINUS_HOMEDIR</span><span style="color:#E1E4E8">.exists()</span></span>
+<span class="line"><span style="color:#79B8FF">False</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> BOISGERA_HOMEDIR</span><span style="color:#E1E4E8">.exists()</span></span>
+<span class="line"><span style="color:#79B8FF">True</span></span></code></pre>
+<p>Alternatively, and that’s probably the simplest, we could have started with a <code>Path</code> to designate
+the root</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> ROOT</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> Path(</span><span style="color:#9ECBFF">&quot;/&quot;</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> LINUS_HOMEDIR</span><span style="color:#F97583"> =</span><span style="color:#79B8FF"> ROOT</span><span style="color:#F97583"> /</span><span style="color:#9ECBFF"> &quot;home&quot;</span><span style="color:#F97583"> /</span><span style="color:#9ECBFF"> &quot;linus&quot;</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> BOISGERA_HOMEDIR</span><span style="color:#F97583"> =</span><span style="color:#79B8FF"> ROOT</span><span style="color:#F97583"> /</span><span style="color:#9ECBFF"> &quot;home&quot;</span><span style="color:#F97583"> /</span><span style="color:#9ECBFF"> &quot;boisgera&quot;</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> LINUS_HOMEDIR</span><span style="color:#E1E4E8">.exists()</span></span>
+<span class="line"><span style="color:#79B8FF">False</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> BOISGERA_HOMEDIR</span><span style="color:#E1E4E8">.exists()</span></span>
+<span class="line"><span style="color:#79B8FF">True</span></span></code></pre>
+<p>Since <code>Path</code> inherits from <code>PurePath</code>, <code>Path</code> instances can be used everywhere
+<code>PurePath</code> instances would work.</p>
+<h2 id="random"><code>random</code></h2>
+<h3 id="introduction">Introduction</h3>
+<p>The <a href="https://docs.python.org/3/library/random.html">random</a> module of the Python standard library
+generates pseudo-random numbers.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#F97583"> import</span><span style="color:#E1E4E8"> random</span></span></code></pre>
+<p>The <code>random</code> function of this module generates floating-point numbers uniformly
+distributed between $0.0$ and $1.0$.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> random.random()</span></span>
+<span class="line"><span style="color:#79B8FF">0.17288416418484898</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> random.random()</span></span>
+<span class="line"><span style="color:#79B8FF">0.7270494197615684</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> random.random()</span></span>
+<span class="line"><span style="color:#79B8FF">0.22967289202282093</span></span></code></pre>
+<p>Multiple functions are provided to generate pseudo-random numbers following various
+probability distributions. For example, to generate numbers distributed according to the
+Gaussian with mean $\mu = 0.0$ and standard deviation $\sigma = 1.0$, we can invoke</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> random.gauss(</span><span style="color:#FFAB70">mu</span><span style="color:#F97583">=</span><span style="color:#79B8FF">0.0</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">sigma</span><span style="color:#F97583">=</span><span style="color:#79B8FF">1.0</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#79B8FF">0.7010040262172509</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> random.gauss(</span><span style="color:#FFAB70">mu</span><span style="color:#F97583">=</span><span style="color:#79B8FF">0.0</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">sigma</span><span style="color:#F97583">=</span><span style="color:#79B8FF">1.0</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#79B8FF">0.11430668630347102</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> random.gauss(</span><span style="color:#FFAB70">mu</span><span style="color:#F97583">=</span><span style="color:#79B8FF">0.0</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">sigma</span><span style="color:#F97583">=</span><span style="color:#79B8FF">1.0</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">-</span><span style="color:#79B8FF">0.49389733826503307</span></span></code></pre>
+<h3 id="object-oriented-interface">Object-Oriented Interface</h3>
+<p>Studying the source file <a href="https://github.com/python/cpython/blob/main/Lib/random.py">random.py</a>
+informs us that the classic module interface is only a thin veneer over an object
+architecture. The module defines a class <code>Random</code>, then creates a private instance
+<code>_inst</code> in this module. The “functions” of the module <code>random</code> like <code>gauss</code> are simply
+shortcuts to the methods of this instance</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> random.random</span></span>
+<span class="line"><span style="color:#F97583">&lt;</span><span style="color:#E1E4E8">built</span><span style="color:#F97583">-in</span><span style="color:#E1E4E8"> method random of Random </span><span style="color:#79B8FF">object</span><span style="color:#E1E4E8"> at </span><span style="color:#F97583">0x</span><span style="color:#79B8FF">55a5a09ad260</span><span style="color:#F97583">&gt;</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> random.gauss</span></span>
+<span class="line"><span style="color:#F97583">&lt;</span><span style="color:#E1E4E8">bound method Random.gauss of </span><span style="color:#F97583">&lt;</span><span style="color:#E1E4E8">random.Random </span><span style="color:#79B8FF">object</span><span style="color:#E1E4E8"> at </span><span style="color:#F97583">0x</span><span style="color:#79B8FF">55a5a09ad260</span><span style="color:#F97583">&gt;&gt;</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> r </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> random._inst</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> type</span><span style="color:#E1E4E8">(r)</span></span>
+<span class="line"><span style="color:#F97583">&lt;class</span><span style="color:#9ECBFF"> &#39;random.Random&#39;</span><span style="color:#F97583">&gt;</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> r.random</span></span>
+<span class="line"><span style="color:#F97583">&lt;</span><span style="color:#E1E4E8">built</span><span style="color:#F97583">-in</span><span style="color:#E1E4E8"> method random of Random </span><span style="color:#79B8FF">object</span><span style="color:#E1E4E8"> at </span><span style="color:#F97583">0x</span><span style="color:#79B8FF">55a5a09ad260</span><span style="color:#F97583">&gt;</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> r.gauss</span></span>
+<span class="line"><span style="color:#F97583">&lt;</span><span style="color:#E1E4E8">bound method Random.gauss of </span><span style="color:#F97583">&lt;</span><span style="color:#E1E4E8">random.Random </span><span style="color:#79B8FF">object</span><span style="color:#E1E4E8"> at </span><span style="color:#F97583">0x</span><span style="color:#79B8FF">55a5a09ad260</span><span style="color:#F97583">&gt;&gt;</span></span></code></pre>
+<p>The default method <code>random</code> generates random integers between $0$ and
+$2^{53} - 1$ (the probability of each integer being identical),
+then divides the result by $2^{53}$.
+The downside of this approach: <code>random()</code> returns a value that is always a
+multiple of $2^{-53}$.
+The floating-point number $2^{-1074}$, for example,
+which is the smallest strictly positive floating-point number,
+has no chance of ever being produced.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> r.random() </span><span style="color:#F97583">*</span><span style="color:#79B8FF"> 2</span><span style="color:#F97583">**</span><span style="color:#79B8FF">53</span></span>
+<span class="line"><span style="color:#79B8FF">4346481833061509.0</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> r.random() </span><span style="color:#F97583">*</span><span style="color:#79B8FF"> 2</span><span style="color:#F97583">**</span><span style="color:#79B8FF">53</span></span>
+<span class="line"><span style="color:#79B8FF">6826402970501312.0</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> r.random() </span><span style="color:#F97583">*</span><span style="color:#79B8FF"> 2</span><span style="color:#F97583">**</span><span style="color:#79B8FF">53</span></span>
+<span class="line"><span style="color:#79B8FF">5570978756682725.0</span></span></code></pre>
+<p>If that’s a problem for you, it is possible to correct this behavior as suggested
+by <a href="https://docs.python.org/3/library/random.html#recipes">the documentation of the module <code>random</code></a>
+by defining a class derived from <code>Random</code> that overrides the method <code>random</code></p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">from</span><span style="color:#E1E4E8"> math </span><span style="color:#F97583">import</span><span style="color:#E1E4E8"> ldexp</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> AltRandom</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">random</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">Random</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> random</span><span style="color:#E1E4E8">(self):</span></span>
+<span class="line"><span style="color:#E1E4E8">        mantissa </span><span style="color:#F97583">=</span><span style="color:#F97583"> 0x</span><span style="color:#79B8FF">10_0000_0000_0000</span><span style="color:#F97583"> |</span><span style="color:#79B8FF"> self</span><span style="color:#E1E4E8">.getrandbits(</span><span style="color:#79B8FF">52</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">        exponent </span><span style="color:#F97583">=</span><span style="color:#F97583"> -</span><span style="color:#79B8FF">53</span></span>
+<span class="line"><span style="color:#E1E4E8">        x </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 0</span></span>
+<span class="line"><span style="color:#F97583">        while</span><span style="color:#F97583"> not</span><span style="color:#E1E4E8"> x:</span></span>
+<span class="line"><span style="color:#E1E4E8">            x </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> self</span><span style="color:#E1E4E8">.getrandbits(</span><span style="color:#79B8FF">32</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">            exponent </span><span style="color:#F97583">+=</span><span style="color:#E1E4E8"> x.bit_length() </span><span style="color:#F97583">-</span><span style="color:#79B8FF"> 32</span></span>
+<span class="line"><span style="color:#F97583">        return</span><span style="color:#E1E4E8"> ldexp(mantissa, exponent)</span></span></code></pre>
+<p>Usage is immediate</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> r </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> AltRandom()</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> r.random()</span></span>
+<span class="line"><span style="color:#79B8FF">0.2768487552410033</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> r.random()</span></span>
+<span class="line"><span style="color:#79B8FF">0.08881389087065399</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> r.random()</span></span>
+<span class="line"><span style="color:#79B8FF">0.28173863914986846</span></span></code></pre>
+<p>The values produced by the method <code>random</code> are no longer necessarily
+multiples of $2^{-53}$.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> r.random() </span><span style="color:#F97583">*</span><span style="color:#79B8FF"> 2</span><span style="color:#F97583">**</span><span style="color:#79B8FF">53</span></span>
+<span class="line"><span style="color:#79B8FF">6118147054761291.0</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> r.random() </span><span style="color:#F97583">*</span><span style="color:#79B8FF"> 2</span><span style="color:#F97583">**</span><span style="color:#79B8FF">53</span></span>
+<span class="line"><span style="color:#79B8FF">1809975186779188.8</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> r.random() </span><span style="color:#F97583">*</span><span style="color:#79B8FF"> 2</span><span style="color:#F97583">**</span><span style="color:#79B8FF">53</span></span>
+<span class="line"><span style="color:#79B8FF">6828617072759119.0</span></span></code></pre>
+<p>Since the other probability distributions use the method <code>random</code> as source of
+random values, we don’t need to reimplement anything else to benefit
+from this improved source of randomness.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> r.gauss(</span><span style="color:#FFAB70">mu</span><span style="color:#F97583">=</span><span style="color:#79B8FF">0.0</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">sigma</span><span style="color:#F97583">=</span><span style="color:#79B8FF">1.0</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">-</span><span style="color:#79B8FF">0.28865100238160024</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> r.gauss(</span><span style="color:#FFAB70">mu</span><span style="color:#F97583">=</span><span style="color:#79B8FF">0.0</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">sigma</span><span style="color:#F97583">=</span><span style="color:#79B8FF">1.0</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">-</span><span style="color:#79B8FF">0.5190938357947126</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> r.gauss(</span><span style="color:#FFAB70">mu</span><span style="color:#F97583">=</span><span style="color:#79B8FF">0.0</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">sigma</span><span style="color:#F97583">=</span><span style="color:#79B8FF">1.0</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#79B8FF">1.0356452612439027</span></span>
+<span class="line"></span></code></pre>
+<h2 id="doctest"><code>doctest</code></h2>
+<p><a href="https://docs.python.org/3/library/doctest.html">Doctest</a> is a unit testing module in the standard library.
+It checks that the examples in your documentation conform to the actual behavior of your code.</p>
+<p>For example, with the code</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#6A737D"># file: add.py</span></span>
+<span class="line"><span style="color:#F97583">def</span><span style="color:#B392F0"> add</span><span style="color:#E1E4E8">(x, y):</span></span>
+<span class="line"><span style="color:#9ECBFF">    &quot;&quot;&quot;</span></span>
+<span class="line"><span style="color:#9ECBFF">    Numerical sum of two objects</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#9ECBFF">    Usage:</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">    &gt;&gt;&gt; </span><span style="color:#9ECBFF">add(1, 1)</span></span>
+<span class="line"><span style="color:#9ECBFF">    2</span></span>
+<span class="line"><span style="color:#F97583">    &gt;&gt;&gt; </span><span style="color:#9ECBFF">add(0.5, 0.25)</span></span>
+<span class="line"><span style="color:#9ECBFF">    0.75</span></span>
+<span class="line"><span style="color:#F97583">    &gt;&gt;&gt; </span><span style="color:#9ECBFF">add([1], [2])</span></span>
+<span class="line"><span style="color:#9ECBFF">    [3]</span></span>
+<span class="line"><span style="color:#9ECBFF">    &quot;&quot;&quot;</span></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">+</span><span style="color:#E1E4E8"> y</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">if</span><span style="color:#79B8FF"> __name__</span><span style="color:#F97583"> ==</span><span style="color:#9ECBFF"> &quot;__main__&quot;</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">    import</span><span style="color:#E1E4E8"> doctest</span></span>
+<span class="line"><span style="color:#E1E4E8">    doctest.testmod()</span></span></code></pre>
+<p>Executing the file tells you that among the three usage examples of your function <code>add</code>,
+the result for one of them is different from what was expected:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#FDAEB7;font-style:italic">$</span><span style="color:#E1E4E8"> python add.py </span></span>
+<span class="line"><span style="color:#F97583">**********************************************************************</span></span>
+<span class="line"><span style="color:#E1E4E8">File </span><span style="color:#9ECBFF">&quot;add.py&quot;</span><span style="color:#E1E4E8">, line </span><span style="color:#79B8FF">13</span><span style="color:#E1E4E8">, </span><span style="color:#F97583">in</span><span style="color:#E1E4E8"> __main__.add</span></span>
+<span class="line"><span style="color:#E1E4E8">Failed example:</span></span>
+<span class="line"><span style="color:#E1E4E8">    add([</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">], [</span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">])</span></span>
+<span class="line"><span style="color:#E1E4E8">Expected:</span></span>
+<span class="line"><span style="color:#E1E4E8">    [</span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#E1E4E8">Got:</span></span>
+<span class="line"><span style="color:#E1E4E8">    [</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#F97583">**********************************************************************</span></span>
+<span class="line"><span style="color:#79B8FF">1</span><span style="color:#E1E4E8"> items had failures:</span></span>
+<span class="line"><span style="color:#79B8FF">   1</span><span style="color:#E1E4E8"> of   </span><span style="color:#79B8FF">3</span><span style="color:#F97583"> in</span><span style="color:#E1E4E8"> __main__.add</span></span>
+<span class="line"><span style="color:#F97583">***</span><span style="color:#E1E4E8">Test Failed</span><span style="color:#F97583">***</span><span style="color:#79B8FF"> 1</span><span style="color:#E1E4E8"> failures.</span></span></code></pre>
+<p>Indeed, if we want an addition of lists “NumPy style”, then the current code is not
+the right one! Because <code>+</code> used on lists concatenates them instead of doing element-wise
+addition.</p>
+<p>We diagnosed the problem, but we don’t have time to fix it right away.
+So we are going to temporarily suppress such erroneous results by marking known
+as erroneous with the symbol 🐛 (a <strong>bug</strong>).
+This will serve as a reminder!</p>
+<p>To do this, we will derive from the class <a href="https://docs.python.org/3/library/doctest.html#doctest.OutputChecker"><code>OutputChecker</code></a> of <code>doctest</code> and
+override its method <code>check_output</code> to signal that any test whose result
+contains a bug symbol should be considered as passed.
+Then we will insert the resulting class in place of the <code>OutputChecker</code>
+class of <code>doctest</code>, to change the behavior of the module.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#6A737D"># file: doctest_patch.py</span></span>
+<span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> doctest</span></span>
+<span class="line"><span style="color:#E1E4E8">_doctest_OutputChecker </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> doctest.OutputChecker</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> OutputChecker</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">_doctest_OutputChecker</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> check_output</span><span style="color:#E1E4E8">(self, want, got, optionflags):</span></span>
+<span class="line"><span style="color:#F97583">        if</span><span style="color:#9ECBFF"> &quot;🐛&quot;</span><span style="color:#F97583"> in</span><span style="color:#E1E4E8"> want:</span></span>
+<span class="line"><span style="color:#F97583">            return</span><span style="color:#79B8FF"> True</span></span>
+<span class="line"><span style="color:#F97583">        else</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">            return</span><span style="color:#79B8FF"> super</span><span style="color:#E1E4E8">().check_output(want, got, optionflags)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># 🐒 Monkey-patching</span></span>
+<span class="line"><span style="color:#E1E4E8">doctest.OutputChecker </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> OutputChecker</span></span></code></pre>
+<p>If we slightly modify the file <code>add.py</code> to mark our problematic test and import <code>doctest_patch</code></p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#6A737D"># file: add.py</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">def</span><span style="color:#B392F0"> add</span><span style="color:#E1E4E8">(x, y):</span></span>
+<span class="line"><span style="color:#9ECBFF">    &quot;&quot;&quot;</span></span>
+<span class="line"><span style="color:#9ECBFF">    Numerical sum of two objects</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#9ECBFF">    Usage:</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">    &gt;&gt;&gt; </span><span style="color:#9ECBFF">add(1, 1)</span></span>
+<span class="line"><span style="color:#9ECBFF">    2</span></span>
+<span class="line"><span style="color:#F97583">    &gt;&gt;&gt; </span><span style="color:#9ECBFF">add(0.5, 0.25)</span></span>
+<span class="line"><span style="color:#9ECBFF">    0.75</span></span>
+<span class="line"><span style="color:#F97583">    &gt;&gt;&gt; </span><span style="color:#9ECBFF">add([1], [2])</span></span>
+<span class="line"><span style="color:#9ECBFF">    [3] 🐛</span></span>
+<span class="line"><span style="color:#9ECBFF">    &quot;&quot;&quot;</span></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#E1E4E8"> x</span><span style="color:#F97583">+</span><span style="color:#E1E4E8">y</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">if</span><span style="color:#79B8FF"> __name__</span><span style="color:#F97583"> ==</span><span style="color:#9ECBFF"> &quot;__main__&quot;</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">    import</span><span style="color:#E1E4E8"> doctest</span></span>
+<span class="line"><span style="color:#F97583">    import</span><span style="color:#E1E4E8"> doctest_patch</span></span>
+<span class="line"><span style="color:#E1E4E8">    doctest.testmod()</span></span></code></pre>
+<p>Then the tests run without error (no output means everything is fine).</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> python</span><span style="color:#9ECBFF"> add.py</span></span></code></pre>
+<p>We can verify this by running the tests in “verbose” mode:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> python</span><span style="color:#9ECBFF"> add.py</span><span style="color:#79B8FF"> -v</span></span>
+<span class="line"><span style="color:#B392F0">Trying:</span></span>
+<span class="line"><span style="color:#B392F0">    add(1,</span><span style="color:#79B8FF"> 1</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#B392F0">Expecting:</span></span>
+<span class="line"><span style="color:#B392F0">    2</span></span>
+<span class="line"><span style="color:#B392F0">ok</span></span>
+<span class="line"><span style="color:#B392F0">Trying:</span></span>
+<span class="line"><span style="color:#B392F0">    add(0.5,</span><span style="color:#79B8FF"> 0.25</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#B392F0">Expecting:</span></span>
+<span class="line"><span style="color:#B392F0">    0.75</span></span>
+<span class="line"><span style="color:#B392F0">ok</span></span>
+<span class="line"><span style="color:#B392F0">Trying:</span></span>
+<span class="line"><span style="color:#B392F0">    add([1],</span><span style="color:#E1E4E8"> [2])</span></span>
+<span class="line"><span style="color:#B392F0">Expecting:</span></span>
+<span class="line"><span style="color:#E1E4E8">    [</span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">] </span><span style="color:#B392F0">🐛</span></span>
+<span class="line"><span style="color:#B392F0">ok</span></span>
+<span class="line"><span style="color:#B392F0">1</span><span style="color:#9ECBFF"> items</span><span style="color:#9ECBFF"> had</span><span style="color:#9ECBFF"> no</span><span style="color:#9ECBFF"> tests:</span></span>
+<span class="line"><span style="color:#B392F0">    __main__</span></span>
+<span class="line"><span style="color:#B392F0">1</span><span style="color:#9ECBFF"> items</span><span style="color:#9ECBFF"> passed</span><span style="color:#9ECBFF"> all</span><span style="color:#9ECBFF"> tests:</span></span>
+<span class="line"><span style="color:#B392F0">   3</span><span style="color:#9ECBFF"> tests</span><span style="color:#9ECBFF"> in</span><span style="color:#9ECBFF"> __main__.add</span></span>
+<span class="line"><span style="color:#B392F0">3</span><span style="color:#9ECBFF"> tests</span><span style="color:#9ECBFF"> in</span><span style="color:#79B8FF"> 2</span><span style="color:#9ECBFF"> items.</span></span>
+<span class="line"><span style="color:#B392F0">3</span><span style="color:#9ECBFF"> passed</span><span style="color:#9ECBFF"> and</span><span style="color:#79B8FF"> 0</span><span style="color:#9ECBFF"> failed.</span></span>
+<span class="line"><span style="color:#B392F0">Test</span><span style="color:#9ECBFF"> passed.</span></span></code></pre> </main> </nav> </body></html>
