@@ -1,0 +1,687 @@
+<!DOCTYPE html><html lang="fr" data-astro-cid-vc27etzb> <head><title>Control flow</title><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><link rel="icon" type="image/svg+xml" href="/python/favicon.svg"><meta name="generator" content="Astro v3.6.5"><script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+    }
+    };
+  </script><script defer src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js">
+  </script><style>aside[data-astro-cid-fjubpvhp]{border:.125rem solid var(--dark);border-radius:.25rem;margin-bottom:1rem}summary[data-astro-cid-fjubpvhp]{padding:1rem;border-top-left-radius:.25rem;border-top-right-radius:.25rem;background-color:var(--light)}details[data-astro-cid-fjubpvhp]>summary[data-astro-cid-fjubpvhp]{list-style:none;border-radius:.25rem;border-bottom-left-radius:0;border-bottom-right-radius:0}.minmax[data-astro-cid-fjubpvhp]{color:var(--dark)}details[data-astro-cid-fjubpvhp].lock{pointer-events:none}details[data-astro-cid-fjubpvhp].lock .minmax[data-astro-cid-fjubpvhp]{display:none}details[data-astro-cid-fjubpvhp][open] .open[data-astro-cid-fjubpvhp]{display:inline}details[data-astro-cid-fjubpvhp][open] .closed[data-astro-cid-fjubpvhp]{display:none}details[data-astro-cid-fjubpvhp]:not([open]) .open[data-astro-cid-fjubpvhp]{display:none}details[data-astro-cid-fjubpvhp]:not([open]) .closed[data-astro-cid-fjubpvhp]{display:inline}.content[data-astro-cid-fjubpvhp]{border-bottom-right-radius:.25rem;border-bottom-left-radius:.25rem}svg[data-astro-cid-fjubpvhp]{height:1rem}.circle[data-astro-cid-fjubpvhp]{height:1.25rem;width:1.25rem;border-radius:.25rem;background-color:var(--dark);color:#fff;display:flex;justify-content:center;align-items:center}
+</style>
+<link rel="stylesheet" href="/python/_astro/burger.7e2592e1.css" /><script type="module" src="/python/_astro/hoisted.311de0fb.js"></script></head> <body data-astro-cid-vc27etzb> <nav data-astro-cid-vc27etzb> <a href="/python" data-astro-cid-vc27etzb><svg viewBox="0 0 128 128" style="width:2rem;height:2rem;" data-astro-cid-vc27etzb astro-icon="python"><linearGradient id="astroicon:pythona" x1="70.252" x2="170.659" y1="1237.476" y2="1151.089" gradientTransform="matrix(.563 0 0 -.568 -29.215 707.817)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#5A9FD4"/><stop offset="1" stop-color="#306998"/></linearGradient><linearGradient id="astroicon:pythonb" x1="209.474" x2="173.62" y1="1098.811" y2="1149.537" gradientTransform="matrix(.563 0 0 -.568 -29.215 707.817)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#FFD43B"/><stop offset="1" stop-color="#FFE873"/></linearGradient><path fill="url(#astroicon:pythona)" d="M63.391 1.988c-4.222.02-8.252.379-11.8 1.007-10.45 1.846-12.346 5.71-12.346 12.837v9.411h24.693v3.137H29.977c-7.176 0-13.46 4.313-15.426 12.521-2.268 9.405-2.368 15.275 0 25.096 1.755 7.311 5.947 12.519 13.124 12.519h8.491V67.234c0-8.151 7.051-15.34 15.426-15.34h24.665c6.866 0 12.346-5.654 12.346-12.548V15.833c0-6.693-5.646-11.72-12.346-12.837-4.244-.706-8.645-1.027-12.866-1.008zM50.037 9.557c2.55 0 4.634 2.117 4.634 4.721 0 2.593-2.083 4.69-4.634 4.69-2.56 0-4.633-2.097-4.633-4.69-.001-2.604 2.073-4.721 4.633-4.721z" transform="translate(0 10.26)"/><path fill="url(#astroicon:pythonb)" d="M91.682 28.38v10.966c0 8.5-7.208 15.655-15.426 15.655H51.591c-6.756 0-12.346 5.783-12.346 12.549v23.515c0 6.691 5.818 10.628 12.346 12.547 7.816 2.297 15.312 2.713 24.665 0 6.216-1.801 12.346-5.423 12.346-12.547v-9.412H63.938v-3.138h37.012c7.176 0 9.852-5.005 12.348-12.519 2.578-7.735 2.467-15.174 0-25.096-1.774-7.145-5.161-12.521-12.348-12.521h-9.268zM77.809 87.927c2.561 0 4.634 2.097 4.634 4.692 0 2.602-2.074 4.719-4.634 4.719-2.55 0-4.633-2.117-4.633-4.719 0-2.595 2.083-4.692 4.633-4.692z" transform="translate(0 10.26)"/><radialGradient id="astroicon:pythonc" cx="1825.678" cy="444.45" r="26.743" gradientTransform="matrix(0 -.24 -1.055 0 532.979 557.576)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#B8B8B8" stop-opacity=".498"/><stop offset="1" stop-color="#7F7F7F" stop-opacity="0"/></radialGradient><path fill="url(#astroicon:pythonc)" d="M97.309 119.597c0 3.543-14.816 6.416-33.091 6.416-18.276 0-33.092-2.873-33.092-6.416 0-3.544 14.815-6.417 33.092-6.417 18.275 0 33.091 2.872 33.091 6.417z" opacity=".444"/></svg></a> <a href="https://github.com/boisgera/python" data-astro-cid-vc27etzb><svg viewBox="0 -.5 25 25" style="width:2rem;height:2rem;" data-astro-cid-vc27etzb astro-icon="github"><path d="M12.494 1.18h.084c2.02 0 3.911.553 5.53 1.515l-.049-.028a11.132 11.132 0 0 1 4.01 3.985l.028.052a10.98 10.98 0 0 1 1.49 5.558c0 4.872-3.139 9.013-7.504 10.507l-.079.024a.653.653 0 0 1-.579-.102h.002a.562.562 0 0 1-.187-.42v-.012l.007-1.104q.007-1.062.007-1.942a2.563 2.563 0 0 0-.75-2.05 9.84 9.84 0 0 0 1.548-.274l-.069.015a5.866 5.866 0 0 0 1.386-.578l-.028.015a4.073 4.073 0 0 0 1.164-.954l.006-.006c.335-.429.597-.934.757-1.482l.008-.032a7.11 7.11 0 0 0 .296-2.056v-.122.006-.065a4.263 4.263 0 0 0-1.143-2.911l.002.003a3.83 3.83 0 0 0-.125-2.968l.01.023a1.888 1.888 0 0 0-1.18.163l.01-.004c-.512.189-.95.403-1.363.654l.035-.02-.55.346a10.199 10.199 0 0 0-2.77-.375c-.987 0-1.941.137-2.846.393l.073-.018q-.23-.158-.614-.39a8.204 8.204 0 0 0-1.146-.536l-.06-.02a1.96 1.96 0 0 0-1.237-.193l.011-.002a3.785 3.785 0 0 0-.354 1.612c0 .478.088.937.248 1.36l-.009-.026a4.257 4.257 0 0 0-1.14 2.977v-.004.117c0 .73.107 1.434.31 2.097l-.014-.05c.17.579.429 1.082.766 1.525l-.008-.012c.319.392.704.715 1.142.957l.02.01c.389.227.84.42 1.315.554l.042.01c.42.112.923.204 1.437.256l.042.003a2.43 2.43 0 0 0-.707 1.477v.01a2.754 2.754 0 0 1-.63.213l-.02.004c-.23.046-.495.072-.766.072h-.06.003a1.696 1.696 0 0 1-.95-.314l.005.004a2.56 2.56 0 0 1-.794-.889l-.006-.013a2.346 2.346 0 0 0-.693-.746l-.008-.005a2.101 2.101 0 0 0-.7-.343l-.014-.003-.288-.044a.944.944 0 0 0-.425.067l.007-.003q-.116.065-.072.166a.791.791 0 0 0 .13.203c.054.064.117.12.184.17l.003.002.1.072c.256.134.466.32.626.544l.003.005c.172.214.324.455.445.714l.01.022.144.331c.121.363.342.665.63.884l.005.004c.27.211.597.362.953.43l.014.003c.298.057.644.093.997.1h.006a4.268 4.268 0 0 0 .826-.054l-.024.004.332-.058q0 .55.007 1.279l.007.786v.013a.562.562 0 0 1-.187.42.646.646 0 0 1-.582.1h.004c-4.442-1.521-7.579-5.662-7.579-10.535 0-2.044.552-3.96 1.515-5.605L2.9 6.7a11.132 11.132 0 0 1 3.985-4.01l.052-.028A10.723 10.723 0 0 1 12.41 1.18h.088-.004ZM5.608 17.103q.043-.101-.101-.173-.144-.044-.188.028-.043.101.101.174.13.086.188-.03zm.448.49q.1-.071-.03-.23-.143-.13-.23-.043-.1.072.029.23.143.142.23.043zm.432.65q.13-.101 0-.274-.115-.188-.245-.087-.13.072 0 .26.13.187.245.1zm.606.606q.115-.115-.058-.274-.173-.173-.288-.043-.13.115.058.274.173.173.288.04zm.823.36q.043-.158-.188-.23-.216-.058-.274.101-.057.159.188.216.216.088.274-.086zm.91.073q0-.187-.246-.159-.23 0-.23.159 0 .187.245.159.23 0 .23-.158zm.837-.144q-.03-.159-.26-.13-.23.043-.202.216.029.173.26.116.23-.058.203-.202z"/></svg></a> <main data-astro-cid-vc27etzb> <header style="margin-bottom: 3rem;"> <div style="margin-bottom: 1.5rem;"> <h1 style="font-size: 2.25rem; line-height:1; font-weight:700; color: #020617;
+    margin-bottom: 1rem;"> Control flow </h1> <p style="color: #64748b;"> Be water my friend </p> </div> <div style="display: flex; justify-content: left; gap: 1rem;"> <img src="https://2.gravatar.com/avatar/39ec5d637b0753448b97a8e63855a45cb6708d033b656fe9f1d3314bb4bfb202?size=128" alt="avatar" style="margin: 0px; flex: 0 48px; width: 48px; height: 48px; border-radius: 50%;"> <p style="margin: 0px; flex: auto; font-size: 0.875rem; line-height: 1.25rem; color: #1e293b;"> Sébastien Boisgérault <br> Associate Professor, ITN Mines Paris – PSL </p><p></p>  </div> </header>
+<h1 id="introduction">Introduction</h1>
+<p>By default, a computer program executes the instructions in the order
+in which they are provided, line by line, and stops once the last
+instruction has been executed.</p>
+<p>For example, the python program <code>main.py</code> containing the following code</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#79B8FF">print</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">&quot;Hey!&quot;</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#79B8FF">print</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">&quot;Ho!&quot;</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#79B8FF">print</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">&quot;Let&#39;s go!&quot;</span><span style="color:#E1E4E8">)</span></span></code></pre>
+<p>when executed, will produce the following output:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#E1E4E8">$ python main.py</span></span>
+<span class="line"><span style="color:#79B8FF">Hey!</span></span>
+<span class="line"><span style="color:#79B8FF">Ho!</span></span>
+<span class="line"><span style="color:#79B8FF">Let&#39;s go!</span></span></code></pre>
+<p>However, some control flow constructs allow you to alter this execution flow
+when needed. They include:</p>
+<ol>
+<li><a href="#conditional-execution"><strong>Conditional execution</strong></a></li>
+<li><a href="#loops"><strong>Loops</strong></a></li>
+<li><a href="#function-calls"><strong>Function calls</strong></a></li>
+<li><a href="#exceptions"><strong>Exceptions</strong></a></li>
+</ol>
+<h1 id="conditional-execution">Conditional execution</h1>
+<p>If statements allow you to execute a block of code only if a certain condition is met.
+The condition is a boolean expression, so let’s dive into this first.</p>
+<h2 id="boolean-expressions">Boolean expressions</h2>
+<p>The boolean type <code>bool</code> can take two values: <code>False</code> and <code>True</code>.</p>
+<h3 id="logic">Logic</h3>
+<p>The logical operators “not” (¬), “and” (∧) and “or” (∨)
+are denoted in Python by the keywords <code>not</code>, <code>and</code> and <code>or</code>,
+and evaluate as follows:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th align="center">Symbol</th><th>Operator</th><th>Expression</th><th>Value</th></tr></thead><tbody><tr><td align="center">¬</td><td><code>not</code></td><td><code>not False</code></td><td><code>True</code></td></tr><tr><td align="center">¬</td><td><code>not</code></td><td><code>not True</code></td><td><code>False</code></td></tr><tr><td align="center">∧</td><td><code>and</code></td><td><code>False and False</code></td><td><code>False</code></td></tr><tr><td align="center">∧</td><td><code>and</code></td><td><code>False and True</code></td><td><code>False</code></td></tr><tr><td align="center">∧</td><td><code>and</code></td><td><code>True and False</code></td><td><code>False</code></td></tr><tr><td align="center">∧</td><td><code>and</code></td><td><code>True and True</code></td><td><code>True</code></td></tr><tr><td align="center">∨</td><td><code>or</code></td><td><code>False or False</code></td><td><code>False</code></td></tr><tr><td align="center">∨</td><td><code>or</code></td><td><code>False or True</code></td><td><code>True</code></td></tr><tr><td align="center">∨</td><td><code>or</code></td><td><code>True or False</code></td><td><code>True</code></td></tr><tr><td align="center">∨</td><td><code>or</code></td><td><code>True or True</code></td><td><code>True</code></td></tr></tbody></table>
+<h3 id="comparison">Comparison</h3>
+<p>Python objects can be compared using the operators <code>==</code> (equal)
+and <code>!=</code> (not equal).</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> 0</span><span style="color:#F97583"> ==</span><span style="color:#79B8FF"> 0</span></span>
+<span class="line"><span style="color:#79B8FF">True</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> 0</span><span style="color:#F97583"> ==</span><span style="color:#79B8FF"> 1</span></span>
+<span class="line"><span style="color:#79B8FF">False</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#9ECBFF"> &quot;A&quot;</span><span style="color:#F97583"> ==</span><span style="color:#9ECBFF"> &quot;A&quot;</span></span>
+<span class="line"><span style="color:#79B8FF">True</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#9ECBFF"> &quot;A&quot;</span><span style="color:#F97583"> ==</span><span style="color:#9ECBFF"> &quot;B&quot;</span></span>
+<span class="line"><span style="color:#79B8FF">False</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">] </span><span style="color:#F97583">==</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#79B8FF">True</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">] </span><span style="color:#F97583">==</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">6</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#79B8FF">False</span></span></code></pre>
+<p>If the objects are of an ordered type (e.g., integers, floating-point
+numbers, etc.), you can also use <code>&lt;</code> (strictly less than),
+<code>&lt;=</code> (less than or equal to), <code>&gt;</code> (strictly greater than) and <code>&gt;=</code> (greater
+than or equal to).</p>
+<p>The ordering depends on the type of the object; for example, for strings,
+lexicographic order is used:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#9ECBFF"> &quot;ABC&quot;</span><span style="color:#F97583"> &lt;</span><span style="color:#9ECBFF"> &quot;XYZ&quot;</span></span>
+<span class="line"><span style="color:#79B8FF">True</span></span></code></pre>
+<h3 id="membership">Membership</h3>
+<p>The operators <code>in</code> and <code>not in</code> allow you to test whether an object
+belongs to a container (a list, a string, a set, etc.):</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> 1</span><span style="color:#F97583"> in</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#79B8FF">True</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> 0</span><span style="color:#F97583"> in</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#79B8FF">False</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> 1</span><span style="color:#F97583"> not</span><span style="color:#F97583"> in</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#79B8FF">False</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> 0</span><span style="color:#F97583"> not</span><span style="color:#F97583"> in</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#79B8FF">True</span></span></code></pre>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> 1</span><span style="color:#F97583"> in</span><span style="color:#79B8FF"> set</span><span style="color:#E1E4E8">([</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">])</span></span>
+<span class="line"><span style="color:#79B8FF">True</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> 0</span><span style="color:#F97583"> in</span><span style="color:#79B8FF"> set</span><span style="color:#E1E4E8">()</span></span>
+<span class="line"><span style="color:#79B8FF">False</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#9ECBFF"> &quot;Hello&quot;</span><span style="color:#F97583"> in</span><span style="color:#9ECBFF"> &quot;Hello world!&quot;</span></span>
+<span class="line"><span style="color:#79B8FF">True</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#9ECBFF"> &quot;x&quot;</span><span style="color:#F97583"> in</span><span style="color:#E1E4E8"> {</span><span style="color:#9ECBFF">&quot;x&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">0.0</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">&quot;y&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">1.0</span><span style="color:#E1E4E8">}</span></span>
+<span class="line"><span style="color:#79B8FF">True</span></span></code></pre>
+<h3 id="equality-and-identity">Equality and Identity</h3>
+<p>The <strong>equality</strong> of <code>x</code> and <code>y</code> is tested with the operator <code>==</code>:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#E1E4E8">x </span><span style="color:#F97583">==</span><span style="color:#E1E4E8"> y</span></span></code></pre>
+<p>The property that they have the same <strong>identity</strong> is tested with the keyword <code>is</code>:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#E1E4E8">x </span><span style="color:#F97583">is</span><span style="color:#E1E4E8"> y</span></span></code></pre>
+<p>The negation of these properties is tested with <code>!=</code> and <code>is not</code>:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#E1E4E8">x </span><span style="color:#F97583">!=</span><span style="color:#E1E4E8"> y</span></span></code></pre>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#E1E4E8">x </span><span style="color:#F97583">is</span><span style="color:#F97583"> not</span><span style="color:#E1E4E8"> y</span></span></code></pre>
+<p>Refer to the section on <a href="./lec07-equality-and-identity">Equality and Identity</a> for more details.</p>
+<h3 id="priorities">Priorities</h3>
+<p>📖 <a href="https://docs.python.org/3/reference/expressions.html#operator-precedence">Python Language Reference / Expressions / Operator Precedence</a></p>
+<p>Some boolean expressions may seem ambiguous; you could a priori
+interpret the expression <code>not x and y or z</code> in multiple ways,
+for example as <code>(not x) and (y or z)</code> or as <code>not (x and (y or z))</code>.
+To resolve this ambiguity, Python defines a precedence list between
+expressions; from highest to lowest precedence, we have:</p>
+<ol>
+<li>Function call</li>
+<li><code>in</code>, <code>not in</code>, <code>is</code>, <code>is not</code>, <code>&lt;</code>, <code>&lt;=</code>, <code>&gt;</code>, <code>&gt;=</code>, <code>!=</code>, <code>==</code></li>
+<li><code>not</code></li>
+<li><code>and</code></li>
+<li><code>or</code></li>
+</ol>
+<p>The expression <code>not x and y or z</code> is therefore interpreted as
+<code>((not x) and y) or z.</code></p>
+<h3 id="explicit-conversions">Explicit Conversions</h3>
+<h4 id="boolean-value">Boolean Value</h4>
+<p>We say that a value <code>x</code> is:</p>
+<ul>
+<li><strong>false-ish</strong> if <code>bool(x)</code> is <code>False</code>,</li>
+<li><strong>true-ish</strong> if <code>bool(x)</code> is <code>True</code>.</li>
+</ul>
+<h4 id=""></h4>
+<p>The conversion table above applies to the most common types:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th align="left"><code>type(x)</code></th><th><code>bool(x) is False</code></th><th><code>bool(x) is True</code></th></tr></thead><tbody><tr><td align="left"><code>type(None)</code></td><td>Always</td><td>Never</td></tr><tr><td align="left"><code>bool</code></td><td><code>x == False</code></td><td><code>x != True</code></td></tr><tr><td align="left"><code>int</code></td><td><code>x == 0</code></td><td><code>x != 0</code></td></tr><tr><td align="left"><code>float</code></td><td><code>x == 0.0</code></td><td><code>x != 0.0</code></td></tr><tr><td align="left"><code>complex</code></td><td><code>x == 0.0j</code></td><td><code>x != 0.0j</code></td></tr><tr><td align="left"><code>str</code></td><td><code>x == &quot;&quot;</code></td><td><code>x != &quot;&quot;</code></td></tr><tr><td align="left"><code>bytes</code></td><td><code>x == b&quot;&quot;</code></td><td><code>x != b&quot;&quot;</code></td></tr><tr><td align="left"><code>tuple</code></td><td><code>x == ()</code></td><td><code>x != ()</code></td></tr><tr><td align="left"><code>list</code></td><td><code>x == []</code></td><td><code>x != []</code></td></tr><tr><td align="left"><code>set</code></td><td><code>x == set()</code></td><td><code>x != set()</code></td></tr><tr><td align="left"><code>dict</code></td><td><code>x == {}</code></td><td><code>x != {}</code></td></tr></tbody></table>
+<aside data-astro-cid-fjubpvhp style="--light: #e0f2fe;--dark: #164e63;"> <details open class="" data-astro-cid-fjubpvhp style="--light: #e0f2fe;--dark: #164e63;"> <summary style="display:flex;align-items:center;justify-content:space-between;; --light: #e0f2fe;--dark: #164e63;" data-astro-cid-fjubpvhp> <span style="display:flex;gap:0.5em;align-items:center;; --light: #e0f2fe;--dark: #164e63;" data-astro-cid-fjubpvhp> <span class="circle" data-astro-cid-fjubpvhp style="--light: #e0f2fe;--dark: #164e63;"> <svg viewBox="0 0 24 24" data-astro-cid-fjubpvhp astro-icon="tabler:pencil"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="icon-tabler"><path d="M4 20h4L18.5 9.5a1.5 1.5 0 0 0-4-4L4 16v4M13.5 6.5l4 4"/></g></svg> </span> <span style="font-weight:500;; --light: #e0f2fe;--dark: #164e63;" data-astro-cid-fjubpvhp>Numbers &amp; Collections</span> </span> <span class="minmax" data-astro-cid-fjubpvhp style="--light: #e0f2fe;--dark: #164e63;"> <svg viewBox="0 0 24 24" data-astro-cid-fjubpvhp class="closed" astro-icon="tabler:arrows-maximize"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="icon-tabler"><path d="M16 4h4v4M14 10l6-6M8 20H4v-4M4 20l6-6M16 20h4v-4M14 14l6 6M8 4H4v4M4 4l6 6"/></g></svg> <svg viewBox="0 0 24 24" data-astro-cid-fjubpvhp class="open" astro-icon="tabler:arrows-minimize"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="icon-tabler"><path d="M5 9h4V5M3 3l6 6M5 15h4v4M3 21l6-6M19 9h-4V5M15 9l6-6M19 15h-4v4M15 15l6 6"/></g></svg> </span> </summary> <div class="content" data-astro-cid-fjubpvhp style="--light: #e0f2fe;--dark: #164e63;"> <div style="margin: 1rem;; --light: #e0f2fe;--dark: #164e63;" data-astro-cid-fjubpvhp> <p>For all the standard types listed above:</p><ul>
+<li>
+<p><code>None</code> (the sole instance of the associated type!) is false-ish:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> bool</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">None</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#79B8FF">False</span></span></code></pre>
+</li>
+<li>
+<p>If <code>x</code> is numeric (<code>bool</code>, <code>int</code>, <code>float</code>, <code>complex</code>),
+it is true-ish if and only if it is non-zero:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#79B8FF">bool</span><span style="color:#E1E4E8">(x) </span><span style="color:#F97583">==</span><span style="color:#E1E4E8"> (x </span><span style="color:#F97583">==</span><span style="color:#79B8FF"> 0</span><span style="color:#E1E4E8">)</span></span></code></pre>
+</li>
+<li>
+<p>If <code>x</code> is a collection (<code>str</code>, <code>bytes</code>, <code>tuple</code>, <code>list</code>, <code>set</code>, <code>dict</code>),
+it is true-ish if and only if it is empty:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#79B8FF">bool</span><span style="color:#E1E4E8">(x) </span><span style="color:#F97583">==</span><span style="color:#E1E4E8"> (</span><span style="color:#79B8FF">len</span><span style="color:#E1E4E8">(x) </span><span style="color:#F97583">==</span><span style="color:#79B8FF"> 0</span><span style="color:#E1E4E8">)</span></span></code></pre>
+</li>
+</ul> </div> </div> </details> </aside>   
+<aside data-astro-cid-fjubpvhp style="--light: #e0f2fe;--dark: #164e63;"> <details open class="" data-astro-cid-fjubpvhp style="--light: #e0f2fe;--dark: #164e63;"> <summary style="display:flex;align-items:center;justify-content:space-between;; --light: #e0f2fe;--dark: #164e63;" data-astro-cid-fjubpvhp> <span style="display:flex;gap:0.5em;align-items:center;; --light: #e0f2fe;--dark: #164e63;" data-astro-cid-fjubpvhp> <span class="circle" data-astro-cid-fjubpvhp style="--light: #e0f2fe;--dark: #164e63;"> <svg viewBox="0 0 24 24" data-astro-cid-fjubpvhp astro-icon="tabler:pencil"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="icon-tabler"><path d="M4 20h4L18.5 9.5a1.5 1.5 0 0 0-4-4L4 16v4M13.5 6.5l4 4"/></g></svg> </span> <span style="font-weight:500;; --light: #e0f2fe;--dark: #164e63;" data-astro-cid-fjubpvhp>Default Value</span> </span> <span class="minmax" data-astro-cid-fjubpvhp style="--light: #e0f2fe;--dark: #164e63;"> <svg viewBox="0 0 24 24" data-astro-cid-fjubpvhp class="closed" astro-icon="tabler:arrows-maximize"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="icon-tabler"><path d="M16 4h4v4M14 10l6-6M8 20H4v-4M4 20l6-6M16 20h4v-4M14 14l6 6M8 4H4v4M4 4l6 6"/></g></svg> <svg viewBox="0 0 24 24" data-astro-cid-fjubpvhp class="open" astro-icon="tabler:arrows-minimize"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="icon-tabler"><path d="M5 9h4V5M3 3l6 6M5 15h4v4M3 21l6-6M19 9h-4V5M15 9l6-6M19 15h-4v4M15 15l6 6"/></g></svg> </span> </summary> <div class="content" data-astro-cid-fjubpvhp style="--light: #e0f2fe;--dark: #164e63;"> <div style="margin: 1rem;; --light: #e0f2fe;--dark: #164e63;" data-astro-cid-fjubpvhp> <p>For all the types listed above, you will notice that there is a unique
+value that is false-ish; all other values are true-ish.
+The value in question is the one obtained by calling the type’s constructor
+without arguments:</p><pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> types </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span></span>
+<span class="line"><span style="color:#79B8FF">...</span><span style="color:#79B8FF">     type</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">None</span><span style="color:#E1E4E8">), </span></span>
+<span class="line"><span style="color:#79B8FF">...</span><span style="color:#79B8FF">     bool</span><span style="color:#E1E4E8">, </span></span>
+<span class="line"><span style="color:#79B8FF">...</span><span style="color:#79B8FF">     int</span><span style="color:#E1E4E8">, </span></span>
+<span class="line"><span style="color:#79B8FF">...</span><span style="color:#79B8FF">     float</span><span style="color:#E1E4E8">, </span></span>
+<span class="line"><span style="color:#79B8FF">...</span><span style="color:#79B8FF">     complex</span><span style="color:#E1E4E8">, </span></span>
+<span class="line"><span style="color:#79B8FF">...</span><span style="color:#79B8FF">     str</span><span style="color:#E1E4E8">, </span></span>
+<span class="line"><span style="color:#79B8FF">...</span><span style="color:#79B8FF">     bytes</span><span style="color:#E1E4E8">, </span></span>
+<span class="line"><span style="color:#79B8FF">...</span><span style="color:#79B8FF">     tuple</span><span style="color:#E1E4E8">, </span></span>
+<span class="line"><span style="color:#79B8FF">...</span><span style="color:#79B8FF">     list</span><span style="color:#E1E4E8">, </span></span>
+<span class="line"><span style="color:#79B8FF">...</span><span style="color:#79B8FF">     set</span><span style="color:#E1E4E8">, </span></span>
+<span class="line"><span style="color:#79B8FF">...</span><span style="color:#79B8FF">     dict</span></span>
+<span class="line"><span style="color:#79B8FF">...</span><span style="color:#E1E4E8"> ]</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#F97583"> for</span><span style="color:#E1E4E8"> T </span><span style="color:#F97583">in</span><span style="color:#E1E4E8"> types:</span></span>
+<span class="line"><span style="color:#79B8FF">...</span><span style="color:#E1E4E8">     val </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> T()</span></span>
+<span class="line"><span style="color:#79B8FF">...</span><span style="color:#79B8FF">     print</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">repr</span><span style="color:#E1E4E8">(val))</span></span>
+<span class="line"><span style="color:#79B8FF">...</span><span style="color:#E1E4E8"> </span></span>
+<span class="line"><span style="color:#79B8FF">False</span></span>
+<span class="line"><span style="color:#79B8FF">0</span></span>
+<span class="line"><span style="color:#79B8FF">0.0</span></span>
+<span class="line"><span style="color:#79B8FF">0</span><span style="color:#F97583">j</span></span>
+<span class="line"><span style="color:#9ECBFF">&#39;&#39;</span></span>
+<span class="line"><span style="color:#F97583">b</span><span style="color:#9ECBFF">&#39;&#39;</span></span>
+<span class="line"><span style="color:#E1E4E8">()</span></span>
+<span class="line"><span style="color:#E1E4E8">[]</span></span>
+<span class="line"><span style="color:#E1E4E8">{}</span></span>
+<span class="line"><span style="color:#79B8FF">set</span><span style="color:#E1E4E8">()</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> print</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">all</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">bool</span><span style="color:#E1E4E8">(T()) </span><span style="color:#F97583">is</span><span style="color:#79B8FF"> False</span><span style="color:#F97583"> for</span><span style="color:#E1E4E8"> T </span><span style="color:#F97583">in</span><span style="color:#E1E4E8"> types))</span></span>
+<span class="line"><span style="color:#79B8FF">True</span></span></code></pre> </div> </div> </details> </aside>   
+<h2 id="if"><code>If</code></h2>
+<p>The keyword <code>if</code> and the associated keywords <code>elif</code> and <code>else</code> allow
+<strong>branching</strong> the execution flow, that is, to execute a block of code
+only if a certain condition is met. This is the most basic form of
+conditional execution of code.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">if</span><span style="color:#E1E4E8"> condition_1:</span></span>
+<span class="line"><span style="color:#79B8FF">    ...</span><span style="color:#6A737D"> # block 1</span></span>
+<span class="line"><span style="color:#F97583">elif</span><span style="color:#E1E4E8"> condition_2:</span></span>
+<span class="line"><span style="color:#79B8FF">    ...</span><span style="color:#6A737D"> # block 2</span></span>
+<span class="line"><span style="color:#F97583">elif</span><span style="color:#E1E4E8"> condition_3:</span></span>
+<span class="line"><span style="color:#79B8FF">    ...</span><span style="color:#6A737D"> # block 3</span></span>
+<span class="line"><span style="color:#79B8FF">...</span></span>
+<span class="line"><span style="color:#F97583">else</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#79B8FF">    ...</span><span style="color:#6A737D"> # block n</span></span></code></pre>
+<p>The <code>elif</code> and <code>else</code> clauses are optional. The keyword <code>elif</code> should be
+understood as a shortcut for <code>else if</code>: the code above is equivalent to:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">if</span><span style="color:#E1E4E8"> condition_1:</span></span>
+<span class="line"><span style="color:#79B8FF">    ...</span><span style="color:#6A737D"> # block 1</span></span>
+<span class="line"><span style="color:#F97583">else</span><span style="color:#E1E4E8">: </span></span>
+<span class="line"><span style="color:#F97583">    if</span><span style="color:#E1E4E8"> condition_2:</span></span>
+<span class="line"><span style="color:#79B8FF">        ...</span><span style="color:#6A737D"> # block 2</span></span>
+<span class="line"><span style="color:#F97583">    else</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">        if</span><span style="color:#E1E4E8"> condition_3:</span></span>
+<span class="line"><span style="color:#79B8FF">            ...</span><span style="color:#6A737D"> # block 3</span></span>
+<span class="line"><span style="color:#79B8FF">        ...</span></span>
+<span class="line"><span style="color:#F97583">        else</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#79B8FF">            ...</span><span style="color:#6A737D"> # block n</span></span></code></pre>
+<p>The expressions <code>condition_*</code> are implicitly converted to booleans and
+determine what the execution flow will be.</p>
+<h1 id="loops">Loops</h1>
+<h2 id="while"><code>While</code></h2>
+<p>The <code>while</code> loop executes as long as its condition is false-ish:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> numbers </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#F97583"> while</span><span style="color:#E1E4E8"> numbers:</span></span>
+<span class="line"><span style="color:#79B8FF">...</span><span style="color:#E1E4E8">     number </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> numbers.pop(</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#79B8FF">...</span><span style="color:#79B8FF">     print</span><span style="color:#E1E4E8">(number)</span></span>
+<span class="line"><span style="color:#79B8FF">...</span></span>
+<span class="line"><span style="color:#79B8FF">1</span></span>
+<span class="line"><span style="color:#79B8FF">2</span></span>
+<span class="line"><span style="color:#79B8FF">3</span></span></code></pre>
+<h2 id="for"><code>For</code></h2>
+<p>The <code>for</code> loop allows you to iterate over all elements of a collection:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> numbers </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#F97583"> for</span><span style="color:#E1E4E8"> number </span><span style="color:#F97583">in</span><span style="color:#E1E4E8"> numbers:</span></span>
+<span class="line"><span style="color:#79B8FF">...</span><span style="color:#79B8FF">     print</span><span style="color:#E1E4E8">(number)</span></span>
+<span class="line"><span style="color:#79B8FF">...</span></span>
+<span class="line"><span style="color:#79B8FF">1</span></span>
+<span class="line"><span style="color:#79B8FF">2</span></span>
+<span class="line"><span style="color:#79B8FF">3</span></span></code></pre>
+<p>Refer to the section <a href="../lec08-iteration-and-comprehension">Iteration and Comprehension</a> for more details.</p>
+<h2 id="exiting-loops">Exiting Loops</h2>
+<p>The execution of <code>while</code> and <code>for</code> loops can be interrupted, either to
+go directly to the next iteration, with the keyword <code>continue</code>,
+or to terminate the loop entirely, with the keyword <code>break</code>.</p>
+<p>For example:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> i </span><span style="color:#F97583">=</span><span style="color:#F97583"> -</span><span style="color:#79B8FF">1</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#F97583"> while</span><span style="color:#E1E4E8"> i </span><span style="color:#F97583">&lt;</span><span style="color:#79B8FF"> 6</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#79B8FF">...</span><span style="color:#E1E4E8">     i </span><span style="color:#F97583">+=</span><span style="color:#79B8FF"> 1</span></span>
+<span class="line"><span style="color:#79B8FF">...</span><span style="color:#F97583">     if</span><span style="color:#E1E4E8"> i </span><span style="color:#F97583">%</span><span style="color:#79B8FF"> 2</span><span style="color:#F97583"> ==</span><span style="color:#79B8FF"> 0</span><span style="color:#E1E4E8">:  </span><span style="color:#6A737D"># i is even</span></span>
+<span class="line"><span style="color:#79B8FF">...</span><span style="color:#F97583">         continue</span></span>
+<span class="line"><span style="color:#79B8FF">...</span><span style="color:#79B8FF">     print</span><span style="color:#E1E4E8">(i)</span></span>
+<span class="line"><span style="color:#79B8FF">...</span></span>
+<span class="line"><span style="color:#79B8FF">1</span></span>
+<span class="line"><span style="color:#79B8FF">3</span></span>
+<span class="line"><span style="color:#79B8FF">5</span></span></code></pre>
+<p>and</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> i </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 0</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#F97583"> while</span><span style="color:#79B8FF"> True</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#79B8FF">...</span><span style="color:#F97583">     if</span><span style="color:#E1E4E8"> i </span><span style="color:#F97583">&gt;=</span><span style="color:#79B8FF"> 3</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#79B8FF">...</span><span style="color:#F97583">         break</span></span>
+<span class="line"><span style="color:#79B8FF">...</span><span style="color:#79B8FF">     print</span><span style="color:#E1E4E8">(i)</span></span>
+<span class="line"><span style="color:#79B8FF">...</span><span style="color:#E1E4E8">     i </span><span style="color:#F97583">+=</span><span style="color:#79B8FF"> 1</span></span>
+<span class="line"><span style="color:#79B8FF">...</span></span>
+<span class="line"><span style="color:#79B8FF">0</span></span>
+<span class="line"><span style="color:#79B8FF">1</span></span>
+<span class="line"><span style="color:#79B8FF">2</span></span></code></pre>
+<p>The same mechanism applies to <code>for</code> loops. Note the optional <code>else</code> clause
+associated with <code>for</code> loops, which is only executed if no <code>break</code>
+occurred.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#F97583"> for</span><span style="color:#E1E4E8"> i </span><span style="color:#F97583">in</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">]:</span></span>
+<span class="line"><span style="color:#79B8FF">...</span><span style="color:#79B8FF">     print</span><span style="color:#E1E4E8">(i)</span></span>
+<span class="line"><span style="color:#79B8FF">...</span><span style="color:#F97583"> else</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#79B8FF">...</span><span style="color:#79B8FF">     print</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">&quot;ok&quot;</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#79B8FF">...</span></span>
+<span class="line"><span style="color:#79B8FF">1</span></span>
+<span class="line"><span style="color:#79B8FF">2</span></span>
+<span class="line"><span style="color:#79B8FF">3</span></span>
+<span class="line"><span style="color:#E1E4E8">ok</span></span></code></pre>
+<h2 id="function-calls">Function calls</h2>
+<p>When a function is called, its code is executed, and then execution resumes
+the normal execution flow.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#F97583"> def</span><span style="color:#B392F0"> print_ho</span><span style="color:#E1E4E8">():</span></span>
+<span class="line"><span style="color:#79B8FF">...</span><span style="color:#79B8FF">     print</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">&quot;Ho!&quot;</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#79B8FF">...</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> print</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">&quot;Hey!&quot;</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> print_ho()</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> print</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">&quot;Let&#39;s go!&quot;</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">Hey!</span></span>
+<span class="line"><span style="color:#E1E4E8">Ho!</span></span>
+<span class="line"><span style="color:#E1E4E8">Let</span><span style="color:#9ECBFF">&#39;s go!</span></span></code></pre>
+<p>This principle applies recursively (a function can call functions,
+which can themselves call functions, etc.)</p>
+<h2 id="exceptions">Exceptions</h2>
+<h3 id="errors">Errors</h3>
+<p>In case of an invalid operation, Python generates an error; for example if you
+divide $1$ by $0$, compute $\sqrt-1$ or evaluate the absolute value
+of an empty list, you will observe the following messages:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> 1.0</span><span style="color:#F97583"> /</span><span style="color:#79B8FF"> 0.0</span></span>
+<span class="line"><span style="color:#E1E4E8">Traceback (most recent call last):</span></span>
+<span class="line"><span style="color:#E1E4E8">  File </span><span style="color:#9ECBFF">&quot;&lt;stdin&gt;&quot;</span><span style="color:#E1E4E8">, line </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#F97583">in</span><span style="color:#F97583"> &lt;</span><span style="color:#E1E4E8">module</span><span style="color:#F97583">&gt;</span></span>
+<span class="line"><span style="color:#79B8FF">ZeroDivisionError</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">float</span><span style="color:#E1E4E8"> division by zero</span></span></code></pre>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#F97583"> import</span><span style="color:#E1E4E8"> math</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> math.sqrt(</span><span style="color:#F97583">-</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">Traceback (most recent call last):</span></span>
+<span class="line"><span style="color:#E1E4E8">  File </span><span style="color:#9ECBFF">&quot;&lt;stdin&gt;&quot;</span><span style="color:#E1E4E8">, line </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#F97583">in</span><span style="color:#F97583"> &lt;</span><span style="color:#E1E4E8">module</span><span style="color:#F97583">&gt;</span></span>
+<span class="line"><span style="color:#79B8FF">ValueError</span><span style="color:#E1E4E8">: math domain error</span></span></code></pre>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> abs</span><span style="color:#E1E4E8">([])</span></span>
+<span class="line"><span style="color:#E1E4E8">Traceback (most recent call last):</span></span>
+<span class="line"><span style="color:#E1E4E8">  File </span><span style="color:#9ECBFF">&quot;&lt;stdin&gt;&quot;</span><span style="color:#E1E4E8">, line </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#F97583">in</span><span style="color:#F97583"> &lt;</span><span style="color:#E1E4E8">module</span><span style="color:#F97583">&gt;</span></span>
+<span class="line"><span style="color:#79B8FF">TypeError</span><span style="color:#E1E4E8">: bad operand </span><span style="color:#79B8FF">type</span><span style="color:#F97583"> for</span><span style="color:#79B8FF"> abs</span><span style="color:#E1E4E8">(): </span><span style="color:#9ECBFF">&#39;list&#39;</span></span></code></pre>
+<p>Technically, Python generates an error by <strong>raising an exception</strong>.
+In interactive mode, the exception manifests as follows:</p>
+<ul>
+<li>
+<p>a <strong>traceback</strong> pointing to the origin of the error:</p>
+<p><code>File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;</code></p>
+<p>(here rather uninformative, we must admit.)</p>
+</li>
+<li>
+<p>an <strong>exception</strong> type:</p>
+<ul>
+<li>
+<p><code>ZeroDivisionError</code>,</p>
+</li>
+<li>
+<p><code>ValueError</code> and</p>
+</li>
+<li>
+<p><code>TypeError</code>.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>an <strong>explanatory</strong> message:</p>
+<ul>
+<li>
+<p><code>&quot;division by zero&quot;</code>,</p>
+</li>
+<li>
+<p><code>&quot;math domain error&quot;</code>,</p>
+</li>
+<li>
+<p><code>&quot;bad operand type for abs(): &#39;list&#39;&quot;</code></p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="consequences-of-an-exception">Consequences of an Exception</h3>
+<p>When an exception is raised in interactive mode (Python REPL, Jupyter
+notebook, etc.), the environment handles the exception;
+it signals that an exception occurred, but you can continue to
+type commands.</p>
+<p>However, in the classic execution of a Python program,
+in the absence of specific exception handling, the occurrence of an
+exception abruptly halts the program. For example, executing the Python
+program</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#6A737D"># file: main.py</span></span>
+<span class="line"><span style="color:#79B8FF">print</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">&quot;Hello&quot;</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#79B8FF">1</span><span style="color:#F97583"> /</span><span style="color:#79B8FF"> 0</span></span>
+<span class="line"><span style="color:#79B8FF">print</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">&quot;world!&quot;</span><span style="color:#E1E4E8">)</span></span></code></pre>
+<p>leads to the following output</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> python</span><span style="color:#9ECBFF"> main.py</span></span>
+<span class="line"><span style="color:#B392F0">Hello</span></span>
+<span class="line"><span style="color:#B392F0">Traceback</span><span style="color:#E1E4E8"> (most </span><span style="color:#9ECBFF">recent</span><span style="color:#9ECBFF"> call</span><span style="color:#9ECBFF"> last</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#B392F0">  File</span><span style="color:#9ECBFF"> &quot;main.py&quot;,</span><span style="color:#9ECBFF"> line</span><span style="color:#79B8FF"> 3</span><span style="color:#9ECBFF">,</span><span style="color:#9ECBFF"> in</span><span style="color:#F97583"> &lt;</span><span style="color:#9ECBFF">modul</span><span style="color:#E1E4E8">e</span><span style="color:#F97583">&gt;</span></span>
+<span class="line"><span style="color:#B392F0">    1</span><span style="color:#9ECBFF"> /</span><span style="color:#79B8FF"> 0</span></span>
+<span class="line"><span style="color:#B392F0">ZeroDivisionError:</span><span style="color:#9ECBFF"> division</span><span style="color:#9ECBFF"> by</span><span style="color:#9ECBFF"> zero</span></span></code></pre>
+<aside data-astro-cid-fjubpvhp style="--light: #e0f2fe;--dark: #164e63;"> <details open class="" data-astro-cid-fjubpvhp style="--light: #e0f2fe;--dark: #164e63;"> <summary style="display:flex;align-items:center;justify-content:space-between;; --light: #e0f2fe;--dark: #164e63;" data-astro-cid-fjubpvhp> <span style="display:flex;gap:0.5em;align-items:center;; --light: #e0f2fe;--dark: #164e63;" data-astro-cid-fjubpvhp> <span class="circle" data-astro-cid-fjubpvhp style="--light: #e0f2fe;--dark: #164e63;"> <svg viewBox="0 0 24 24" data-astro-cid-fjubpvhp astro-icon="tabler:pencil"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="icon-tabler"><path d="M4 20h4L18.5 9.5a1.5 1.5 0 0 0-4-4L4 16v4M13.5 6.5l4 4"/></g></svg> </span> <span style="font-weight:500;; --light: #e0f2fe;--dark: #164e63;" data-astro-cid-fjubpvhp>Terminal &amp; Errors</span> </span> <span class="minmax" data-astro-cid-fjubpvhp style="--light: #e0f2fe;--dark: #164e63;"> <svg viewBox="0 0 24 24" data-astro-cid-fjubpvhp class="closed" astro-icon="tabler:arrows-maximize"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="icon-tabler"><path d="M16 4h4v4M14 10l6-6M8 20H4v-4M4 20l6-6M16 20h4v-4M14 14l6 6M8 4H4v4M4 4l6 6"/></g></svg> <svg viewBox="0 0 24 24" data-astro-cid-fjubpvhp class="open" astro-icon="tabler:arrows-minimize"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="icon-tabler"><path d="M5 9h4V5M3 3l6 6M5 15h4v4M3 21l6-6M19 9h-4V5M15 9l6-6M19 15h-4v4M15 15l6 6"/></g></svg> </span> </summary> <div class="content" data-astro-cid-fjubpvhp style="--light: #e0f2fe;--dark: #164e63;"> <div style="margin: 1rem;; --light: #e0f2fe;--dark: #164e63;" data-astro-cid-fjubpvhp> <p>The string <code>&quot;Hello&quot;</code> is printed to standard output, but
+the error message is actually directed to standard error (file descriptor 2),
+and an exit code (different from 0, which corresponds to error-free
+execution) is emitted:</p><pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> python</span><span style="color:#9ECBFF"> main.py</span><span style="color:#F97583"> 2&gt;</span><span style="color:#9ECBFF">error.txt</span></span>
+<span class="line"><span style="color:#B392F0">Hello</span></span>
+<span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> echo</span><span style="color:#79B8FF"> $?</span></span>
+<span class="line"><span style="color:#B392F0">1</span></span>
+<span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> cat</span><span style="color:#9ECBFF"> error.txt</span></span>
+<span class="line"><span style="color:#B392F0">Traceback</span><span style="color:#E1E4E8"> (most </span><span style="color:#9ECBFF">recent</span><span style="color:#9ECBFF"> call</span><span style="color:#9ECBFF"> last</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#B392F0">  File</span><span style="color:#9ECBFF"> &quot;main.py&quot;,</span><span style="color:#9ECBFF"> line</span><span style="color:#79B8FF"> 3</span><span style="color:#9ECBFF">,</span><span style="color:#9ECBFF"> in</span><span style="color:#F97583"> &lt;</span><span style="color:#9ECBFF">modul</span><span style="color:#E1E4E8">e</span><span style="color:#F97583">&gt;</span></span>
+<span class="line"><span style="color:#B392F0">    1</span><span style="color:#9ECBFF"> /</span><span style="color:#79B8FF"> 0</span></span>
+<span class="line"><span style="color:#B392F0">ZeroDivisionError:</span><span style="color:#9ECBFF"> division</span><span style="color:#9ECBFF"> by</span><span style="color:#9ECBFF"> zero</span></span></code></pre> </div> </div> </details> </aside>   
+<p>In any case, the string <code>&quot;world!&quot;</code> will never be printed. The classic linear
+execution flow is thus disrupted by the exception.</p>
+<h3 id="exception-handling">Exception Handling</h3>
+<p>Exceptions that occur can be <strong>caught</strong> and handled as you wish
+before they cause the program to stop.</p>
+<p>For example:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#F97583"> def</span><span style="color:#B392F0"> ratio</span><span style="color:#E1E4E8">(numerator, denominator):</span></span>
+<span class="line"><span style="color:#79B8FF">...</span><span style="color:#F97583">     try</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#79B8FF">...</span><span style="color:#F97583">         return</span><span style="color:#E1E4E8"> numerator </span><span style="color:#F97583">/</span><span style="color:#E1E4E8"> denominator</span></span>
+<span class="line"><span style="color:#79B8FF">...</span><span style="color:#F97583">     except</span><span style="color:#79B8FF"> ZeroDivisionError</span><span style="color:#F97583"> as</span><span style="color:#E1E4E8"> error:</span></span>
+<span class="line"><span style="color:#79B8FF">...</span><span style="color:#E1E4E8">         message </span><span style="color:#F97583">=</span><span style="color:#9ECBFF"> &quot;denominator is equal to zero.&quot;</span></span>
+<span class="line"><span style="color:#79B8FF">...</span><span style="color:#F97583">         raise</span><span style="color:#79B8FF"> ValueError</span><span style="color:#E1E4E8">(message) </span><span style="color:#F97583">from</span><span style="color:#E1E4E8"> error</span></span>
+<span class="line"><span style="color:#79B8FF">...</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> ratio(</span><span style="color:#79B8FF">640</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">480</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#79B8FF">1.3333333333333333</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> ratio(</span><span style="color:#79B8FF">640</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">Traceback (most recent call last):</span></span>
+<span class="line"><span style="color:#E1E4E8">  File </span><span style="color:#9ECBFF">&quot;&lt;stdin&gt;&quot;</span><span style="color:#E1E4E8">, line </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">, </span><span style="color:#F97583">in</span><span style="color:#E1E4E8"> ratio</span></span>
+<span class="line"><span style="color:#79B8FF">ZeroDivisionError</span><span style="color:#E1E4E8">: division by zero</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">The above exception was the direct cause of the following exception:</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">Traceback (most recent call last):</span></span>
+<span class="line"><span style="color:#E1E4E8">  File </span><span style="color:#9ECBFF">&quot;&lt;stdin&gt;&quot;</span><span style="color:#E1E4E8">, line </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#F97583">in</span><span style="color:#F97583"> &lt;</span><span style="color:#E1E4E8">module</span><span style="color:#F97583">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">  File </span><span style="color:#9ECBFF">&quot;&lt;stdin&gt;&quot;</span><span style="color:#E1E4E8">, line </span><span style="color:#79B8FF">6</span><span style="color:#E1E4E8">, </span><span style="color:#F97583">in</span><span style="color:#E1E4E8"> ratio</span></span>
+<span class="line"><span style="color:#79B8FF">ValueError</span><span style="color:#E1E4E8">: denominator </span><span style="color:#F97583">is</span><span style="color:#E1E4E8"> equal to zero.</span></span></code></pre>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#F97583"> import</span><span style="color:#E1E4E8"> math</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 4</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#F97583"> try</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#79B8FF">...</span><span style="color:#E1E4E8">     r </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> math.sqrt(x)</span></span>
+<span class="line"><span style="color:#79B8FF">...</span><span style="color:#F97583"> except</span><span style="color:#79B8FF"> ValueError</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#79B8FF">...</span><span style="color:#E1E4E8">     r </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> math.sqrt(</span><span style="color:#F97583">-</span><span style="color:#E1E4E8">x)</span></span>
+<span class="line"><span style="color:#79B8FF">...</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> r</span></span>
+<span class="line"><span style="color:#79B8FF">2.0</span></span></code></pre>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> xs </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">0.0</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">1.0</span><span style="color:#E1E4E8">, </span><span style="color:#F97583">-</span><span style="color:#79B8FF">1.0</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">&quot;Hello!&quot;</span><span style="color:#E1E4E8">, [], </span><span style="color:#79B8FF">1.0</span><span style="color:#F97583">j</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">None</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">42</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> abs_xs </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> []</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#F97583"> for</span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">in</span><span style="color:#E1E4E8"> xs:</span></span>
+<span class="line"><span style="color:#79B8FF">...</span><span style="color:#F97583">     try</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#79B8FF">...</span><span style="color:#E1E4E8">         abs_xs.append(</span><span style="color:#79B8FF">abs</span><span style="color:#E1E4E8">(x))</span></span>
+<span class="line"><span style="color:#79B8FF">...</span><span style="color:#F97583">     except</span><span style="color:#79B8FF"> TypeError</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#79B8FF">...</span><span style="color:#E1E4E8">         abs_xs.append(</span><span style="color:#79B8FF">None</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#79B8FF">...</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> abs_xs</span></span>
+<span class="line"><span style="color:#E1E4E8">[</span><span style="color:#79B8FF">0.0</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">1.0</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">1.0</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">None</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">None</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">1.0</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">None</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">42</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"></span></code></pre>
+<h3 id="raising-an-exception">Raising an Exception</h3>
+<p>You can <strong>raise</strong> an exception using the keyword <code>raise</code>.</p>
+<h4 id="simulation">Simulation</h4>
+<p>For example, to reproduce the errors we have encountered so far:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#6A737D"> # 1 / 0</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#F97583"> raise</span><span style="color:#79B8FF"> ZeroDivisionError</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">&quot;float division by zero&quot;</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">Traceback (most recent call last):</span></span>
+<span class="line"><span style="color:#E1E4E8">  File </span><span style="color:#9ECBFF">&quot;&lt;stdin&gt;&quot;</span><span style="color:#E1E4E8">, line </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#F97583">in</span><span style="color:#F97583"> &lt;</span><span style="color:#E1E4E8">module</span><span style="color:#F97583">&gt;</span></span>
+<span class="line"><span style="color:#79B8FF">ZeroDivisionError</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">float</span><span style="color:#E1E4E8"> division by zero</span></span></code></pre>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#6A737D"> # math.sqrt(-1)</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#F97583"> raise</span><span style="color:#79B8FF"> ValueError</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">&quot;math domain error&quot;</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">Traceback (most recent call last):</span></span>
+<span class="line"><span style="color:#E1E4E8">  File </span><span style="color:#9ECBFF">&quot;&lt;stdin&gt;&quot;</span><span style="color:#E1E4E8">, line </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#F97583">in</span><span style="color:#F97583"> &lt;</span><span style="color:#E1E4E8">module</span><span style="color:#F97583">&gt;</span></span>
+<span class="line"><span style="color:#79B8FF">ValueError</span><span style="color:#E1E4E8">: math domain error</span></span></code></pre>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#6A737D"> # abs([])</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#F97583"> raise</span><span style="color:#79B8FF"> TypeError</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">&quot;bad operand type for abs(): &#39;list&#39;&quot;</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">Traceback (most recent call last):</span></span>
+<span class="line"><span style="color:#E1E4E8">  File </span><span style="color:#9ECBFF">&quot;&lt;stdin&gt;&quot;</span><span style="color:#E1E4E8">, line </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#F97583">in</span><span style="color:#F97583"> &lt;</span><span style="color:#E1E4E8">module</span><span style="color:#F97583">&gt;</span></span>
+<span class="line"><span style="color:#79B8FF">TypeError</span><span style="color:#E1E4E8">: bad operand </span><span style="color:#79B8FF">type</span><span style="color:#F97583"> for</span><span style="color:#79B8FF"> abs</span><span style="color:#E1E4E8">(): </span><span style="color:#9ECBFF">&#39;list&#39;</span></span></code></pre>
+<h4 id="a-more-realistic-example">A More Realistic Example</h4>
+<p>You can quickly define a factorial function:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> math</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">def</span><span style="color:#B392F0"> factorial</span><span style="color:#E1E4E8">(n):</span></span>
+<span class="line"><span style="color:#E1E4E8">    integers </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> range</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, n </span><span style="color:#F97583">+</span><span style="color:#79B8FF"> 1</span><span style="color:#E1E4E8">) </span><span style="color:#6A737D"># 1, 2, 3, ..., n (iterable)</span></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#E1E4E8"> math.prod(integers)</span></span></code></pre>
+<p>which gives the correct result “when all goes well”</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> factorial(</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#79B8FF">1</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> factorial(</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#79B8FF">1</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> factorial(</span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#79B8FF">2</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> factorial(</span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#79B8FF">6</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> factorial(</span><span style="color:#79B8FF">10</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#79B8FF">3628800</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> factorial(</span><span style="color:#79B8FF">20</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#79B8FF">2432902008176640000</span></span></code></pre>
+<p>But in case of an error with the argument type, the associated error is somewhat
+cryptic:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> factorial(</span><span style="color:#9ECBFF">&quot;100&quot;</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">Traceback (most recent call last):</span></span>
+<span class="line"><span style="color:#E1E4E8">  File </span><span style="color:#9ECBFF">&quot;&lt;stdin&gt;&quot;</span><span style="color:#E1E4E8">, line </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#F97583">in</span><span style="color:#F97583"> &lt;</span><span style="color:#E1E4E8">module</span><span style="color:#F97583">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">  File </span><span style="color:#9ECBFF">&quot;&lt;stdin&gt;&quot;</span><span style="color:#E1E4E8">, line </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#F97583">in</span><span style="color:#E1E4E8"> factorial</span></span>
+<span class="line"><span style="color:#79B8FF">TypeError</span><span style="color:#E1E4E8">: can only concatenate </span><span style="color:#79B8FF">str</span><span style="color:#E1E4E8"> (</span><span style="color:#F97583">not</span><span style="color:#9ECBFF"> &quot;int&quot;</span><span style="color:#E1E4E8">) to </span><span style="color:#79B8FF">str</span></span></code></pre>
+<p>It is possible to do better, for example with the following code:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">def</span><span style="color:#B392F0"> factorial</span><span style="color:#E1E4E8">(n):</span></span>
+<span class="line"><span style="color:#F97583">    if</span><span style="color:#F97583"> not</span><span style="color:#79B8FF"> isinstance</span><span style="color:#E1E4E8">(n, </span><span style="color:#79B8FF">int</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#E1E4E8">        message </span><span style="color:#F97583">=</span><span style="color:#F97583"> f</span><span style="color:#9ECBFF">&quot;</span><span style="color:#79B8FF">{</span><span style="color:#E1E4E8">n</span><span style="color:#F97583">!r</span><span style="color:#79B8FF">}</span><span style="color:#9ECBFF"> is not an integer&quot;</span></span>
+<span class="line"><span style="color:#F97583">        raise</span><span style="color:#79B8FF"> TypeError</span><span style="color:#E1E4E8">(message)</span></span>
+<span class="line"><span style="color:#E1E4E8">    integers </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> range</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, n</span><span style="color:#F97583">+</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">) </span><span style="color:#6A737D"># 1, 2, 3, ..., n (iterable)</span></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#E1E4E8"> math.prod(integers)</span></span></code></pre>
+<p>You will then get the more explicit error</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> factorial(</span><span style="color:#9ECBFF">&quot;100&quot;</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">Traceback (most recent call last):</span></span>
+<span class="line"><span style="color:#E1E4E8">  File </span><span style="color:#9ECBFF">&quot;&lt;stdin&gt;&quot;</span><span style="color:#E1E4E8">, line </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#F97583">in</span><span style="color:#F97583"> &lt;</span><span style="color:#E1E4E8">module</span><span style="color:#F97583">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">  File </span><span style="color:#9ECBFF">&quot;&lt;stdin&gt;&quot;</span><span style="color:#E1E4E8">, line </span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">, </span><span style="color:#F97583">in</span><span style="color:#E1E4E8"> factorial</span></span>
+<span class="line"><span style="color:#79B8FF">TypeError</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&#39;100&#39;</span><span style="color:#F97583"> is</span><span style="color:#F97583"> not</span><span style="color:#E1E4E8"> an integer</span></span></code></pre>
+<p>But even then we can still have surprises. Thus, if <code>n</code> is an integer but it is
+strictly negative, <code>factorial</code> will evaluate <code>math.prod([])</code>, which equals 1.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> factorial(</span><span style="color:#F97583">-</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#79B8FF">1</span></span></code></pre>
+<p>Let’s fix this flaw in our implementation!</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">def</span><span style="color:#B392F0"> factorial</span><span style="color:#E1E4E8">(n):</span></span>
+<span class="line"><span style="color:#F97583">    if</span><span style="color:#F97583"> not</span><span style="color:#79B8FF"> isinstance</span><span style="color:#E1E4E8">(n, </span><span style="color:#79B8FF">int</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#E1E4E8">        message </span><span style="color:#F97583">=</span><span style="color:#F97583"> f</span><span style="color:#9ECBFF">&quot;</span><span style="color:#79B8FF">{</span><span style="color:#E1E4E8">n</span><span style="color:#F97583">!r</span><span style="color:#79B8FF">}</span><span style="color:#9ECBFF"> is not an integer.&quot;</span></span>
+<span class="line"><span style="color:#F97583">        raise</span><span style="color:#79B8FF"> TypeError</span><span style="color:#E1E4E8">(message)</span></span>
+<span class="line"><span style="color:#F97583">    if</span><span style="color:#E1E4E8"> n </span><span style="color:#F97583">&lt;</span><span style="color:#79B8FF"> 0</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#E1E4E8">        message </span><span style="color:#F97583">=</span><span style="color:#F97583"> f</span><span style="color:#9ECBFF">&quot;</span><span style="color:#79B8FF">{</span><span style="color:#E1E4E8">n</span><span style="color:#79B8FF">}</span><span style="color:#9ECBFF"> &lt; 0.&quot;</span></span>
+<span class="line"><span style="color:#F97583">        raise</span><span style="color:#79B8FF"> ValueError</span><span style="color:#E1E4E8">(message) </span></span>
+<span class="line"><span style="color:#E1E4E8">    integers </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> range</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, n</span><span style="color:#F97583">+</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">) </span><span style="color:#6A737D"># 1, 2, 3, ..., n (iterable)</span></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#E1E4E8"> math.prod(integers)</span></span></code></pre>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> factorial(</span><span style="color:#F97583">-</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">Traceback (most recent call last):</span></span>
+<span class="line"><span style="color:#E1E4E8">  File </span><span style="color:#9ECBFF">&quot;&lt;stdin&gt;&quot;</span><span style="color:#E1E4E8">, line </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#F97583">in</span><span style="color:#F97583"> &lt;</span><span style="color:#E1E4E8">module</span><span style="color:#F97583">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">  File </span><span style="color:#9ECBFF">&quot;&lt;stdin&gt;&quot;</span><span style="color:#E1E4E8">, line </span><span style="color:#79B8FF">7</span><span style="color:#E1E4E8">, </span><span style="color:#F97583">in</span><span style="color:#E1E4E8"> factorial</span></span>
+<span class="line"><span style="color:#79B8FF">ValueError</span><span style="color:#E1E4E8">: </span><span style="color:#F97583">-</span><span style="color:#79B8FF">1</span><span style="color:#F97583"> &lt;</span><span style="color:#79B8FF"> 0</span><span style="color:#E1E4E8">.</span></span></code></pre>
+<aside data-astro-cid-fjubpvhp style="--light: #e0f2fe;--dark: #164e63;"> <details open class="" data-astro-cid-fjubpvhp style="--light: #e0f2fe;--dark: #164e63;"> <summary style="display:flex;align-items:center;justify-content:space-between;; --light: #e0f2fe;--dark: #164e63;" data-astro-cid-fjubpvhp> <span style="display:flex;gap:0.5em;align-items:center;; --light: #e0f2fe;--dark: #164e63;" data-astro-cid-fjubpvhp> <span class="circle" data-astro-cid-fjubpvhp style="--light: #e0f2fe;--dark: #164e63;"> <svg viewBox="0 0 24 24" data-astro-cid-fjubpvhp astro-icon="tabler:pencil"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="icon-tabler"><path d="M4 20h4L18.5 9.5a1.5 1.5 0 0 0-4-4L4 16v4M13.5 6.5l4 4"/></g></svg> </span> <span style="font-weight:500;; --light: #e0f2fe;--dark: #164e63;" data-astro-cid-fjubpvhp>It&#39;s easier to ask forgiveness than it is to get permission.</span> </span> <span class="minmax" data-astro-cid-fjubpvhp style="--light: #e0f2fe;--dark: #164e63;"> <svg viewBox="0 0 24 24" data-astro-cid-fjubpvhp class="closed" astro-icon="tabler:arrows-maximize"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="icon-tabler"><path d="M16 4h4v4M14 10l6-6M8 20H4v-4M4 20l6-6M16 20h4v-4M14 14l6 6M8 4H4v4M4 4l6 6"/></g></svg> <svg viewBox="0 0 24 24" data-astro-cid-fjubpvhp class="open" astro-icon="tabler:arrows-minimize"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="icon-tabler"><path d="M5 9h4V5M3 3l6 6M5 15h4v4M3 21l6-6M19 9h-4V5M15 9l6-6M19 15h-4v4M15 15l6 6"/></g></svg> </span> </summary> <div class="content" data-astro-cid-fjubpvhp style="--light: #e0f2fe;--dark: #164e63;"> <div style="margin: 1rem;; --light: #e0f2fe;--dark: #164e63;" data-astro-cid-fjubpvhp> <p>A quote from <a href="https://en.wikipedia.org/wiki/Grace_Hopper">Grace Hopper</a>, which corresponds to a classic error-handling
+style in Python. Instead of pre-emptively testing all possible error
+conditions, which can be tedious,
+you “do what you have to do” and then analyze the result
+and handle any resulting errors if necessary.
+In the case of the factorial function, this style could translate as follows:</p><pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">def</span><span style="color:#B392F0"> factorial</span><span style="color:#E1E4E8">(n):</span></span>
+<span class="line"><span style="color:#F97583">    try</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">        if</span><span style="color:#E1E4E8"> n </span><span style="color:#F97583">&lt;</span><span style="color:#79B8FF"> 0</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#E1E4E8">            message </span><span style="color:#F97583">=</span><span style="color:#F97583"> f</span><span style="color:#9ECBFF">&quot;</span><span style="color:#79B8FF">{</span><span style="color:#E1E4E8">n</span><span style="color:#79B8FF">}</span><span style="color:#9ECBFF"> &lt; 0.&quot;</span></span>
+<span class="line"><span style="color:#F97583">            raise</span><span style="color:#79B8FF"> ValueError</span><span style="color:#E1E4E8">(message) </span></span>
+<span class="line"><span style="color:#E1E4E8">        integers </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> range</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, n</span><span style="color:#F97583">+</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">) </span><span style="color:#6A737D"># 1, 2, 3, ..., n (iterable)</span></span>
+<span class="line"><span style="color:#F97583">        return</span><span style="color:#E1E4E8"> math.prod(integers)</span></span>
+<span class="line"><span style="color:#F97583">    except</span><span style="color:#79B8FF"> TypeError</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#E1E4E8">        message </span><span style="color:#F97583">=</span><span style="color:#F97583"> f</span><span style="color:#9ECBFF">&quot;</span><span style="color:#79B8FF">{</span><span style="color:#E1E4E8">n</span><span style="color:#F97583">!r</span><span style="color:#79B8FF">}</span><span style="color:#9ECBFF"> is not an integer.&quot;</span></span>
+<span class="line"><span style="color:#F97583">        raise</span><span style="color:#79B8FF"> TypeError</span><span style="color:#E1E4E8">(message)</span></span></code></pre><pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> factorial(</span><span style="color:#F97583">-</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">Traceback (most recent call last):</span></span>
+<span class="line"><span style="color:#E1E4E8">  File </span><span style="color:#9ECBFF">&quot;&lt;stdin&gt;&quot;</span><span style="color:#E1E4E8">, line </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#F97583">in</span><span style="color:#F97583"> &lt;</span><span style="color:#E1E4E8">module</span><span style="color:#F97583">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">  File </span><span style="color:#9ECBFF">&quot;&lt;stdin&gt;&quot;</span><span style="color:#E1E4E8">, line </span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">, </span><span style="color:#F97583">in</span><span style="color:#E1E4E8"> factorial</span></span>
+<span class="line"><span style="color:#79B8FF">ValueError</span><span style="color:#E1E4E8">: </span><span style="color:#F97583">-</span><span style="color:#79B8FF">1</span><span style="color:#F97583"> &lt;</span><span style="color:#79B8FF"> 0</span><span style="color:#E1E4E8">.</span></span></code></pre><pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> factorial(</span><span style="color:#9ECBFF">&quot;100&quot;</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">Traceback (most recent call last):</span></span>
+<span class="line"><span style="color:#E1E4E8">  File </span><span style="color:#9ECBFF">&quot;&lt;stdin&gt;&quot;</span><span style="color:#E1E4E8">, line </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">, </span><span style="color:#F97583">in</span><span style="color:#F97583"> &lt;</span><span style="color:#E1E4E8">module</span><span style="color:#F97583">&gt;</span></span>
+<span class="line"><span style="color:#79B8FF">  TypeError</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&#39;&lt;&#39;</span><span style="color:#F97583"> not</span><span style="color:#E1E4E8"> supported between instances of </span><span style="color:#9ECBFF">&#39;str&#39;</span><span style="color:#F97583"> and</span><span style="color:#9ECBFF"> &#39;int&#39;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">During handling of the above exception, another exception occurred:</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">Traceback (most recent call last):</span></span>
+<span class="line"><span style="color:#E1E4E8">  File </span><span style="color:#9ECBFF">&quot;&lt;stdin&gt;&quot;</span><span style="color:#E1E4E8">, line </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#F97583">in</span><span style="color:#F97583"> &lt;</span><span style="color:#E1E4E8">module</span><span style="color:#F97583">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">  File </span><span style="color:#9ECBFF">&quot;&lt;stdin&gt;&quot;</span><span style="color:#E1E4E8">, line </span><span style="color:#79B8FF">11</span><span style="color:#E1E4E8">, </span><span style="color:#F97583">in</span><span style="color:#E1E4E8"> factorial</span></span>
+<span class="line"><span style="color:#79B8FF">  TypeError</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&#39;100&#39;</span><span style="color:#F97583"> is</span><span style="color:#F97583"> not</span><span style="color:#E1E4E8"> an integer.</span></span></code></pre> </div> </div> </details> </aside>   
+<h3 id="exceptions--flow-control">Exceptions &amp; Flow Control</h3>
+<p>It may not be obvious that exceptions — ostensibly intended to
+describe errors — provide a powerful flow control mechanism.
+And yet it is the case!</p>
+<p>As an example, let’s show how an exception allows us to exit
+from multiple nested loops (unlike the keyword <code>break</code>).
+We can thus use (for example) the exception <code>StopIteration</code>
+in the following code:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#F97583"> try</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#79B8FF">...</span><span style="color:#F97583">     for</span><span style="color:#E1E4E8"> i </span><span style="color:#F97583">in</span><span style="color:#79B8FF"> range</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">10</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#79B8FF">...</span><span style="color:#F97583">         for</span><span style="color:#E1E4E8"> j </span><span style="color:#F97583">in</span><span style="color:#79B8FF"> range</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">10</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#79B8FF">...</span><span style="color:#F97583">             for</span><span style="color:#E1E4E8"> k </span><span style="color:#F97583">in</span><span style="color:#79B8FF"> range</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">10</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#79B8FF">...</span><span style="color:#79B8FF">                 print</span><span style="color:#E1E4E8">(i, j, k)</span></span>
+<span class="line"><span style="color:#79B8FF">...</span><span style="color:#F97583">                 if</span><span style="color:#E1E4E8"> i </span><span style="color:#F97583">+</span><span style="color:#E1E4E8"> j </span><span style="color:#F97583">+</span><span style="color:#E1E4E8"> k </span><span style="color:#F97583">==</span><span style="color:#79B8FF"> 7</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#79B8FF">...</span><span style="color:#F97583">                     raise</span><span style="color:#79B8FF"> StopIteration</span><span style="color:#E1E4E8">() </span></span>
+<span class="line"><span style="color:#79B8FF">...</span><span style="color:#F97583"> except</span><span style="color:#79B8FF"> StopIteration</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#79B8FF">...</span><span style="color:#F97583">     pass</span></span>
+<span class="line"><span style="color:#79B8FF">...</span></span>
+<span class="line"><span style="color:#79B8FF">0</span><span style="color:#79B8FF"> 0</span><span style="color:#79B8FF"> 0</span></span>
+<span class="line"><span style="color:#79B8FF">0</span><span style="color:#79B8FF"> 0</span><span style="color:#79B8FF"> 1</span></span>
+<span class="line"><span style="color:#79B8FF">0</span><span style="color:#79B8FF"> 0</span><span style="color:#79B8FF"> 2</span></span>
+<span class="line"><span style="color:#79B8FF">0</span><span style="color:#79B8FF"> 0</span><span style="color:#79B8FF"> 3</span></span>
+<span class="line"><span style="color:#79B8FF">0</span><span style="color:#79B8FF"> 0</span><span style="color:#79B8FF"> 4</span></span>
+<span class="line"><span style="color:#79B8FF">0</span><span style="color:#79B8FF"> 0</span><span style="color:#79B8FF"> 5</span></span>
+<span class="line"><span style="color:#79B8FF">0</span><span style="color:#79B8FF"> 0</span><span style="color:#79B8FF"> 6</span></span>
+<span class="line"><span style="color:#79B8FF">0</span><span style="color:#79B8FF"> 0</span><span style="color:#79B8FF"> 7</span></span></code></pre>
+<p>Note that this usage is not as exotic as it might seem.
+Indeed, Python itself uses (implicitly) the exception <code>StopIteration</code>
+in <code>for</code> loops to signal the exhaustion of an iterable.</p>
+<p>Thus the code</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">for</span><span style="color:#E1E4E8"> i </span><span style="color:#F97583">in</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">]:</span></span>
+<span class="line"><span style="color:#79B8FF">    print</span><span style="color:#E1E4E8">(i)</span></span></code></pre>
+<p>is (schematically) equivalent to:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#E1E4E8">it </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> iter</span><span style="color:#E1E4E8">([</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">])</span></span>
+<span class="line"><span style="color:#F97583">while</span><span style="color:#79B8FF"> True</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">    try</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#E1E4E8">        i </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> next</span><span style="color:#E1E4E8">(it)</span></span>
+<span class="line"><span style="color:#79B8FF">        print</span><span style="color:#E1E4E8">(i)</span></span>
+<span class="line"><span style="color:#F97583">    except</span><span style="color:#79B8FF"> StopIteration</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">        break</span></span></code></pre> </main> </nav> </body></html>

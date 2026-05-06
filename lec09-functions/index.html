@@ -1,0 +1,735 @@
+<!DOCTYPE html><html lang="fr" data-astro-cid-vc27etzb> <head><title>Functions</title><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><link rel="icon" type="image/svg+xml" href="/python/favicon.svg"><meta name="generator" content="Astro v3.6.5"><script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+    }
+    };
+  </script><script defer src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js">
+  </script><style>aside[data-astro-cid-fjubpvhp]{border:.125rem solid var(--dark);border-radius:.25rem;margin-bottom:1rem}summary[data-astro-cid-fjubpvhp]{padding:1rem;border-top-left-radius:.25rem;border-top-right-radius:.25rem;background-color:var(--light)}details[data-astro-cid-fjubpvhp]>summary[data-astro-cid-fjubpvhp]{list-style:none;border-radius:.25rem;border-bottom-left-radius:0;border-bottom-right-radius:0}.minmax[data-astro-cid-fjubpvhp]{color:var(--dark)}details[data-astro-cid-fjubpvhp].lock{pointer-events:none}details[data-astro-cid-fjubpvhp].lock .minmax[data-astro-cid-fjubpvhp]{display:none}details[data-astro-cid-fjubpvhp][open] .open[data-astro-cid-fjubpvhp]{display:inline}details[data-astro-cid-fjubpvhp][open] .closed[data-astro-cid-fjubpvhp]{display:none}details[data-astro-cid-fjubpvhp]:not([open]) .open[data-astro-cid-fjubpvhp]{display:none}details[data-astro-cid-fjubpvhp]:not([open]) .closed[data-astro-cid-fjubpvhp]{display:inline}.content[data-astro-cid-fjubpvhp]{border-bottom-right-radius:.25rem;border-bottom-left-radius:.25rem}svg[data-astro-cid-fjubpvhp]{height:1rem}.circle[data-astro-cid-fjubpvhp]{height:1.25rem;width:1.25rem;border-radius:.25rem;background-color:var(--dark);color:#fff;display:flex;justify-content:center;align-items:center}
+</style>
+<link rel="stylesheet" href="/python/_astro/burger.7e2592e1.css" /><script type="module" src="/python/_astro/hoisted.311de0fb.js"></script></head> <body data-astro-cid-vc27etzb> <nav data-astro-cid-vc27etzb> <a href="/python" data-astro-cid-vc27etzb><svg viewBox="0 0 128 128" style="width:2rem;height:2rem;" data-astro-cid-vc27etzb astro-icon="python"><linearGradient id="astroicon:pythona" x1="70.252" x2="170.659" y1="1237.476" y2="1151.089" gradientTransform="matrix(.563 0 0 -.568 -29.215 707.817)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#5A9FD4"/><stop offset="1" stop-color="#306998"/></linearGradient><linearGradient id="astroicon:pythonb" x1="209.474" x2="173.62" y1="1098.811" y2="1149.537" gradientTransform="matrix(.563 0 0 -.568 -29.215 707.817)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#FFD43B"/><stop offset="1" stop-color="#FFE873"/></linearGradient><path fill="url(#astroicon:pythona)" d="M63.391 1.988c-4.222.02-8.252.379-11.8 1.007-10.45 1.846-12.346 5.71-12.346 12.837v9.411h24.693v3.137H29.977c-7.176 0-13.46 4.313-15.426 12.521-2.268 9.405-2.368 15.275 0 25.096 1.755 7.311 5.947 12.519 13.124 12.519h8.491V67.234c0-8.151 7.051-15.34 15.426-15.34h24.665c6.866 0 12.346-5.654 12.346-12.548V15.833c0-6.693-5.646-11.72-12.346-12.837-4.244-.706-8.645-1.027-12.866-1.008zM50.037 9.557c2.55 0 4.634 2.117 4.634 4.721 0 2.593-2.083 4.69-4.634 4.69-2.56 0-4.633-2.097-4.633-4.69-.001-2.604 2.073-4.721 4.633-4.721z" transform="translate(0 10.26)"/><path fill="url(#astroicon:pythonb)" d="M91.682 28.38v10.966c0 8.5-7.208 15.655-15.426 15.655H51.591c-6.756 0-12.346 5.783-12.346 12.549v23.515c0 6.691 5.818 10.628 12.346 12.547 7.816 2.297 15.312 2.713 24.665 0 6.216-1.801 12.346-5.423 12.346-12.547v-9.412H63.938v-3.138h37.012c7.176 0 9.852-5.005 12.348-12.519 2.578-7.735 2.467-15.174 0-25.096-1.774-7.145-5.161-12.521-12.348-12.521h-9.268zM77.809 87.927c2.561 0 4.634 2.097 4.634 4.692 0 2.602-2.074 4.719-4.634 4.719-2.55 0-4.633-2.117-4.633-4.719 0-2.595 2.083-4.692 4.633-4.692z" transform="translate(0 10.26)"/><radialGradient id="astroicon:pythonc" cx="1825.678" cy="444.45" r="26.743" gradientTransform="matrix(0 -.24 -1.055 0 532.979 557.576)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#B8B8B8" stop-opacity=".498"/><stop offset="1" stop-color="#7F7F7F" stop-opacity="0"/></radialGradient><path fill="url(#astroicon:pythonc)" d="M97.309 119.597c0 3.543-14.816 6.416-33.091 6.416-18.276 0-33.092-2.873-33.092-6.416 0-3.544 14.815-6.417 33.092-6.417 18.275 0 33.091 2.872 33.091 6.417z" opacity=".444"/></svg></a> <a href="https://github.com/boisgera/python" data-astro-cid-vc27etzb><svg viewBox="0 -.5 25 25" style="width:2rem;height:2rem;" data-astro-cid-vc27etzb astro-icon="github"><path d="M12.494 1.18h.084c2.02 0 3.911.553 5.53 1.515l-.049-.028a11.132 11.132 0 0 1 4.01 3.985l.028.052a10.98 10.98 0 0 1 1.49 5.558c0 4.872-3.139 9.013-7.504 10.507l-.079.024a.653.653 0 0 1-.579-.102h.002a.562.562 0 0 1-.187-.42v-.012l.007-1.104q.007-1.062.007-1.942a2.563 2.563 0 0 0-.75-2.05 9.84 9.84 0 0 0 1.548-.274l-.069.015a5.866 5.866 0 0 0 1.386-.578l-.028.015a4.073 4.073 0 0 0 1.164-.954l.006-.006c.335-.429.597-.934.757-1.482l.008-.032a7.11 7.11 0 0 0 .296-2.056v-.122.006-.065a4.263 4.263 0 0 0-1.143-2.911l.002.003a3.83 3.83 0 0 0-.125-2.968l.01.023a1.888 1.888 0 0 0-1.18.163l.01-.004c-.512.189-.95.403-1.363.654l.035-.02-.55.346a10.199 10.199 0 0 0-2.77-.375c-.987 0-1.941.137-2.846.393l.073-.018q-.23-.158-.614-.39a8.204 8.204 0 0 0-1.146-.536l-.06-.02a1.96 1.96 0 0 0-1.237-.193l.011-.002a3.785 3.785 0 0 0-.354 1.612c0 .478.088.937.248 1.36l-.009-.026a4.257 4.257 0 0 0-1.14 2.977v-.004.117c0 .73.107 1.434.31 2.097l-.014-.05c.17.579.429 1.082.766 1.525l-.008-.012c.319.392.704.715 1.142.957l.02.01c.389.227.84.42 1.315.554l.042.01c.42.112.923.204 1.437.256l.042.003a2.43 2.43 0 0 0-.707 1.477v.01a2.754 2.754 0 0 1-.63.213l-.02.004c-.23.046-.495.072-.766.072h-.06.003a1.696 1.696 0 0 1-.95-.314l.005.004a2.56 2.56 0 0 1-.794-.889l-.006-.013a2.346 2.346 0 0 0-.693-.746l-.008-.005a2.101 2.101 0 0 0-.7-.343l-.014-.003-.288-.044a.944.944 0 0 0-.425.067l.007-.003q-.116.065-.072.166a.791.791 0 0 0 .13.203c.054.064.117.12.184.17l.003.002.1.072c.256.134.466.32.626.544l.003.005c.172.214.324.455.445.714l.01.022.144.331c.121.363.342.665.63.884l.005.004c.27.211.597.362.953.43l.014.003c.298.057.644.093.997.1h.006a4.268 4.268 0 0 0 .826-.054l-.024.004.332-.058q0 .55.007 1.279l.007.786v.013a.562.562 0 0 1-.187.42.646.646 0 0 1-.582.1h.004c-4.442-1.521-7.579-5.662-7.579-10.535 0-2.044.552-3.96 1.515-5.605L2.9 6.7a11.132 11.132 0 0 1 3.985-4.01l.052-.028A10.723 10.723 0 0 1 12.41 1.18h.088-.004ZM5.608 17.103q.043-.101-.101-.173-.144-.044-.188.028-.043.101.101.174.13.086.188-.03zm.448.49q.1-.071-.03-.23-.143-.13-.23-.043-.1.072.029.23.143.142.23.043zm.432.65q.13-.101 0-.274-.115-.188-.245-.087-.13.072 0 .26.13.187.245.1zm.606.606q.115-.115-.058-.274-.173-.173-.288-.043-.13.115.058.274.173.173.288.04zm.823.36q.043-.158-.188-.23-.216-.058-.274.101-.057.159.188.216.216.088.274-.086zm.91.073q0-.187-.246-.159-.23 0-.23.159 0 .187.245.159.23 0 .23-.158zm.837-.144q-.03-.159-.26-.13-.23.043-.202.216.029.173.26.116.23-.058.203-.202z"/></svg></a> <main data-astro-cid-vc27etzb> <header style="margin-bottom: 3rem;"> <div style="margin-bottom: 1.5rem;"> <h1 style="font-size: 2.25rem; line-height:1; font-weight:700; color: #020617;
+    margin-bottom: 1rem;"> Functions </h1> <p style="color: #64748b;"> Function definition, arguments, generators, closures, and decorators </p> </div> <div style="display: flex; justify-content: left; gap: 1rem;"> <img src="https://2.gravatar.com/avatar/39ec5d637b0753448b97a8e63855a45cb6708d033b656fe9f1d3314bb4bfb202?size=128" alt="avatar" style="margin: 0px; flex: 0 48px; width: 48px; height: 48px; border-radius: 50%;"> <p style="margin: 0px; flex: auto; font-size: 0.875rem; line-height: 1.25rem; color: #1e293b;"> Sébastien Boisgérault <br> Associate Professor, ITN Mines Paris – PSL </p><p></p>  </div> </header>
+<h2 id="functions">Functions</h2>
+<h3 id="generalities">Generalities</h3>
+<p>Functions are defined using the keyword <code>def</code>, followed by the name of the function,
+followed by the list of their <strong>parameters</strong> in parentheses.
+The <strong>return value</strong> of a function is preceded by the keyword <code>return</code>.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">def</span><span style="color:#B392F0"> fibonacci</span><span style="color:#E1E4E8">(n):</span></span>
+<span class="line"><span style="color:#9ECBFF">    &quot;Return a list of n Fibonacci numbers.&quot;</span></span>
+<span class="line"><span style="color:#E1E4E8">    result </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> []</span></span>
+<span class="line"><span style="color:#E1E4E8">    a, b </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> (</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">    while</span><span style="color:#79B8FF"> len</span><span style="color:#E1E4E8">(result) </span><span style="color:#F97583">&lt;</span><span style="color:#E1E4E8"> n:</span></span>
+<span class="line"><span style="color:#E1E4E8">        result.append(a)</span></span>
+<span class="line"><span style="color:#E1E4E8">        a, b </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> b, a</span><span style="color:#F97583">+</span><span style="color:#E1E4E8">b</span></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#E1E4E8"> result</span></span></code></pre>
+<p>To call the function <code>fibonacci</code> passing as argument the <strong>argument</strong> <code>10</code> and retrieve the result:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> numbers </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> fibonacci(</span><span style="color:#79B8FF">10</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> numbers</span></span>
+<span class="line"><span style="color:#E1E4E8">[</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">8</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">13</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">21</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">34</span><span style="color:#E1E4E8">]</span></span></code></pre>
+<p>The parameters of a function can be accompanied by a <strong>default value</strong>.
+We can thus add a second parameter <code>start</code> to the function <code>fibonacci</code> with default value <code>(0, 1)</code>.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">def</span><span style="color:#B392F0"> fibonacci</span><span style="color:#E1E4E8">(n, start</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">)):</span></span>
+<span class="line"><span style="color:#9ECBFF">    &quot;Return a list of n Fibonacci numbers.&quot;</span></span>
+<span class="line"><span style="color:#E1E4E8">    result </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> []</span></span>
+<span class="line"><span style="color:#E1E4E8">    a, b </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> start</span></span>
+<span class="line"><span style="color:#F97583">    while</span><span style="color:#79B8FF"> len</span><span style="color:#E1E4E8">(result) </span><span style="color:#F97583">&lt;</span><span style="color:#E1E4E8"> n:</span></span>
+<span class="line"><span style="color:#E1E4E8">        result.append(a)</span></span>
+<span class="line"><span style="color:#E1E4E8">        a, b </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> b, a</span><span style="color:#F97583">+</span><span style="color:#E1E4E8">b</span></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#E1E4E8"> result</span></span></code></pre>
+<p>If we do not specify the value of the parameter at invocation, its default value is used.
+In this case, if we do not give a second argument to the function <code>fibonacci</code>,
+it behaves like the first version:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> numbers </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> fibonacci(</span><span style="color:#79B8FF">10</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> numbers</span></span>
+<span class="line"><span style="color:#E1E4E8">[</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">8</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">13</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">21</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">34</span><span style="color:#E1E4E8">]</span></span></code></pre>
+<p>However, if we provide a second argument, the default value is not used.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> numbers </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> fibonacci(</span><span style="color:#79B8FF">10</span><span style="color:#E1E4E8">, (</span><span style="color:#79B8FF">21</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">34</span><span style="color:#E1E4E8">))</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> numbers</span></span>
+<span class="line"><span style="color:#E1E4E8">[</span><span style="color:#79B8FF">21</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">34</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">55</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">89</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">144</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">233</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">377</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">610</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">987</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">1597</span><span style="color:#E1E4E8">]</span></span></code></pre>
+<p>Note that arguments can generally be <strong>positional</strong> — the parameter to which the argument
+is assigned depends on the position of the argument in the list of arguments passed to the function —
+or <strong>keyword</strong> (named), in which case the argument is assigned to the parameter of the same name.</p>
+<p>Keyword arguments are often useful to make the role of the argument clearer.
+Thus, the second argument of <code>fibonacci</code>, named <code>start</code>, is a pair of integers
+that provides the two initial values of the Fibonacci sequence. The role of the code is
+probably more obvious if we use a keyword argument:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> numbers </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> fibonacci(</span><span style="color:#79B8FF">10</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">start</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">21</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">34</span><span style="color:#E1E4E8">))</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> numbers</span></span>
+<span class="line"><span style="color:#E1E4E8">[</span><span style="color:#79B8FF">21</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">34</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">55</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">89</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">144</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">233</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">377</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">610</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">987</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">1597</span><span style="color:#E1E4E8">]</span></span></code></pre>
+<p>Note that the use of keyword arguments also makes it possible to ignore
+the order in which the parameters of the function are specified:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> numbers </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> fibonacci(</span><span style="color:#FFAB70">start</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">21</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">34</span><span style="color:#E1E4E8">), </span><span style="color:#FFAB70">n</span><span style="color:#F97583">=</span><span style="color:#79B8FF">10</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> numbers</span></span>
+<span class="line"><span style="color:#E1E4E8">[</span><span style="color:#79B8FF">21</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">34</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">55</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">89</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">144</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">233</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">377</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">610</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">987</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">1597</span><span style="color:#E1E4E8">]</span></span></code></pre>
+<h3 id="arguments--and">Arguments: <code>*</code> and <code>**</code></h3>
+<p>It is possible to store values in a tuple<sup><a href="#user-content-fn-gen" id="user-content-fnref-gen" data-footnote-ref="" aria-describedby="footnote-label">1</a></sup>, then use them as positional arguments
+in a call to a function. For example:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> args </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> (</span><span style="color:#79B8FF">10</span><span style="color:#E1E4E8">, (</span><span style="color:#79B8FF">21</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">34</span><span style="color:#E1E4E8">))</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> fibonacci(</span><span style="color:#F97583">*</span><span style="color:#E1E4E8">args)</span></span>
+<span class="line"><span style="color:#E1E4E8">[</span><span style="color:#79B8FF">21</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">34</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">55</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">89</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">144</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">233</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">377</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">610</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">987</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">1597</span><span style="color:#E1E4E8">]</span></span></code></pre>
+<p>A similar mechanism exists with dictionaries and keyword arguments:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> kwargs </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> {</span><span style="color:#9ECBFF">&quot;n&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">10</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">&quot;start&quot;</span><span style="color:#E1E4E8">: (</span><span style="color:#79B8FF">21</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">34</span><span style="color:#E1E4E8">)}</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> fibonacci(</span><span style="color:#F97583">**</span><span style="color:#E1E4E8">kwargs)</span></span>
+<span class="line"><span style="color:#E1E4E8">[</span><span style="color:#79B8FF">21</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">34</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">55</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">89</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">144</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">233</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">377</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">610</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">987</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">1597</span><span style="color:#E1E4E8">]</span></span></code></pre>
+<p>It is possible to hybridize the two approaches:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> args </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> (</span><span style="color:#79B8FF">10</span><span style="color:#E1E4E8">,)</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> kwargs </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> {</span><span style="color:#9ECBFF">&quot;start&quot;</span><span style="color:#E1E4E8">: (</span><span style="color:#79B8FF">21</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">34</span><span style="color:#E1E4E8">)}</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> fibonacci(</span><span style="color:#F97583">*</span><span style="color:#E1E4E8">args, </span><span style="color:#F97583">**</span><span style="color:#E1E4E8">kwargs)</span></span>
+<span class="line"><span style="color:#E1E4E8">[</span><span style="color:#79B8FF">21</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">34</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">55</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">89</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">144</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">233</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">377</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">610</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">987</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">1597</span><span style="color:#E1E4E8">]</span></span></code></pre>
+<p>There is also a form of symmetry in this mechanism, which can be
+used to define a function that accepts an arbitrary number of
+positional and/or keyword arguments. For example, with:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">def</span><span style="color:#B392F0"> f</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">*</span><span style="color:#E1E4E8">args, </span><span style="color:#F97583">**</span><span style="color:#E1E4E8">kwargs):</span></span>
+<span class="line"><span style="color:#79B8FF">    print</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">f</span><span style="color:#9ECBFF">&quot;args = </span><span style="color:#79B8FF">{</span><span style="color:#E1E4E8">args</span><span style="color:#F97583">!r</span><span style="color:#79B8FF">}</span><span style="color:#9ECBFF">&quot;</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#79B8FF">    print</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">f</span><span style="color:#9ECBFF">&quot;kwargs = </span><span style="color:#79B8FF">{</span><span style="color:#E1E4E8">kwargs</span><span style="color:#F97583">!r</span><span style="color:#79B8FF">}</span><span style="color:#9ECBFF">&quot;</span><span style="color:#E1E4E8">)</span></span></code></pre>
+<p>We get:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> f(</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">&quot;Hello!&quot;</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">args </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> (</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">&#39;Hello!&#39;</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">kwargs </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> {}</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> f(</span><span style="color:#FFAB70">fast</span><span style="color:#F97583">=</span><span style="color:#79B8FF">True</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">verbose</span><span style="color:#F97583">=</span><span style="color:#79B8FF">False</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">args </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> ()</span></span>
+<span class="line"><span style="color:#E1E4E8">kwargs </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> {</span><span style="color:#9ECBFF">&#39;fast&#39;</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">True</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">&#39;verbose&#39;</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">False</span><span style="color:#E1E4E8">}</span></span></code></pre>
+<h3 id="static-typing">Static Typing</h3>
+<p>Python is a dynamically typed language; the same variable can denote
+an integer at one moment and a string at another. However,
+it is possible — but optional — to statically attach a
+<a href="https://docs.python.org/3/library/typing.html"><strong>type annotation</strong></a>
+to a variable.</p>
+<p>For example, if you want to declare that the function <code>fibonacci</code> takes
+an integer and a pair of integers as arguments and returns a list of integers,
+you can define it as follows:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">def</span><span style="color:#B392F0"> fibonacci</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#E1E4E8">    n: </span><span style="color:#79B8FF">int</span><span style="color:#E1E4E8">, </span></span>
+<span class="line"><span style="color:#E1E4E8">    start: tuple[</span><span style="color:#79B8FF">int</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">int</span><span style="color:#E1E4E8">] </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> (</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">) -&gt; list[</span><span style="color:#79B8FF">int</span><span style="color:#E1E4E8">]:</span></span>
+<span class="line"><span style="color:#9ECBFF">    &quot;Return a list of n Fibonacci numbers.&quot;</span></span>
+<span class="line"><span style="color:#E1E4E8">    result : list[</span><span style="color:#79B8FF">int</span><span style="color:#E1E4E8">] </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> []</span></span>
+<span class="line"><span style="color:#E1E4E8">    a, b </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> start</span></span>
+<span class="line"><span style="color:#F97583">    while</span><span style="color:#79B8FF"> len</span><span style="color:#E1E4E8">(result) </span><span style="color:#F97583">&lt;</span><span style="color:#E1E4E8"> n:</span></span>
+<span class="line"><span style="color:#E1E4E8">        result.append(a)</span></span>
+<span class="line"><span style="color:#E1E4E8">        a, b </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> b, a</span><span style="color:#F97583">+</span><span style="color:#E1E4E8">b</span></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#E1E4E8"> result</span></span></code></pre>
+<p>This information can be used during development to detect any structural inconsistencies
+in your code. Thus, if you complete the code above with:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#E1E4E8">fibonacci(</span><span style="color:#9ECBFF">&quot;Hello!&quot;</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">True</span><span style="color:#E1E4E8">)</span></span></code></pre>
+<p>The use of <a href="http://mypy-lang.org/">mypy</a> will provide:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> mypy</span><span style="color:#9ECBFF"> fib.py</span></span>
+<span class="line"><span style="color:#B392F0">fibonacci.py:13:</span><span style="color:#9ECBFF"> error:</span><span style="color:#9ECBFF"> Argument</span><span style="color:#79B8FF"> 1</span><span style="color:#9ECBFF"> to</span><span style="color:#9ECBFF"> &quot;fibonacci&quot;</span><span style="color:#9ECBFF"> has</span><span style="color:#9ECBFF"> incompatible</span><span style="color:#9ECBFF"> type</span><span style="color:#9ECBFF"> &quot;str&quot;</span><span style="color:#E1E4E8">; </span><span style="color:#B392F0">expected</span><span style="color:#9ECBFF"> &quot;int&quot;</span></span>
+<span class="line"><span style="color:#B392F0">fibonacci.py:13:</span><span style="color:#9ECBFF"> error:</span><span style="color:#9ECBFF"> Argument</span><span style="color:#79B8FF"> 2</span><span style="color:#9ECBFF"> to</span><span style="color:#9ECBFF"> &quot;fibonacci&quot;</span><span style="color:#9ECBFF"> has</span><span style="color:#9ECBFF"> incompatible</span><span style="color:#9ECBFF"> type</span><span style="color:#9ECBFF"> &quot;bool&quot;</span><span style="color:#E1E4E8">; </span><span style="color:#B392F0">expected</span><span style="color:#9ECBFF"> &quot;Tuple[int, int]&quot;</span></span>
+<span class="line"><span style="color:#B392F0">Found</span><span style="color:#79B8FF"> 2</span><span style="color:#9ECBFF"> errors</span><span style="color:#9ECBFF"> in</span><span style="color:#79B8FF"> 1</span><span style="color:#9ECBFF"> file</span><span style="color:#E1E4E8"> (checked </span><span style="color:#79B8FF">1</span><span style="color:#9ECBFF"> source</span><span style="color:#9ECBFF"> file</span><span style="color:#E1E4E8">)</span></span></code></pre>
+<h3 id="namespaces">Namespaces</h3>
+<p>The <strong>scope</strong> of a variable in a program determines the way it is associated with a value.
+At the top level (of a file, a module, the Python interpreter, etc.),
+variables are <strong>global</strong>. The link between the variable name and
+the value it designates is described by the <code>globals()</code> dictionary:
+this is the <strong>namespace</strong> associated with global variables.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#F97583"> import</span><span style="color:#E1E4E8"> math</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> message </span><span style="color:#F97583">=</span><span style="color:#9ECBFF"> &quot;Hello world&quot;</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#F97583"> def</span><span style="color:#B392F0"> answer</span><span style="color:#E1E4E8">():</span></span>
+<span class="line"><span style="color:#79B8FF">...</span><span style="color:#F97583">    return</span><span style="color:#79B8FF"> 42</span></span>
+<span class="line"><span style="color:#79B8FF">...</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> globs </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> globals</span><span style="color:#E1E4E8">()</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> globs[</span><span style="color:#9ECBFF">&quot;math&quot;</span><span style="color:#E1E4E8">] </span><span style="color:#F97583">is</span><span style="color:#E1E4E8"> math</span></span>
+<span class="line"><span style="color:#79B8FF">True</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> globs[</span><span style="color:#9ECBFF">&quot;message&quot;</span><span style="color:#E1E4E8">] </span><span style="color:#F97583">is</span><span style="color:#E1E4E8"> message</span></span>
+<span class="line"><span style="color:#79B8FF">True</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> globs[</span><span style="color:#9ECBFF">&quot;answer&quot;</span><span style="color:#E1E4E8">] </span><span style="color:#F97583">is</span><span style="color:#E1E4E8"> answer</span></span>
+<span class="line"><span style="color:#79B8FF">True</span></span></code></pre>
+<p>Within functions, there are generally <strong>local</strong> variables to the function.
+This is notably the case of the function parameters, and — in the absence of
+a contrary statement — variables assigned within it. In the body of this function,
+the associated namespace can be obtained by calling <code>locals()</code>.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 1</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#F97583"> def</span><span style="color:#B392F0"> f</span><span style="color:#E1E4E8">(y):</span></span>
+<span class="line"><span style="color:#79B8FF">...</span><span style="color:#E1E4E8">     z </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 3</span></span>
+<span class="line"><span style="color:#79B8FF">...</span><span style="color:#E1E4E8">     locs </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> locals</span><span style="color:#E1E4E8">()</span></span>
+<span class="line"><span style="color:#79B8FF">...</span><span style="color:#79B8FF">     print</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">&quot;x&quot;</span><span style="color:#F97583"> in</span><span style="color:#E1E4E8"> locs)</span></span>
+<span class="line"><span style="color:#79B8FF">...</span><span style="color:#79B8FF">     print</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">&quot;y&quot;</span><span style="color:#F97583"> in</span><span style="color:#E1E4E8"> locs)</span></span>
+<span class="line"><span style="color:#79B8FF">...</span><span style="color:#79B8FF">     print</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">&quot;z&quot;</span><span style="color:#F97583"> in</span><span style="color:#E1E4E8"> locs)</span></span>
+<span class="line"><span style="color:#79B8FF">...</span><span style="color:#E1E4E8"> </span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> f(</span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#79B8FF">False</span></span>
+<span class="line"><span style="color:#79B8FF">True</span></span>
+<span class="line"><span style="color:#79B8FF">True</span></span></code></pre>
+<p>It is therefore possible for a local variable to <strong>shadow</strong> a global variable:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> a </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 1</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#F97583"> def</span><span style="color:#B392F0"> f</span><span style="color:#E1E4E8">():</span></span>
+<span class="line"><span style="color:#79B8FF">...</span><span style="color:#E1E4E8">     a </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 2</span><span style="color:#6A737D">  # assigned =&gt; local</span></span>
+<span class="line"><span style="color:#79B8FF">...</span><span style="color:#79B8FF">     print</span><span style="color:#E1E4E8">(a)</span></span>
+<span class="line"><span style="color:#79B8FF">...</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> a</span></span>
+<span class="line"><span style="color:#79B8FF">1</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> f()</span></span>
+<span class="line"><span style="color:#79B8FF">2</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> a  </span><span style="color:#6A737D"># in the global scope =&gt; the value remains unchanged</span></span>
+<span class="line"><span style="color:#79B8FF">1</span></span></code></pre>
+<p>In the absence of such an assignment, within a function, global variables remain accessible,
+but only for reading:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> a </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 1</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#F97583"> def</span><span style="color:#B392F0"> f</span><span style="color:#E1E4E8">():</span></span>
+<span class="line"><span style="color:#79B8FF">...</span><span style="color:#79B8FF">     print</span><span style="color:#E1E4E8">(a)</span></span>
+<span class="line"><span style="color:#79B8FF">...</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> f()</span></span>
+<span class="line"><span style="color:#79B8FF">1</span></span></code></pre>
+<p>If we want to assign a new value to a global variable within the body of a function,
+it is necessary to declare the variable as global:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> a </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 1</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#F97583"> def</span><span style="color:#B392F0"> f</span><span style="color:#E1E4E8">():</span></span>
+<span class="line"><span style="color:#79B8FF">...</span><span style="color:#F97583">     global</span><span style="color:#E1E4E8"> a</span></span>
+<span class="line"><span style="color:#79B8FF">...</span><span style="color:#E1E4E8">     a </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 2</span></span>
+<span class="line"><span style="color:#79B8FF">...</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> print</span><span style="color:#E1E4E8">(a)</span></span>
+<span class="line"><span style="color:#79B8FF">1</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> f()</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> print</span><span style="color:#E1E4E8">(a)</span></span>
+<span class="line"><span style="color:#79B8FF">2</span></span></code></pre>
+<p>There is also a <strong>built-in</strong> scope and in the case of <strong>nested</strong> functions,
+the concept of outer scope; see for example
+<a href="https://realpython.com/python-scope-legb-rule/">the description of the LEGB rule</a>.</p>
+<h2 id="callables">Callables</h2>
+<p>An object that behaves like a function, that is, can be called (invoked) with the
+same syntax as functions, is called a <strong>callable</strong>.</p>
+<p>Thus, the integer <code>0</code> is not callable:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> zero </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 0</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> zero()</span></span>
+<span class="line"><span style="color:#E1E4E8">Traceback (most recent call last):</span></span>
+<span class="line"><span style="color:#E1E4E8">  File </span><span style="color:#9ECBFF">&quot;&lt;stdin&gt;&quot;</span><span style="color:#E1E4E8">, line </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#F97583">in</span><span style="color:#F97583"> &lt;</span><span style="color:#E1E4E8">module</span><span style="color:#F97583">&gt;</span></span>
+<span class="line"><span style="color:#79B8FF">TypeError</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&#39;int&#39;</span><span style="color:#79B8FF"> object</span><span style="color:#F97583"> is</span><span style="color:#F97583"> not</span><span style="color:#79B8FF"> callable</span></span></code></pre>
+<p>But the function without argument that returns <code>0</code> is callable:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#F97583"> def</span><span style="color:#B392F0"> zero_fun</span><span style="color:#E1E4E8">():</span></span>
+<span class="line"><span style="color:#79B8FF">...</span><span style="color:#F97583">     return</span><span style="color:#79B8FF"> 0</span></span>
+<span class="line"><span style="color:#79B8FF">...</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> zero_fun()</span></span>
+<span class="line"><span style="color:#79B8FF">0</span></span></code></pre>
+<p>Which is not a surprise since it is a function!</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> type</span><span style="color:#E1E4E8">(zero_fun)</span></span>
+<span class="line"><span style="color:#F97583">&lt;class</span><span style="color:#9ECBFF"> &#39;function&#39;</span><span style="color:#F97583">&gt;</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#F97583"> import</span><span style="color:#E1E4E8"> types</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> isinstance</span><span style="color:#E1E4E8">(zero_fun, types.FunctionType)</span></span>
+<span class="line"><span style="color:#79B8FF">True</span></span></code></pre>
+<p>The callability of Python objects can be tested with the function <code>callable</code>:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> callable</span><span style="color:#E1E4E8">(zero)</span></span>
+<span class="line"><span style="color:#79B8FF">False</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> callable</span><span style="color:#E1E4E8">(zero_fun)</span></span>
+<span class="line"><span style="color:#79B8FF">True</span></span></code></pre>
+<p>Note that this test tells whether an object is callable, but not whether it can be
+invoked without arguments (or how many arguments are needed, of what type, etc.). Thus:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> callable</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">hash</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#79B8FF">True</span></span></code></pre>
+<p>But:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> hash</span><span style="color:#E1E4E8">()</span></span>
+<span class="line"><span style="color:#E1E4E8">Traceback (most recent call last):</span></span>
+<span class="line"><span style="color:#E1E4E8">  File </span><span style="color:#9ECBFF">&quot;&lt;stdin&gt;&quot;</span><span style="color:#E1E4E8">, line </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#F97583">in</span><span style="color:#F97583"> &lt;</span><span style="color:#E1E4E8">module</span><span style="color:#F97583">&gt;</span></span>
+<span class="line"><span style="color:#79B8FF">TypeError</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">hash</span><span style="color:#E1E4E8">() takes exactly one argument (</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8"> given)</span></span></code></pre>
+<p>However:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> hash</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">2</span><span style="color:#F97583">**</span><span style="color:#79B8FF">100</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#79B8FF">549755813888</span></span></code></pre>
+<p>To learn more about the expected arguments, refer to the documentation of the
+object in question.</p>
+<h3 id="types">Types</h3>
+<p>An object like <code>int</code> is also callable:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> callable</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">int</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#79B8FF">True</span></span></code></pre>
+<p>Which can be quickly confirmed experimentally:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> int</span><span style="color:#E1E4E8">()</span></span>
+<span class="line"><span style="color:#79B8FF">0</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> int</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">0.0</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#79B8FF">0</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> int</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">&quot;0&quot;</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#79B8FF">0</span></span></code></pre>
+<p>Yet it is not a function, but a type:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> type</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">int</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">&lt;class</span><span style="color:#9ECBFF"> &#39;type&#39;</span><span style="color:#F97583">&gt;</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> type</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">int</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">is</span><span style="color:#79B8FF"> type</span><span style="color:#6A737D">  # 🤯</span></span>
+<span class="line"><span style="color:#79B8FF">True</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> isinstance</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">int</span><span style="color:#E1E4E8">, types.FunctionType)</span></span>
+<span class="line"><span style="color:#79B8FF">False</span></span></code></pre>
+<p>Recall that types (or classes) are intended, when called, to create
+instances of the type considered:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> isinstance</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">int</span><span style="color:#E1E4E8">(), </span><span style="color:#79B8FF">int</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#79B8FF">True</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> isinstance</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">int</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">0.0</span><span style="color:#E1E4E8">), </span><span style="color:#79B8FF">int</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#79B8FF">True</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> isinstance</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">int</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">&quot;0&quot;</span><span style="color:#E1E4E8">), </span><span style="color:#79B8FF">int</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#79B8FF">True</span></span></code></pre>
+<p>The classes you define are also callable:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> Transmogrifier</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">    pass</span></span></code></pre>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> callable</span><span style="color:#E1E4E8">(Transmogrifier)</span></span>
+<span class="line"><span style="color:#79B8FF">True</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> transmogrifier </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> Transmogrifier()</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> isinstance</span><span style="color:#E1E4E8">(transmogrifier, Transmogrifier)</span></span>
+<span class="line"><span style="color:#79B8FF">True</span></span></code></pre>
+<h3 id="methods">Methods</h3>
+<p>A <a href="https://calvinandhobbes.fandom.com/wiki/Transmogrifier">transmogrifier</a>
+can transform its user into whatever it wants (by default, a tiger 🐯;
+but we didn’t specify the size of the tiger! 😉).</p>
+<img src="https://www.nicepng.com/png/full/198-1980373_calvin-and-hobbes-png-hd-calvin-and-hobbes.png" alt="Calvin (on the right) transformed into a tiger" style="width: 100%"/>
+<p><em>Calvin (on the right) transformed into a tiger</em></p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> Transmogrifier</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#79B8FF"> __init__</span><span style="color:#E1E4E8">(self, turn_into</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">&quot;tiger&quot;</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">.turn_into </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> turn_into</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> activate</span><span style="color:#E1E4E8">(self, user):</span></span>
+<span class="line"><span style="color:#F97583">        return</span><span style="color:#79B8FF"> self</span><span style="color:#E1E4E8">.turn_into</span></span></code></pre>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> transmogrifier </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> Transmogrifier()</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> transmogrifier.activate(</span><span style="color:#9ECBFF">&quot;calvin&quot;</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#9ECBFF">&#39;tiger&#39;</span></span></code></pre>
+<p>The operation <code>transmogrifier.activate(&quot;calvin&quot;)</code> is not “atomic”: it first obtains
+the attribute <code>activate</code> from the object <code>transmogrifier</code>, then invokes it
+with the argument <code>&quot;calvin&quot;</code>.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> transmogrify </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> transmogrifier.activate</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> callable</span><span style="color:#E1E4E8">(transmogrify)</span></span>
+<span class="line"><span style="color:#79B8FF">True</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> transmogrify(</span><span style="color:#9ECBFF">&quot;calvin&quot;</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#9ECBFF">&#39;tiger&#39;</span></span></code></pre>
+<p>This is possible because <code>activate</code> is a method (bound to the instance
+<code>transmogrifier</code> of <code>Transmogrifier</code>) and is therefore callable.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> transmogrify</span></span>
+<span class="line"><span style="color:#F97583">&lt;</span><span style="color:#E1E4E8">bound method Transmogrifier.activate </span><span style="color:#79B8FF">...</span><span style="color:#F97583">&gt;</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> type</span><span style="color:#E1E4E8">(transmogrify)</span></span>
+<span class="line"><span style="color:#F97583">&lt;class</span><span style="color:#9ECBFF"> &#39;method&#39;</span><span style="color:#F97583">&gt;</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#F97583"> import</span><span style="color:#E1E4E8"> types</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> type</span><span style="color:#E1E4E8">(transmogrify) </span><span style="color:#F97583">is</span><span style="color:#E1E4E8"> types.MethodType</span></span>
+<span class="line"><span style="color:#79B8FF">True</span></span></code></pre>
+<h3 id="instances">Instances</h3>
+<p>Note that at this stage <code>Transmogrifier</code> is callable and the method <code>activate</code>
+of transmogrifiers is also callable. But the transmogrifiers themselves are not:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> callable</span><span style="color:#E1E4E8">(transmogrifier)</span></span>
+<span class="line"><span style="color:#79B8FF">False</span></span></code></pre>
+<p>If we think it is preferable, we can make them callable. It seems quite reasonable
+to make invoking a transmogrifier activate it:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> Transmogrifier</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#79B8FF"> __init__</span><span style="color:#E1E4E8">(self, turn_into</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">&quot;tiger&quot;</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">.turn_into </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> turn_into</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> activate</span><span style="color:#E1E4E8">(self, user):</span></span>
+<span class="line"><span style="color:#F97583">        return</span><span style="color:#79B8FF"> self</span><span style="color:#E1E4E8">.turn_into</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#79B8FF"> __call__</span><span style="color:#E1E4E8">(self, user):</span></span>
+<span class="line"><span style="color:#F97583">        return</span><span style="color:#79B8FF"> self</span><span style="color:#E1E4E8">.activate(user)</span></span></code></pre>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> transmogrifier </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> Transmogrifier()</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> callable</span><span style="color:#E1E4E8">(transmogrifier)</span></span>
+<span class="line"><span style="color:#79B8FF">True</span></span></code></pre>
+<p>We can then simplify the usage of the transmogrifier as follows:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> transmogrifier(</span><span style="color:#9ECBFF">&quot;calvin&quot;</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#9ECBFF">&#39;tiger&#39;</span></span></code></pre>
+<h2 id="generator-functions">Generator Functions</h2>
+<p>A function is <strong>generator</strong> if its definition uses the keyword <code>yield</code>.</p>
+<ul>
+<li>
+<p>Calling a generator function does not execute its code immediately,
+but returns an iterator as return value.</p>
+</li>
+<li>
+<p>Accessing the first element of this iterator executes the function until
+it reaches the first <code>yield</code>; the function then returns the value provided
+to <code>yield</code>, then pauses its execution.</p>
+</li>
+<li>
+<p>Accessing the second element of this iterator resumes execution
+from that point, until it reaches the second <code>yield</code>, etc.</p>
+</li>
+</ul>
+<p>Thus, with</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">def</span><span style="color:#B392F0"> one_two_three</span><span style="color:#E1E4E8">():</span></span>
+<span class="line"><span style="color:#F97583">    yield</span><span style="color:#79B8FF"> 1</span></span>
+<span class="line"><span style="color:#F97583">    yield</span><span style="color:#79B8FF"> 2</span></span>
+<span class="line"><span style="color:#F97583">    yield</span><span style="color:#79B8FF"> 3</span></span></code></pre>
+<p>We get:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#F97583"> for</span><span style="color:#E1E4E8"> i </span><span style="color:#F97583">in</span><span style="color:#E1E4E8"> one_two_three():</span></span>
+<span class="line"><span style="color:#79B8FF">...</span><span style="color:#79B8FF">     print</span><span style="color:#E1E4E8">(i)</span></span>
+<span class="line"><span style="color:#79B8FF">...</span></span>
+<span class="line"><span style="color:#79B8FF">1</span></span>
+<span class="line"><span style="color:#79B8FF">2</span></span>
+<span class="line"><span style="color:#79B8FF">3</span></span></code></pre>
+<p>And:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> list</span><span style="color:#E1E4E8">(one_two_three())</span></span>
+<span class="line"><span style="color:#E1E4E8">[</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">]</span></span></code></pre>
+<h4 id="examples-source-itertools">Examples (source: <a href="https://docs.python.org/3/library/itertools.html#module-itertools">itertools</a>)</h4>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">def</span><span style="color:#B392F0"> count</span><span style="color:#E1E4E8">(start</span><span style="color:#F97583">=</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">, step</span><span style="color:#F97583">=</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#9ECBFF">    &quot;&quot;&quot;</span></span>
+<span class="line"><span style="color:#9ECBFF">    Generate the sequence start, start + step, start + 2*step, ...</span></span>
+<span class="line"><span style="color:#9ECBFF">    &quot;&quot;&quot;</span></span>
+<span class="line"><span style="color:#E1E4E8">    value </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> start</span></span>
+<span class="line"><span style="color:#F97583">    while</span><span style="color:#79B8FF"> True</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">        yield</span><span style="color:#E1E4E8"> value</span></span>
+<span class="line"><span style="color:#E1E4E8">        value </span><span style="color:#F97583">+=</span><span style="color:#E1E4E8"> step</span></span></code></pre>
+<p>Usage:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> odd_numbers </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> count(</span><span style="color:#FFAB70">start</span><span style="color:#F97583">=</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">step</span><span style="color:#F97583">=</span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#F97583"> for</span><span style="color:#E1E4E8"> number </span><span style="color:#F97583">in</span><span style="color:#E1E4E8"> odd_numbers:</span></span>
+<span class="line"><span style="color:#79B8FF">...</span><span style="color:#F97583">     if</span><span style="color:#E1E4E8"> number </span><span style="color:#F97583">&gt;=</span><span style="color:#79B8FF"> 20</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#79B8FF">...</span><span style="color:#F97583">         break</span></span>
+<span class="line"><span style="color:#79B8FF">...</span><span style="color:#F97583">     else</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#79B8FF">...</span><span style="color:#79B8FF">         print</span><span style="color:#E1E4E8">(number)</span></span>
+<span class="line"><span style="color:#79B8FF">...</span></span>
+<span class="line"><span style="color:#79B8FF">1</span><span style="color:#E1E4E8"> </span></span>
+<span class="line"><span style="color:#79B8FF">3</span><span style="color:#E1E4E8"> </span></span>
+<span class="line"><span style="color:#79B8FF">5</span><span style="color:#E1E4E8"> </span></span>
+<span class="line"><span style="color:#79B8FF">7</span><span style="color:#E1E4E8"> </span></span>
+<span class="line"><span style="color:#79B8FF">9</span><span style="color:#E1E4E8"> </span></span>
+<span class="line"><span style="color:#79B8FF">11</span><span style="color:#E1E4E8"> </span></span>
+<span class="line"><span style="color:#79B8FF">13</span><span style="color:#E1E4E8"> </span></span>
+<span class="line"><span style="color:#79B8FF">15</span><span style="color:#E1E4E8"> </span></span>
+<span class="line"><span style="color:#79B8FF">17</span><span style="color:#E1E4E8"> </span></span>
+<span class="line"><span style="color:#79B8FF">19</span></span></code></pre>
+<hr/>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">def</span><span style="color:#B392F0"> cycle</span><span style="color:#E1E4E8">(iterable):</span></span>
+<span class="line"><span style="color:#9ECBFF">    &quot;&quot;&quot;</span></span>
+<span class="line"><span style="color:#9ECBFF">    Yield all items from an iterable, then repeat this sequence indefinitely. </span></span>
+<span class="line"><span style="color:#9ECBFF">    &quot;&quot;&quot;</span></span>
+<span class="line"><span style="color:#E1E4E8">    items </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> list</span><span style="color:#E1E4E8">(iterable)</span></span>
+<span class="line"><span style="color:#F97583">    while</span><span style="color:#E1E4E8"> items:</span></span>
+<span class="line"><span style="color:#F97583">        for</span><span style="color:#E1E4E8"> item </span><span style="color:#F97583">in</span><span style="color:#E1E4E8"> items:</span></span>
+<span class="line"><span style="color:#F97583">            yield</span><span style="color:#E1E4E8"> item</span></span></code></pre>
+<p>Usage:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#F97583"> for</span><span style="color:#E1E4E8"> i, item </span><span style="color:#F97583">in</span><span style="color:#79B8FF"> enumerate</span><span style="color:#E1E4E8">(cycle(</span><span style="color:#9ECBFF">&quot;ABCD&quot;</span><span style="color:#E1E4E8">)):</span></span>
+<span class="line"><span style="color:#79B8FF">...</span><span style="color:#F97583">     if</span><span style="color:#E1E4E8"> i </span><span style="color:#F97583">&gt;=</span><span style="color:#79B8FF"> 12</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#79B8FF">...</span><span style="color:#F97583">         break</span></span>
+<span class="line"><span style="color:#79B8FF">...</span><span style="color:#F97583">     else</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#79B8FF">...</span><span style="color:#79B8FF">         print</span><span style="color:#E1E4E8">(item)</span></span>
+<span class="line"><span style="color:#79B8FF">...</span></span>
+<span class="line"><span style="color:#E1E4E8">A </span></span>
+<span class="line"><span style="color:#E1E4E8">B </span></span>
+<span class="line"><span style="color:#E1E4E8">C </span></span>
+<span class="line"><span style="color:#E1E4E8">D </span></span>
+<span class="line"><span style="color:#E1E4E8">A </span></span>
+<span class="line"><span style="color:#E1E4E8">B </span></span>
+<span class="line"><span style="color:#E1E4E8">C </span></span>
+<span class="line"><span style="color:#E1E4E8">D </span></span>
+<span class="line"><span style="color:#E1E4E8">A </span></span>
+<span class="line"><span style="color:#E1E4E8">B </span></span>
+<span class="line"><span style="color:#E1E4E8">C </span></span>
+<span class="line"><span style="color:#E1E4E8">D</span></span></code></pre>
+<hr/>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">def</span><span style="color:#B392F0"> repeat</span><span style="color:#E1E4E8">(object, n</span><span style="color:#F97583">=</span><span style="color:#79B8FF">None</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#9ECBFF">    &quot;&quot;&quot;</span></span>
+<span class="line"><span style="color:#9ECBFF">    Yield object an object n times (or indefinitely if n is None).</span></span>
+<span class="line"><span style="color:#9ECBFF">    &quot;&quot;&quot;</span></span>
+<span class="line"><span style="color:#F97583">    if</span><span style="color:#E1E4E8"> n </span><span style="color:#F97583">is</span><span style="color:#79B8FF"> None</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">        while</span><span style="color:#79B8FF"> True</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">            yield</span><span style="color:#79B8FF"> object</span></span>
+<span class="line"><span style="color:#F97583">    else</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">        for</span><span style="color:#E1E4E8"> i </span><span style="color:#F97583">in</span><span style="color:#79B8FF"> range</span><span style="color:#E1E4E8">(n):</span></span>
+<span class="line"><span style="color:#F97583">            yield</span><span style="color:#79B8FF"> object</span></span></code></pre>
+<p>Usage:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> list</span><span style="color:#E1E4E8">(repeat(</span><span style="color:#79B8FF">10</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">))</span></span>
+<span class="line"><span style="color:#E1E4E8">[</span><span style="color:#79B8FF">10</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">10</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">10</span><span style="color:#E1E4E8">]</span></span></code></pre>
+<h4 id="exercises">Exercises</h4>
+<ul>
+<li>
+<p>Implement your own version of the standard functions <code>range</code>, <code>enumerate</code>
+and <code>zip</code> using generator functions.</p>
+</li>
+<li>
+<p>Review the definition of the function <code>fibonacci</code> to make it a generator
+function that returns Fibonacci numbers as an iterator rather than a list.
+Make sure that when argument <code>n</code> is not provided, the iterator traverses
+the entire sequence.</p>
+</li>
+</ul>
+<h2 id="functional-programming">Functional Programming</h2>
+<p>One of the features of <strong>functional programming</strong><sup><a href="#user-content-fn-pf" id="user-content-fnref-pf" data-footnote-ref="" aria-describedby="footnote-label">2</a></sup>, a style of programming that
+Python supports (in part), is to allow manipulation of functions as
+objects like others, which can be assigned to variables, stored in containers,
+passed as arguments to other functions, etc. A function that accepts
+functions as arguments and/or returns functions is a <strong>higher-order function</strong>.</p>
+<p>Mathematical libraries often make good use of these higher-order functions.
+Thus, the <a href="https://github.com/HIPS/autograd#autograd---">Autograd</a> automatic differentiation library defines a higher-order function
+<code>grad</code> that associates with a real-valued function its derivative.</p>
+<p>Its documentation gives the following example of usage:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#F97583"> import</span><span style="color:#E1E4E8"> autograd.numpy </span><span style="color:#F97583">as</span><span style="color:#E1E4E8"> np </span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#F97583"> from</span><span style="color:#E1E4E8"> autograd </span><span style="color:#F97583">import</span><span style="color:#E1E4E8"> grad   </span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#F97583"> def</span><span style="color:#B392F0"> tanh</span><span style="color:#E1E4E8">(x):                </span></span>
+<span class="line"><span style="color:#79B8FF">...</span><span style="color:#E1E4E8">     y </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> np.exp(</span><span style="color:#F97583">-</span><span style="color:#79B8FF">2.0</span><span style="color:#F97583"> *</span><span style="color:#E1E4E8"> x)</span></span>
+<span class="line"><span style="color:#79B8FF">...</span><span style="color:#F97583">     return</span><span style="color:#E1E4E8"> (</span><span style="color:#79B8FF">1.0</span><span style="color:#F97583"> -</span><span style="color:#E1E4E8"> y) </span><span style="color:#F97583">/</span><span style="color:#E1E4E8"> (</span><span style="color:#79B8FF">1.0</span><span style="color:#F97583"> +</span><span style="color:#E1E4E8"> y)</span></span>
+<span class="line"><span style="color:#79B8FF">...</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> d_tanh </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> grad(tanh)  </span><span style="color:#6A737D"># d_tanh is the derivative of tanh   </span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> d_tanh(</span><span style="color:#79B8FF">1.0</span><span style="color:#E1E4E8">)          </span><span style="color:#6A737D"># we evaluate it at x = 1.0              </span></span>
+<span class="line"><span style="color:#79B8FF">0.419974341614026</span></span></code></pre>
+<p>Another important use of higher-order functions is the exploitation of
+<strong>callback</strong> functions, notably in graphical interfaces.</p>
+<p>For example, let’s look at how the graphical application given as an example
+in <a href="http://tkdocs.com/tutorial/firstexample.html#design">the Tk library tutorial</a> is programmed:</p>
+<img src="/python/_astro/converter.8541ad91_Z5sv7u.webp" alt="Feet to meters converter" style="border-radius: 0.375rem; width: 50%; height: auto;" width="306" height="150" loading="lazy" decoding="async">
+<p>The graphical interface is partly defined by the code:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">from</span><span style="color:#E1E4E8"> tkinter </span><span style="color:#F97583">import</span><span style="color:#F97583"> *</span></span>
+<span class="line"><span style="color:#F97583">from</span><span style="color:#E1E4E8"> tkinter </span><span style="color:#F97583">import</span><span style="color:#E1E4E8"> ttk</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">root </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> Tk()</span></span>
+<span class="line"><span style="color:#E1E4E8">root.title(</span><span style="color:#9ECBFF">&quot;Feet to Meters&quot;</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">mainframe </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> ttk.Frame(root, </span><span style="color:#FFAB70">padding</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">&quot;3 3 12 12&quot;</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">mainframe.grid(</span><span style="color:#FFAB70">column</span><span style="color:#F97583">=</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">row</span><span style="color:#F97583">=</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">sticky</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">(N, W, E, S))</span></span>
+<span class="line"><span style="color:#E1E4E8">root.columnconfigure(</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">weight</span><span style="color:#F97583">=</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">root.rowconfigure(</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">weight</span><span style="color:#F97583">=</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">feet </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> StringVar()</span></span>
+<span class="line"><span style="color:#E1E4E8">feet_entry </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> ttk.Entry(mainframe, </span><span style="color:#FFAB70">width</span><span style="color:#F97583">=</span><span style="color:#79B8FF">7</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">textvariable</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">feet)</span></span>
+<span class="line"><span style="color:#E1E4E8">feet_entry.grid(</span><span style="color:#FFAB70">column</span><span style="color:#F97583">=</span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">row</span><span style="color:#F97583">=</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">sticky</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">(W, E))</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">meters </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> StringVar()</span></span>
+<span class="line"><span style="color:#E1E4E8">ttk.Label(mainframe, </span><span style="color:#FFAB70">textvariable</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">meters).grid(</span><span style="color:#FFAB70">column</span><span style="color:#F97583">=</span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">row</span><span style="color:#F97583">=</span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">sticky</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">(W, E))</span></span></code></pre>
+<p>Let’s just note at this stage that <code>feet</code> is the text field where we enter
+the length in feet and <code>meters</code> is the text field that should display
+the equivalent length in meters when we click the button.</p>
+<p>For the application to behave as desired, we define a function <code>calculate</code>
+that each time it is invoked, reads the length in feet and writes the length
+in meters:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">def</span><span style="color:#B392F0"> calculate</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">*</span><span style="color:#E1E4E8">args):</span></span>
+<span class="line"><span style="color:#F97583">    try</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#E1E4E8">        value </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> float</span><span style="color:#E1E4E8">(feet.get())</span></span>
+<span class="line"><span style="color:#E1E4E8">        meters_value </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> int</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">0.3048</span><span style="color:#F97583"> *</span><span style="color:#E1E4E8"> value </span><span style="color:#F97583">*</span><span style="color:#79B8FF"> 1e4</span><span style="color:#F97583"> +</span><span style="color:#79B8FF"> 0.5</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">/</span><span style="color:#79B8FF"> 1e4</span></span>
+<span class="line"><span style="color:#E1E4E8">        meters.set(meters_value)</span></span>
+<span class="line"><span style="color:#F97583">    except</span><span style="color:#79B8FF"> ValueError</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">        pass</span></span></code></pre>
+<p>Then we create a button that <strong>calls back</strong> this function each time it is pressed:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#E1E4E8">ttk.Button(</span></span>
+<span class="line"><span style="color:#E1E4E8">    mainframe, </span></span>
+<span class="line"><span style="color:#FFAB70">    text</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">&quot;Calculate&quot;</span><span style="color:#E1E4E8">, </span></span>
+<span class="line"><span style="color:#FFAB70">    command</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">calculate</span></span>
+<span class="line"><span style="color:#E1E4E8">).grid(</span><span style="color:#FFAB70">column</span><span style="color:#F97583">=</span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">row</span><span style="color:#F97583">=</span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">sticky</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">W)</span></span></code></pre>
+<p>A few more labels in the graphical interface, a little bit of positioning,
+and we are ready to launch the execution loop!</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#E1E4E8">ttk.Label(mainframe, </span><span style="color:#FFAB70">text</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">&quot;feet&quot;</span><span style="color:#E1E4E8">).grid(</span><span style="color:#FFAB70">column</span><span style="color:#F97583">=</span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">row</span><span style="color:#F97583">=</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">sticky</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">W)</span></span>
+<span class="line"><span style="color:#E1E4E8">ttk.Label(mainframe, </span><span style="color:#FFAB70">text</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">&quot;is equivalent to&quot;</span><span style="color:#E1E4E8">).grid(</span><span style="color:#FFAB70">column</span><span style="color:#F97583">=</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">row</span><span style="color:#F97583">=</span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">sticky</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">E)</span></span>
+<span class="line"><span style="color:#E1E4E8">ttk.Label(mainframe, </span><span style="color:#FFAB70">text</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">&quot;meters&quot;</span><span style="color:#E1E4E8">).grid(</span><span style="color:#FFAB70">column</span><span style="color:#F97583">=</span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">row</span><span style="color:#F97583">=</span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">sticky</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">W)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">for</span><span style="color:#E1E4E8"> child </span><span style="color:#F97583">in</span><span style="color:#E1E4E8"> mainframe.winfo_children(): </span></span>
+<span class="line"><span style="color:#E1E4E8">    child.grid_configure(</span><span style="color:#FFAB70">padx</span><span style="color:#F97583">=</span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">pady</span><span style="color:#F97583">=</span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">feet_entry.focus()</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">root.mainloop()</span></span></code></pre>
+<h3 id="lambda">Lambda</h3>
+<p><strong>Lambda functions</strong> in Python are a construct that does not increase
+the expressiveness of the language — you can’t do anything with lambda
+functions that you couldn’t already do with regular functions —
+but in some cases allows for more concise code.</p>
+<p>Thus, to numerically find the zero of the function $x \mapsto x^2 - 2$
+between 0 and 2 with <code>scipy</code>, after importing a root-finding function:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">from</span><span style="color:#E1E4E8"> scipy.optimize </span><span style="color:#F97583">import</span><span style="color:#E1E4E8"> root_scalar </span><span style="color:#F97583">as</span><span style="color:#E1E4E8"> find_root</span></span></code></pre>
+<p>We can define the function of interest, which requires naming it
+(for example <code>f</code>):</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">def</span><span style="color:#B392F0"> f</span><span style="color:#E1E4E8">(x):</span></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#E1E4E8"> x</span><span style="color:#F97583">*</span><span style="color:#E1E4E8">x </span><span style="color:#F97583">-</span><span style="color:#79B8FF"> 2</span></span></code></pre>
+<p>Then call scipy’s zero-finding routine:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> find_root(f, </span><span style="color:#FFAB70">bracket</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">[</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">])</span></span>
+<span class="line"><span style="color:#E1E4E8">      converged: </span><span style="color:#79B8FF">True</span></span>
+<span class="line"><span style="color:#E1E4E8">           flag: </span><span style="color:#9ECBFF">&#39;converged&#39;</span></span>
+<span class="line"><span style="color:#E1E4E8">function_calls: </span><span style="color:#79B8FF">9</span></span>
+<span class="line"><span style="color:#E1E4E8">    iterations: </span><span style="color:#79B8FF">8</span></span>
+<span class="line"><span style="color:#E1E4E8">         root: </span><span style="color:#79B8FF">1.4142135623731364</span></span></code></pre>
+<p>But we can also skip the preliminary definition and naming step,
+and perform this operation on the fly, in the call to <code>find_root</code>,
+using a lambda function:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> find_root(</span><span style="color:#F97583">lambda</span><span style="color:#E1E4E8"> x: x</span><span style="color:#F97583">*</span><span style="color:#E1E4E8">x</span><span style="color:#F97583">-</span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">bracket</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">[</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">])</span></span>
+<span class="line"><span style="color:#E1E4E8">      converged: </span><span style="color:#79B8FF">True</span></span>
+<span class="line"><span style="color:#E1E4E8">           flag: </span><span style="color:#9ECBFF">&#39;converged&#39;</span></span>
+<span class="line"><span style="color:#E1E4E8">function_calls: </span><span style="color:#79B8FF">9</span></span>
+<span class="line"><span style="color:#E1E4E8">    iterations: </span><span style="color:#79B8FF">8</span></span>
+<span class="line"><span style="color:#E1E4E8">         root: </span><span style="color:#79B8FF">1.4142135623731364</span></span></code></pre>
+<p>The keyword <code>lambda</code> refers to the traditional notation of
+<a href="https://en.wikipedia.org/wiki/Lambda_calculus">$\lambda$-calculus</a>;
+there, the function $x \mapsto x^2+1$ would be denoted
+$(\lambda x.x^2+1)$.</p>
+<h3 id="closures">Closures</h3>
+<p>As Wikipedia says:</p>
+<blockquote>
+<p>In a programming language, a <strong>closure</strong> or <strong>clôture</strong> is a function
+accompanied by its lexical environment.</p>
+<p>The <strong>lexical environment</strong> of a function is the set of non-local variables
+it has captured, either by value (i.e., by copying the values of the variables),
+or by reference (i.e., by copying the memory addresses of the variables).</p>
+<p>A closure is therefore created, among other things, when a function is defined
+in the body of another function and uses parameters or local variables
+of the latter.</p>
+<p>Source: <a href="https://en.wikipedia.org/wiki/Closure_(computer_programming)">Closure (wikipedia)</a></p>
+</blockquote>
+<p>Let’s try to give a concrete example illustrating this definition.</p>
+<h4 id="expression-evaluator">Expression Evaluator</h4>
+<p>The built-in function <code>eval</code> allows calculating the value of expressions
+represented by strings. Thus:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 1</span><span style="color:#E1E4E8"> </span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> y </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 2</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> eval</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">&quot;x + y&quot;</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#79B8FF">3</span></span></code></pre>
+<p>It is also possible to ignore the global namespace and explicitly specify
+the namespace that the evaluator should use:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> namespace </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> {</span><span style="color:#9ECBFF">&quot;x&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">&quot;y&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">}</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> eval</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">&quot;x + y&quot;</span><span style="color:#E1E4E8">, namespace)</span></span>
+<span class="line"><span style="color:#79B8FF">7</span></span></code></pre>
+<p>We would like to have a higher-order function — let’s call it <code>fun</code> —
+that associates with an expression, like <code>&quot;x+y&quot;</code>, a function that will accept
+the necessary keyword arguments to evaluate the expression — here <code>x</code> and <code>y</code> —
+and return the associated value of the expression.</p>
+<p>With function closures, nothing could be simpler:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">def</span><span style="color:#B392F0"> fun</span><span style="color:#E1E4E8">(expression):</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> f</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">**</span><span style="color:#E1E4E8">kwargs): </span></span>
+<span class="line"><span style="color:#F97583">       return</span><span style="color:#79B8FF"> eval</span><span style="color:#E1E4E8">(expression, kwargs)</span></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#E1E4E8"> f</span></span></code></pre>
+<p>Note that <code>eval(expression, kwargs)</code> uses the variable <code>kwargs</code> which is local to <code>f</code>
+(because passed as parameter). But it also uses <code>expression</code> which is a local variable of <code>fun</code>;
+it belongs to the lexical environment of <code>f</code>, which is therefore a closure.</p>
+<p>Here’s how to use our function <code>fun</code>:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> add_xy </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> fun(</span><span style="color:#9ECBFF">&quot;x + y&quot;</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> add_xy(</span><span style="color:#FFAB70">x</span><span style="color:#F97583">=</span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">y</span><span style="color:#F97583">=</span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#79B8FF">9</span></span>
+<span class="line"><span style="color:#FDAEB7;font-style:italic">--------------------------------------------------------------------------------</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">The non</span><span style="color:#F97583">-</span><span style="color:#E1E4E8">local variables of a closure are accessible </span><span style="color:#F97583">for</span><span style="color:#E1E4E8"> reading by default.</span></span>
+<span class="line"><span style="color:#E1E4E8">To modify them, it </span><span style="color:#F97583">is</span><span style="color:#E1E4E8"> first necessary to explicitly declare them </span><span style="color:#F97583">as</span><span style="color:#E1E4E8"> non</span><span style="color:#F97583">-</span><span style="color:#E1E4E8">local to the closure.</span></span>
+<span class="line"><span style="color:#E1E4E8">(The situation </span><span style="color:#F97583">is</span><span style="color:#E1E4E8"> therefore similar to that of </span><span style="color:#F97583">global</span><span style="color:#E1E4E8"> variables used </span><span style="color:#F97583">in</span><span style="color:#E1E4E8"> functions.)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">For example, the function </span><span style="color:#FDAEB7;font-style:italic">`make_get_set`</span><span style="color:#E1E4E8"> generates two closures that access</span></span>
+<span class="line"><span style="color:#E1E4E8">the same variable </span><span style="color:#FDAEB7;font-style:italic">`x`</span><span style="color:#E1E4E8"> (which </span><span style="color:#F97583">is</span><span style="color:#E1E4E8"> local to </span><span style="color:#FDAEB7;font-style:italic">`make_get_set`</span><span style="color:#E1E4E8">): </span><span style="color:#FDAEB7;font-style:italic">`get`</span><span style="color:#E1E4E8"> allows reading</span></span>
+<span class="line"><span style="color:#E1E4E8">the value of </span><span style="color:#FDAEB7;font-style:italic">`x`</span><span style="color:#F97583"> and</span><span style="color:#E1E4E8"> therefore does </span><span style="color:#F97583">not</span><span style="color:#E1E4E8"> need to declare it </span><span style="color:#F97583">as</span><span style="color:#E1E4E8"> non</span><span style="color:#F97583">-</span><span style="color:#E1E4E8">local;</span></span>
+<span class="line"><span style="color:#E1E4E8">but </span><span style="color:#FDAEB7;font-style:italic">`</span><span style="color:#79B8FF;font-style:italic">set</span><span style="color:#FDAEB7;font-style:italic">`</span><span style="color:#E1E4E8"> must be able to change the value of this variable </span><span style="color:#F97583">and</span><span style="color:#E1E4E8"> therefore declares it</span></span>
+<span class="line"><span style="color:#F97583">as</span><span style="color:#E1E4E8"> non</span><span style="color:#F97583">-</span><span style="color:#E1E4E8">local:</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#FDAEB7;font-style:italic">```python</span></span>
+<span class="line"><span style="color:#F97583">def</span><span style="color:#E1E4E8"> make_get_set(x):</span></span>
+<span class="line"><span style="color:#F97583">     def</span><span style="color:#E1E4E8"> get():</span></span>
+<span class="line"><span style="color:#F97583">         return</span><span style="color:#E1E4E8"> x</span></span>
+<span class="line"><span style="color:#F97583">     def</span><span style="color:#79B8FF"> set</span><span style="color:#E1E4E8">(value):</span></span>
+<span class="line"><span style="color:#F97583">         nonlocal</span><span style="color:#E1E4E8"> x</span></span>
+<span class="line"><span style="color:#E1E4E8">         x = value</span></span>
+<span class="line"><span style="color:#F97583">     return</span><span style="color:#E1E4E8"> get, </span><span style="color:#79B8FF">set</span></span></code></pre>
+<p>Example usage of these functions:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> get, </span><span style="color:#79B8FF">set</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> make_get_set(</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> get()</span></span>
+<span class="line"><span style="color:#79B8FF">1</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#79B8FF"> set</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> get()</span></span>
+<span class="line"><span style="color:#79B8FF">5</span></span>
+<span class="line"><span style="color:#FDAEB7;font-style:italic">--------------------------------------------------------------------------------</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">It </span><span style="color:#F97583">is</span><span style="color:#E1E4E8"> good to know that non</span><span style="color:#F97583">-</span><span style="color:#E1E4E8">local variables are captured by reference </span><span style="color:#F97583">in</span><span style="color:#E1E4E8"> Python,</span></span>
+<span class="line"><span style="color:#F97583">and</span><span style="color:#F97583"> not</span><span style="color:#E1E4E8"> by value, which can </span><span style="color:#F97583">in</span><span style="color:#E1E4E8"> some cases make your life</span></span>
+<span class="line"><span style="color:#79B8FF">...</span><span style="color:#E1E4E8"> interesting! 😂</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">For example, the programmer who wrote:</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#FDAEB7;font-style:italic">```python</span></span>
+<span class="line"><span style="color:#F97583">def</span><span style="color:#B392F0"> make_actions</span><span style="color:#E1E4E8">():</span></span>
+<span class="line"><span style="color:#E1E4E8">    actions </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> []</span></span>
+<span class="line"><span style="color:#F97583">    for</span><span style="color:#E1E4E8"> i </span><span style="color:#F97583">in</span><span style="color:#79B8FF"> range</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#F97583">        def</span><span style="color:#B392F0"> printer</span><span style="color:#E1E4E8">():</span></span>
+<span class="line"><span style="color:#79B8FF">            print</span><span style="color:#E1E4E8">(i)</span></span>
+<span class="line"><span style="color:#E1E4E8">        actions.append(printer)</span></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#E1E4E8"> actions</span></span></code></pre>
+<p>Probably expects to generate a list of 3 actions that will display
+0, 1 and 2 respectively when they are called.
+But since <code>i</code> used by the function <code>printer</code> is captured by reference,
+its effective value is determined only at the time of the call <code>print(i)</code>. But at that time,
+the <code>for</code> loop has already been executed, so <code>i</code> equals <code>2</code>. Consequently, we actually get:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#F97583"> for</span><span style="color:#E1E4E8"> action </span><span style="color:#F97583">in</span><span style="color:#E1E4E8"> make_actions():</span></span>
+<span class="line"><span style="color:#79B8FF">...</span><span style="color:#E1E4E8">     action()</span></span>
+<span class="line"><span style="color:#79B8FF">...</span></span>
+<span class="line"><span style="color:#79B8FF">2</span></span>
+<span class="line"><span style="color:#79B8FF">2</span></span>
+<span class="line"><span style="color:#79B8FF">2</span></span></code></pre>
+<p>The classic “hack” to solve this problem is to use the fact that the default
+arguments of a function are evaluated at its definition.
+Therefore, if we define:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">def</span><span style="color:#B392F0"> make_actions</span><span style="color:#E1E4E8">():</span></span>
+<span class="line"><span style="color:#E1E4E8">    actions </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> []</span></span>
+<span class="line"><span style="color:#F97583">    for</span><span style="color:#E1E4E8"> i </span><span style="color:#F97583">in</span><span style="color:#79B8FF"> range</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#F97583">        def</span><span style="color:#B392F0"> printer</span><span style="color:#E1E4E8">(i</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">i):</span></span>
+<span class="line"><span style="color:#79B8FF">            print</span><span style="color:#E1E4E8">(i)</span></span>
+<span class="line"><span style="color:#E1E4E8">        actions.append(printer)</span></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#E1E4E8"> actions</span></span></code></pre>
+<p>We get as desired:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#F97583"> for</span><span style="color:#E1E4E8"> action </span><span style="color:#F97583">in</span><span style="color:#E1E4E8"> make_actions():</span></span>
+<span class="line"><span style="color:#79B8FF">...</span><span style="color:#E1E4E8">     action()</span></span>
+<span class="line"><span style="color:#79B8FF">...</span></span>
+<span class="line"><span style="color:#79B8FF">0</span></span>
+<span class="line"><span style="color:#79B8FF">1</span></span>
+<span class="line"><span style="color:#79B8FF">2</span></span></code></pre>
+<h3 id="decorators">Decorators</h3>
+<p><strong>Decorators</strong> are a syntactic sugar using the symbol <code>@</code> that facilitates the
+implementation of a fairly common pattern that we will illustrate with an example.</p>
+<p>Imagine that we have developed a function <code>plus_one</code></p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">def</span><span style="color:#B392F0"> plus_one</span><span style="color:#E1E4E8">(x):</span></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">+</span><span style="color:#79B8FF"> 1</span></span></code></pre>
+<p>But in testing it in a program, we find its behavior mysterious.
+To understand what is happening, we modify its definition to display
+its arguments and the values it returns each time it is called.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">def</span><span style="color:#B392F0"> plus_one</span><span style="color:#E1E4E8">(x):</span></span>
+<span class="line"><span style="color:#79B8FF">    print</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">&quot;input:&quot;</span><span style="color:#E1E4E8">, x)</span></span>
+<span class="line"><span style="color:#E1E4E8">    y </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">+</span><span style="color:#79B8FF"> 1</span></span>
+<span class="line"><span style="color:#79B8FF">    print</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">&quot;output:&quot;</span><span style="color:#E1E4E8">, y)</span></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#E1E4E8"> y</span></span></code></pre>
+<p>With the firm intention of removing this additional code once the mystery is solved.</p>
+<p>However, this process is not very satisfactory. Rather than modifying
+the code of <code>plus_one</code>, we can develop a function <code>debug</code> that takes the function
+<code>plus_one</code> as an argument and returns a new function that works like <code>plus_one</code>
+except that it displays the arguments and output value:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">def</span><span style="color:#B392F0"> debug</span><span style="color:#E1E4E8">(f):</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> f_debug</span><span style="color:#E1E4E8">(x):</span></span>
+<span class="line"><span style="color:#79B8FF">        print</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">&quot;input:&quot;</span><span style="color:#E1E4E8">, x)</span></span>
+<span class="line"><span style="color:#E1E4E8">        y </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> f(x)</span></span>
+<span class="line"><span style="color:#79B8FF">        print</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">&quot;output:&quot;</span><span style="color:#E1E4E8">, y)</span></span>
+<span class="line"><span style="color:#F97583">        return</span><span style="color:#E1E4E8"> y</span></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#E1E4E8"> f_debug</span></span></code></pre>
+<p>To test the code in a real situation, we just need to replace the classic function
+<code>plus_one</code> with this new function</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#E1E4E8">plus_one </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> debug(plus_one)</span></span></code></pre>
+<p>Then erase only this additional line once the mystery is solved.</p>
+<p>It turns out that the code</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">def</span><span style="color:#B392F0"> plus_one</span><span style="color:#E1E4E8">(x):</span></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">+</span><span style="color:#79B8FF"> 1</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">plus_one </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> debug(plus_one)</span></span></code></pre>
+<p>Is equivalent to the following construction using the decorator <code>@debug</code>:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#B392F0">@debug</span></span>
+<span class="line"><span style="color:#F97583">def</span><span style="color:#B392F0"> plus_one</span><span style="color:#E1E4E8">(x):</span></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">+</span><span style="color:#79B8FF"> 1</span></span></code></pre>
+<p>You may find this second notation more pleasant and readable!</p>
+<h4 id="example">Example</h4>
+<p>The higher-order function <code>count</code> below can be used as a decorator to record the number of times
+a function has been invoked (the number of calls to the function is stored in the <code>count</code> attribute
+of the function):</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">def</span><span style="color:#B392F0"> count</span><span style="color:#E1E4E8">(f):</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> counted_f</span><span style="color:#E1E4E8">(x):</span></span>
+<span class="line"><span style="color:#E1E4E8">        counted_f.count </span><span style="color:#F97583">+=</span><span style="color:#79B8FF"> 1</span></span>
+<span class="line"><span style="color:#F97583">        return</span><span style="color:#E1E4E8"> f(x)</span></span>
+<span class="line"><span style="color:#E1E4E8">    counted_f.count </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 0</span></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#E1E4E8"> counted_f</span></span></code></pre>
+<p>For example, if we want to locate the positive root of the function
+$x \mapsto x^2 - 2$, which is $\sqrt2$, we can define it by decorating
+it with <code>@count</code>:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#B392F0">@count</span></span>
+<span class="line"><span style="color:#F97583">def</span><span style="color:#B392F0"> f</span><span style="color:#E1E4E8">(x):</span></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#E1E4E8"> x</span><span style="color:#F97583">*</span><span style="color:#E1E4E8">x </span><span style="color:#F97583">-</span><span style="color:#79B8FF"> 2</span></span></code></pre>
+<p>Then proceed by successive iterations to produce an estimate of $\sqrt2$:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> f(</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">-</span><span style="color:#79B8FF">2</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> f(</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">-</span><span style="color:#79B8FF">1</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> f(</span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#79B8FF">2</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> f(</span><span style="color:#79B8FF">1.5</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#79B8FF">0.25</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> f(</span><span style="color:#79B8FF">1.4</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">-</span><span style="color:#79B8FF">0.04000000000000026</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> f(</span><span style="color:#79B8FF">1.45</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#79B8FF">0.10250000000000004</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> f(</span><span style="color:#79B8FF">1.43</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#79B8FF">0.04489999999999972</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> f(</span><span style="color:#79B8FF">1.42</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#79B8FF">0.01639999999999997</span></span>
+<span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> f(</span><span style="color:#79B8FF">1.41</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">-</span><span style="color:#79B8FF">0.011900000000000244</span></span></code></pre>
+<p>And note afterward how many calls to the function <code>f</code> were necessary:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#F97583">&gt;&gt;&gt;</span><span style="color:#E1E4E8"> f.count</span></span>
+<span class="line"><span style="color:#79B8FF">9</span></span></code></pre>
+
+<section data-footnotes="" class="footnotes"><h2 class="sr-only" id="footnote-label">Footnotes</h2>
+<ol>
+<li id="user-content-fn-gen">
+<p>or more generally an iterable. <a href="#user-content-fnref-gen" data-footnote-backref="" class="data-footnote-backref" aria-label="Back to content">↩</a></p>
+</li>
+<li id="user-content-fn-pf">
+<p><a href="https://en.wikipedia.org/wiki/Functional_programming">https://en.wikipedia.org/wiki/Functional_programming</a> <a href="#user-content-fnref-pf" data-footnote-backref="" class="data-footnote-backref" aria-label="Back to content">↩</a></p>
+</li>
+</ol>
+</section> </main> </nav> </body></html>
