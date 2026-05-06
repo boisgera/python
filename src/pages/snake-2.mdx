@@ -488,7 +488,7 @@ pyxel.run(update, draw)
 
 ## Draw Refactoring
 
-Implement a function `display` that draws list of colored pixels.
+Implement a function `display` that draws a list or set of colored pixels.
 Make sure that it works in a way that we can replace the original
 implementation of `draw` with:
 
@@ -508,8 +508,8 @@ Then extend the `display` function so that:
   - when its second argument is not specified, it should apply the color
     to all pixels of the screen;
 
-  - when the second argument is a single pixel and not a list of pixels, 
-    it should apply the color to this pixel.
+  - when the second argument is a single pixel and not a list or set 
+    of pixels, it should apply the color to this pixel.
 
 Simplify the implementation of `draw` to leverage these extensions
 
@@ -893,8 +893,9 @@ def update():
 def display(color, pixels=None):
     if pixels is None:
         pyxel.cls(color)
-    elif len(pixels) >= 1 and isinstance(pixels[0], int):
-        display(color, [pixels])
+    elif len(pixels) >= 1 and isinstance(list(pixels)[0], int):
+        pixels = [pixels]
+        display(color, pixels)
     else:
         for x, y in pixels:
             pyxel.pset(x, y, color)
